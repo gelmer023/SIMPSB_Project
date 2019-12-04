@@ -47,7 +47,7 @@
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="fecha" value="#{citasEti.fecha}"/>
                                 <h:inputText id="fecha" styleClass="form form-control" a:type="date"
-                                     value="#{citasController.citas.fecha}" a:min="#{citasController.año}-#{citasController.mes}-#{citasController.dia}"> 
+                                     value="#{citascontroller.citas.fecha}" a:min="#{citascontroller.año}-#{citascontroller.mes}-#{citascontroller.dia}"> 
                                     <f:convertDateTime for="fecha" type="date" pattern="yyyy-MM-dd"></f:convertDateTime>
                                 </h:inputText>
                                 <h:message for="fecha"/>
@@ -55,7 +55,7 @@
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="hora" value="#{citasEti.hora}"/>
                                 <h:inputText id="hora" styleClass="form form-control" a:type="time" a:min="9:00" a:max="20:00" a:step="1800"
-                                             value="#{citasController.citas.hora}">
+                                             value="#{citascontroller.citas.hora}">
                                     <f:convertDateTime dateStyle="full" pattern="HH:mm"></f:convertDateTime>
                                 </h:inputText>
                                 <h:message for="hora"/>
@@ -64,9 +64,9 @@
 
                         <div class="form-group col-md-12">
                             <h:outputLabel for="servicio" value="#{citasEti.servicio}"/>
-                            <h:selectOneMenu id="servicio" value="#{citasController.servicios.idServicio}" styleClass="form form-control">
+                            <h:selectOneMenu id="servicio" value="#{citascontroller.servicios.idServicio}" styleClass="form form-control">
                                 <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
-                                <f:selectItems value="#{citasController.listServicios}" var="servicio" 
+                                <f:selectItems value="#{citascontroller.listServicios}" var="servicio" 
                                                itemValue="#{servicio.idServicio}" 
                                                itemLabel="#{servicio.nombre}"/>
                             </h:selectOneMenu>
@@ -75,9 +75,9 @@
 
                         <div class="form-group col-md-12">
                             <h:outputLabel for="empleado" value="#{citasEti.empleado}"/>
-                            <h:selectOneMenu id="empleado" value="#{citasController.empleado.idEmpleado}" styleClass="form form-control">
+                            <h:selectOneMenu id="empleado" value="#{citascontroller.empleado.idEmpleado}" styleClass="form form-control">
                                 <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
-                                <f:selectItems value="#{citasController.listEmpleados}" var="emp" 
+                                <f:selectItems value="#{citascontroller.listEmpleados}" var="emp" 
                                                itemValue="#{emp.idEmpleado}" 
                                                itemLabel="#{emp.idUsuario.nombre}"/>
                             </h:selectOneMenu>
@@ -85,7 +85,7 @@
                         </div>
 
                         <h:commandButton styleClass="btn boton d-block mx-auto" 
-                                         action="#{citasController.generarCita()}" 
+                                         action="#{citascontroller.generarCita()}" 
                                          value="#{citasEti.btn_agendar}"/> 
                     </h:form>
                 </div>

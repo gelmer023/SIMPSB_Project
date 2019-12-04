@@ -120,7 +120,7 @@ public class pruebaController {
         listarComisiones();
         listarUsuarios();
         listarEmpleados();
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listUsuarios);
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listComisiones);
         
         //Traer la ruta del Jasper
         String ruta = FacesContext.getCurrentInstance().getExternalContext().getRealPath("reportes/");

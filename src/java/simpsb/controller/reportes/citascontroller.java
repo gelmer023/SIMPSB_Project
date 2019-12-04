@@ -23,49 +23,48 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import simpsb.dao.*;
 import simpsb.entidades.*;
 
-/**
- *
- * @author usuario
- */
 @Named
 @RequestScoped
-public class pagoscontroller {
+public class citascontroller {
 
     @EJB
     private ComisionesFacadeLocal comisionesFacadeLocal;
     private List<Comisiones> listComisiones;
 
+    @EJB
+    private CitasFacadeLocal citasFacadeLocal;
+    private List<Citas> listcCitases;
     @PostConstruct
     private void init() {
         listComisiones = comisionesFacadeLocal.findAll();
     }
 
-    public pagoscontroller() {
+    public citascontroller() {
     }
 
-    public List<Comisiones> listarComisiones() {
-        listComisiones = comisionesFacadeLocal.findAll();
-        return listComisiones;
+    public List<Citas> listarCitases() {
+        listcCitases = citasFacadeLocal.findAll();
+        return listcCitases;
     }
 
     public void genenarPDF(ActionEvent actionEvent) {
         //Genero un Hash Map para los parametros del reporte
         Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("idComision",1);
+        parametros.put("idCita", 1);
 
         //Genero la lista para los Fields del reporte
-        listarComisiones();
-        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listComisiones);
+        listarCitases();
+        JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listcCitases);
 
         //Traer la ruta del Jasper  
         String ruta = FacesContext.getCurrentInstance().getExternalContext().getRealPath("reportes/");
         try {
             //Generar el Reporte
-            JasperPrint jasperPrint = JasperFillManager.fillReport(ruta + "/ReportePagos.jasper", parametros, beanCollectionDataSource);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(ruta + "/ReporteCitas.jasper", parametros, beanCollectionDataSource);
 
             //Con estas lineas mi navegador puede leer el PDF y lo puede descargar
             HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-            httpServletResponse.addHeader("Content-disposition", "attachment; filename=ReportePagos.pdf");
+            httpServletResponse.addHeader("Content-disposition", "attachment; filename=ReporteCitas.pdf");
             ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
 
             JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
@@ -84,12 +83,28 @@ public class pagoscontroller {
         this.comisionesFacadeLocal = comisionesFacadeLocal;
     }
 
-    public List<Comisiones> getListComisioneses() {
+    public List<Comisiones> getListComisiones() {
         return listComisiones;
     }
 
-    public void setListComisioneses(List<Comisiones> listComisioneses) {
-        this.listComisiones = listComisioneses;
+    public void setListComisiones(List<Comisiones> listComisiones) {
+        this.listComisiones = listComisiones;
+    }
+
+    public CitasFacadeLocal getCitasFacadeLocal() {
+        return citasFacadeLocal;
+    }
+
+    public void setCitasFacadeLocal(CitasFacadeLocal citasFacadeLocal) {
+        this.citasFacadeLocal = citasFacadeLocal;
+    }
+
+    public List<Citas> getListcCitases() {
+        return listcCitases;
+    }
+
+    public void setListcCitases(List<Citas> listcCitases) {
+        this.listcCitases = listcCitases;
     }
 
 }

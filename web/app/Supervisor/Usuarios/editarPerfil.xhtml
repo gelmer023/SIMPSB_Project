@@ -39,28 +39,20 @@
             <div class="container">
                 <div class="formulario d-block mx-auto">
                     <div class="titulo">
-                        <h1 class="text-center text-uppercase">#{usuariosEti.modificar}</h1>
+                        <h1 class="text-center text-uppercase">Cambiar Foto de Perfil</h1>
                     </div>
 
                     <h:form enctype="multipart/form-data">
                         <h:inputHidden value="#{usuarioController.usuario.pass}"/>
-                        <div class="foto-perfil">
-                            FOTO DE PERFIL
-                            
-                            <div>
-                                <div>
-                                    <h:outputLabel for="imagen" value=""/>
-                                    <div>
-                                        <p> Actual Foto </p>
-                                        <h:graphicImage value="#{user.getFoto()}" class="estilosFtPerfil"/>
-                                        <h:inputFile a:accept=".jpg" a:type="file" class="form-control" value="#{usuarioController.imagen.file}"/>
-                                    </div>
-                                    <h:commandButton actionListener="#{usuarioController.cambiarFoto()}" value="Subir"/>
-                                </div>
-                            </div>
-                            
+                        <h:outputLabel for="imagen" value=""/>
+                        <div class="foto">
+                            <p> Foto Actual </p>
+                            <h:graphicImage value="#{user.getFoto()}" class="estilosFtPerfil"/>
+                            <br></br>
+                            <h:inputFile a:accept=".jpg" a:type="file" class="form-control" value="#{usuarioController.imagen.file}"/>
+                            <br></br>
                         </div>
-                        
+                        <h:commandButton actionListener="#{usuarioController.cambiarFoto()}" value="Subir" class="btn boton"/>
                     </h:form>
                 </div>
             </div>
