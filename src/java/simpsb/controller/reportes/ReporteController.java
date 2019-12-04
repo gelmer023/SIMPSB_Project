@@ -25,7 +25,7 @@ import simpsb.entidades.*;
 
 @Named
 @RequestScoped
-public class CitasControllerReport {
+public class ReporteController {
 
     @EJB
     private ComisionesFacadeLocal comisionesFacadeLocal;
@@ -39,7 +39,7 @@ public class CitasControllerReport {
         listComisiones = comisionesFacadeLocal.findAll();
     }
 
-    public CitasControllerReport() {
+    public ReporteController() {
     }
 
     public List<Citas> listarCitas() {
@@ -50,7 +50,7 @@ public class CitasControllerReport {
     public void genenarPDF(ActionEvent actionEvent) {
         //Genero un Hash Map para los parametros del reporte
         Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("idCita", 1);
+        parametros.put("idCita",1);
 
         //Genero la lista para los Fields del reporte
         listarCitas();
