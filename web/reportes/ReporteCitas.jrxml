@@ -7,7 +7,6 @@
 	<field name="idCita" class="java.lang.Integer"/>
 	<field name="fecha" class="java.util.Date"/>
 	<field name="hora" class="java.util.Date"/>
-	<field name="idServicio" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
