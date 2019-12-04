@@ -25,7 +25,7 @@ import simpsb.entidades.*;
 
 @Named
 @RequestScoped
-public class citascontroller {
+public class CitasControllerReport {
 
     @EJB
     private ComisionesFacadeLocal comisionesFacadeLocal;
@@ -39,10 +39,10 @@ public class citascontroller {
         listComisiones = comisionesFacadeLocal.findAll();
     }
 
-    public citascontroller() {
+    public CitasControllerReport() {
     }
 
-    public List<Citas> listarCitases() {
+    public List<Citas> listarCitas() {
         listcCitases = citasFacadeLocal.findAll();
         return listcCitases;
     }
@@ -53,7 +53,7 @@ public class citascontroller {
         parametros.put("idCita", 1);
 
         //Genero la lista para los Fields del reporte
-        listarCitases();
+        listarCitas();
         JRBeanCollectionDataSource beanCollectionDataSource = new JRBeanCollectionDataSource(listcCitases);
 
         //Traer la ruta del Jasper  

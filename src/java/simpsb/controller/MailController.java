@@ -111,8 +111,8 @@ public class MailController {
         }
     }
 
-    public void citas(Object idCita) throws UnsupportedEncodingException {
-        citas = citasFacadeLocal.find(idCita);
+    public void citas(Citas ct) throws UnsupportedEncodingException {
+        citas = citasFacadeLocal.find(ct.getIdCita());
         //Defino destinatario
         this.setDestinatario(citas.getIdCliente().getIdUsuario().getCorreo());
         //Defino asunto

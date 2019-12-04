@@ -29,7 +29,7 @@ import simpsb.entidades.*;
  */
 @Named
 @RequestScoped
-public class pagoscontroller {
+public class PagosControllerReport {
 
     @EJB
     private ComisionesFacadeLocal comisionesFacadeLocal;
@@ -40,7 +40,7 @@ public class pagoscontroller {
         listComisiones = comisionesFacadeLocal.findAll();
     }
 
-    public pagoscontroller() {
+    public PagosControllerReport() {
     }
 
     public List<Comisiones> listarComisiones() {

@@ -50,7 +50,7 @@
             <div class="citas col-8">
                 <p class="text-uppercase"> <img src="../resources/img/icono_citas.png" alt="Icono citas"/>#{citasEti.subtitulo_citas}</p>
                 <h:form>
-                    <h:dataTable value="#{citascontroller.listarCitas()}" var="cita" class="tablas table table-striped table-bordered dt-responsive nowrap text-center">
+                    <h:dataTable value="#{citasControllerReport.listarCitas()}" var="cita" class="tablas table table-striped table-bordered dt-responsive nowrap text-center">
                         <h:column>
                             <f:facet name="header">ID</f:facet>
                             <h:outputText id="id" value="#{cita.idCita}"/>
@@ -99,11 +99,11 @@
 
                         <h:column>
                             <f:facet name="header">#{universEti.acciones}</f:facet>
-                            <h:commandButton class="btn btn-warning" action="#{citascontroller.consultarCita(cita)}" value="#{universEti.modificar}"/>
+                            <h:commandButton class="btn btn-warning" action="#{citasControllerReport.consultarCita(cita)}" value="#{universEti.modificar}"/>
                             <h:commandButton class="btn btn-danger" 
                                              onclick="javascript:if (!confirm('¿Está seguro que desea eliminar este horario?'))
                                                          return false;" 
-                                             action="#{citascontroller.eliminarCita(cita)}" 
+                                             action="#{citasControllerReport.eliminarCita(cita)}" 
                                              value="#{universEti.eliminar}"/>
                         </h:column>
                     </h:dataTable>

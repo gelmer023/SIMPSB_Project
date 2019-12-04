@@ -18,30 +18,9 @@
                     <div class="perfil">
                         <p class="text-center text-uppercase">Supervisor</p>
                             <h:graphicImage value="#{user.getFoto()}" class="estilosFtPerfil"/>
-                        <p class="text-center text-uppercase">#{user.getIdUsuario()}</p>
-                    </div>
-                    <!--  MODAL CAMBIO FOTO -->
-                    <div class="modal fade" id="cambio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Cambiar foto de perfil</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true"></span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <h:inputFile value="#{uploadController.file}"/>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                    <h:commandButton class="btn btn-warning" action="#{uploadController.subirArchivos()}" value="Guardar cambios"/>
-                                </div>
-                            </div>
-                        </div>
+                        <p class="text-center text-uppercase">#{user.getNombre()} #{user.getApellido()}</p>
                     </div>
                     <div class="modulos">
-
                         <!-- HOME -->
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_home.png" alt=""/>
@@ -54,13 +33,13 @@
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_facturacion.png" alt=""/>
                             <h5>
-                                <a href="#">#{perfilEti.Facturacion}</a>
+                                <a href="#">{perfilEti.Facturacion}</a>
                             </h5>
                             <p>
-                                <a href="Facturacion/crearFactura.xhtml" target="area-trabajo">#{perfilEti.crearFactura}</a>
+                                <a href="Facturacion/crearFactura.xhtml" target="area-trabajo">{perfilEti.crearFactura}</a>
                             </p>
                             <p>
-                                <a href="Facturacion/consultarFactura.xhtml" target="area-trabajo">#{perfilEti.consultarFactura}</a>
+                                <a href="Facturacion/consultarFactura.xhtml" target="area-trabajo">{perfilEti.consultarFactura}</a>
                             </p>
                         </div> -->
                         <!-- SERVICIOS -->
@@ -117,13 +96,13 @@
                             <p><a href="Usuarios/consultarUsuario.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.consultarUsuarios}</a></p>
                         </div>
 
-                        <!-- REPORTES -->
+                        <!-- REPORTES 
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_reportes.png" alt=""/>
                             <h4>
-                                <a href="../Error/404.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.Reportes}</a>
+                                <a href="../Error/404.xhtml?faces-redirect=true" target="area-trabajo">{perfilEti.Reportes}</a>
                             </h4>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
