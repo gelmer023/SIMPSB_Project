@@ -44,27 +44,27 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="nombre" value="#{usuariosEti.nombre}"/>
-                                <h:inputText value="#{usuarioController.usuario.nombre}" id="nombre" styleClass="form-control form" a:placeholder="#{usuariosEti.placeNom}"/>
+                                <h:inputText value="#{usuarioController.usuario.nombre}" id="nombre" a:type="text" styleClass="form-control form" a:placeholder="#{usuariosEti.placeNom}"/>
                                 <h:message for="nombre"/>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="apellido" value="#{usuariosEti.apellido}"/>
-                                <h:inputText required="true" value="#{usuarioController.usuario.apellido}" id="apellido" styleClass="form-control form" a:placeholder="#{usuariosEti.placeApe}"/>
+                                <h:inputText required="true" value="#{usuarioController.usuario.apellido}" id="apellido" a:type="text" styleClass="form-control form" a:placeholder="#{usuariosEti.placeApe}"/>
                                 <h:message for="apellido"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <h:outputLabel for="correo" value="#{usuariosEti.correo}"/>
-                            <h:inputText value="#{usuarioController.usuario.correo}" id="correo" styleClass="form-control form" a:placeholder="#{usuariosEti.placeCorr}"/>
+                            <h:inputText value="#{usuarioController.usuario.correo}" id="correo" styleClass="form-control form" a:type="email" a:placeholder="#{usuariosEti.placeCorr}"/>
                             <h:message for="correo"/> 
                         </div>
 
                         <div class="form-row">
                             <div class="form-group  col-md-6">
                                 <h:outputLabel for="documento" value="#{usuariosEti.documento}"/>
-                                <h:inputText value="#{usuarioController.usuario.numDocumento}" id="documento" styleClass="form-control form" a:placeholder="#{usuariosEti.placeDoc}"/>
+                                <h:inputText value="#{usuarioController.usuario.numDocumento}" id="documento" a:type="number" styleClass="form-control form" a:placeholder="#{usuariosEti.placeDoc}"/>
                                 <h:message for="documento"/>
                             </div>
                             <div class="form-group col-md-6">
