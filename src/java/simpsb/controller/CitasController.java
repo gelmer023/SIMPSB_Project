@@ -174,7 +174,7 @@ public class CitasController {
             estado.setIdEstado(3);
             citas.setEstadoFK(estado);
             citasFacadeLocal.create(citas);
-            mailC.citas(citas);
+            //mailC.citas(citas);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente la cita"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
         } catch (Exception e) {

@@ -219,10 +219,10 @@ public class UsuarioController {
                 usuario = us;
                 usuario.setPass(contra);
                 usuarioFacadeLocal.edit(usuario);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha cambiado su contraseña exitosamente"));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Ha ocurrido un error"));
             }
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha cambiado su contraseña exitosamente"));
         } catch (Exception e) {
             e.printStackTrace();
         }

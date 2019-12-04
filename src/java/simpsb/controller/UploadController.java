@@ -97,7 +97,7 @@ public class UploadController {
         try {
             this.nombre = file.getSubmittedFileName();
             path = path + this.nombre;
-            pathReal = "/SIMSPB1/FotosPerfil/" + this.nombre;
+            pathReal = "/FotosPerfil/" + this.nombre;
 
             InputStream in = file.getInputStream();
             File f = new File(path);
