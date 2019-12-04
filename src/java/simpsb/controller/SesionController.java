@@ -22,10 +22,19 @@ public class SesionController implements Serializable {
     @EJB
     private UsuarioFacadeLocal usuarioFacadeLocal;
     private Usuario usuario;
+    private Usuario us;
 
     @PostConstruct
     public void init() {
         usuario = new Usuario();
+    }
+
+    public Usuario getUs() {
+        return us;
+    }
+
+    public void setUs(Usuario us) {
+        this.us = us;
     }
 
     public Usuario getUsuario() {
@@ -68,8 +77,9 @@ public class SesionController implements Serializable {
 
     public void verificarSesion() {
         try {
-            Usuario u = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-            if (u == null) {
+            us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+            
+            if (us == null) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("../../../../Error/404.xhtml");
             }
         } catch (Exception e) {

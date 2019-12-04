@@ -2,16 +2,12 @@ package simpsb.controller;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.Part;
 import simpsb.dao.*;
 import simpsb.entidades.*;
 
@@ -35,8 +31,9 @@ public class UsuarioController {
     private Cliente cliente;
     private Empleado empleado;
 
-    
     private UploadController imagen;
+    
+    private String contra;
     
     @PostConstruct
     public void init() {
@@ -46,6 +43,14 @@ public class UsuarioController {
         cliente = new Cliente();
         empleado = new Empleado();
         imagen = new UploadController();
+    }
+
+    public String getContra() {
+        return contra;
+    }
+
+    public void setContra(String contra) {
+        this.contra = contra;
     }
 
     public Utils getUtil() {
@@ -132,7 +137,6 @@ public class UsuarioController {
     public void registrarUsuario() {
         Usuario user = null;
         try {
-            user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
             roles.setIdRol(3);
             usuario.setIdRol(roles);
             usuarioFacadeLocal.create(usuario);
@@ -147,7 +151,6 @@ public class UsuarioController {
     public void crearUsuario() {
         Usuario user = null;
         try {
-            user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
             roles.setIdRol(3);
             usuario.setIdRol(roles);
             usuarioFacadeLocal.create(usuario);
@@ -209,18 +212,25 @@ public class UsuarioController {
     //MÉTODOS PARA LA EDICIÓN DEL PERFIL CLIENT SIDE
     public void cambiarContra() {
         try {
-            usuarioFacadeLocal.edit(usuario);
+            String contra1 = usuario.getPass();
+            Usuario us;
+            if (contra1.equals(contra)) {
+                us = usuarioFacadeLocal.getId(usuario.getNumDocumento());
+                usuario = us;
+                usuario.setPass(contra);
+                usuarioFacadeLocal.edit(usuario);
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Ha ocurrido un error"));
+            }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha cambiado su contraseña exitosamente"));
         } catch (Exception e) {
             e.printStackTrace();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Ha ocurrido un error"));
         }
     }
 
     public void editarPerfil() {
         Usuario us = null;
         try {
-            us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
             usuario.setIdUsuario(us.getIdUsuario());
             usuarioFacadeLocal.edit(usuario);
         } catch (Exception e) {

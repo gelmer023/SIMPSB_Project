@@ -10,7 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import simpsb.entidades.Usuario;
+import simpsb.entidades.*;
 
 /**
  *
@@ -64,5 +64,6 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         }
         return user;
     }
+    
     
 }

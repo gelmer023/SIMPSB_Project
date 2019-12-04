@@ -1,4 +1,4 @@
-x<html xmlns="http://www.w3.org/1999/xhtml"
+<html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -50,7 +50,7 @@ x<html xmlns="http://www.w3.org/1999/xhtml"
                             </h4>
                         </div>
 
-                        <!-- FACTURACIÓN -->
+                        <!-- FACTURACIÓN 
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_facturacion.png" alt=""/>
                             <h5>
@@ -62,7 +62,7 @@ x<html xmlns="http://www.w3.org/1999/xhtml"
                             <p>
                                 <a href="Facturacion/consultarFactura.xhtml" target="area-trabajo">#{perfilEti.consultarFactura}</a>
                             </p>
-                        </div> 
+                        </div> -->
                         <!-- SERVICIOS -->
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_servicios.png" alt=""/>
@@ -145,10 +145,7 @@ x<html xmlns="http://www.w3.org/1999/xhtml"
                                             <img src="../resources/img/editar-perfil.png" alt=""/><a class="text-left" href="Usuarios/loginFoto.xhtml" target="area-trabajo">Editar Perfil</a>
                                         </li>
                                         <li>
-                                            <img src="../resources/img/ajustes.png" alt=""/><a class="text-left" href="../Error/404.xhtml?faces-redirect=true">#{perfilEti.configuracion}</a>
-                                        </li>
-                                        <li>
-                                            <img src="../resources/img/alarma.png" alt=""/><a class="text-left" href="../Error/404.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.notificaciones}</a>
+                                            <img src="../resources/img/ajustes.png" alt=""/><a class="text-left" href="Config/cambiarContra.xhtml?faces-redirect=true" target="area-trabajo">Cambiar contraseña</a>
                                         </li>
                                         <li>	
                                             <img src="../resources/img/logout.png" alt=""/><a class="text-left" href="#{sesionController.logout()}">#{perfilEti.cerrarSesion}</a>

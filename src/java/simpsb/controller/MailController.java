@@ -97,7 +97,7 @@ public class MailController {
                     + "<br>"
                     + "<br>"
                     + "<br>"
-                    + "<p style = \"color: rgb(110,110,110); font-size: 13px;\"> Si no has solicitado cambiar la contraseña, ignora este mensaje y no se realizara ningún cambio.</p>"
+                    + "<p style = \"color: rgb(110,110,110); font-size: 13px;\">Al ingresar al sistema puede cambiar su contraseña en la opción 'Cambiar contraseña'.</p>"
                     + "</div>"
                     + "</body>\n";
             this.setMensaje(text);
@@ -111,7 +111,8 @@ public class MailController {
         }
     }
 
-    public void citas() throws UnsupportedEncodingException {
+    public void citas(Object idCita) throws UnsupportedEncodingException {
+        citas = citasFacadeLocal.find(idCita);
         //Defino destinatario
         this.setDestinatario(citas.getIdCliente().getIdUsuario().getCorreo());
         //Defino asunto

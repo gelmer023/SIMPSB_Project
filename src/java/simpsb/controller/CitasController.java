@@ -43,7 +43,6 @@ public class CitasController {
     private List<Servicios> listServicios;
     private List<Empleado> listEmpleados;
 
-
     @PostConstruct
     public void init() {
         citas = new Citas();
@@ -51,13 +50,22 @@ public class CitasController {
         empleado = new Empleado();
         estado = new Estado();
         cliente = new Cliente();
+        usuario = new Usuario();
         listServicios = serviciosFacadeLocal.findAll();
         listEmpleados = empleadoFacadeLocal.findAll();
         validarEstado();
+        validarDia();
     }
     
-
     //GETTERS Y SETTERS CONTROLADOR
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {    
+        this.usuario = usuario;
+    }
+
     public Estado getEstado() {
         return estado;
     }
@@ -119,8 +127,17 @@ public class CitasController {
     int dia = fecha.get(Calendar.DATE);
     int mes = fecha.get(Calendar.MONTH) + 1;
     int año = fecha.get(Calendar.YEAR);
+    String diaS;
 
     //GETTERS Y SETTERS FECHA
+    public String getDiaS() {
+        return diaS;
+    }
+
+    public void setDiaS(String diaS) {
+        this.diaS = diaS;
+    }
+
     public int getDia() {
         return dia;
     }
@@ -148,15 +165,16 @@ public class CitasController {
     public void generarCita() {
         Cliente cl = null;
         try {
-//            cl = clienteFacadeLocal.find(user.getIdUsuario());
-            cliente.setIdCliente(1);
-            citas.setIdCliente(cliente);
+            Usuario us = usuarioFacadeLocal.getId(usuario.getNumDocumento());
+            int idUs = us.getIdUsuario();
+            cl = clienteFacadeLocal.getIdCl(idUs);
+            citas.setIdCliente(cl);
             citas.setIdEmpleado(empleado);
             citas.setIdServicio(servicios);
             estado.setIdEstado(3);
             citas.setEstadoFK(estado);
             citasFacadeLocal.create(citas);
-            mailC.citas();
+            mailC.citas(citas.getIdCita());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente la cita"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
         } catch (Exception e) {
@@ -248,40 +266,17 @@ public class CitasController {
         }
     }
 
+    //MÉTODO PARA VALIDAR SI EL DIA TIENE UN SOLO DIGITO
+    private void validarDia() {
+        diaS = dia + "";
+        if (diaS.length() == 1) {
+            diaS = "0" + diaS;
+        }
+    }
+
     //MÉTODOS ESPECIALES PARA EL PERFIL CLIENTE
     public void listarCitasUs() {
-        
+
     }
 
-    public void validarHoras(){
-
-//        horas[0] = "9:00";
-//        horas[1] = "9:30";
-//        horas[2] = "10:00";
-//        horas[3] = "10:30";
-//        horas[4] = "11:00";
-//        horas[5] = "11:30";
-//        horas[6] = "12:00";
-//        horas[7] = "12:30";
-//        horas[8] = "1:00";
-//        horas[9] = "1:30";
-//        horas[10] = "2:00";
-//        horas[11] = "2:30";
-//        horas[12] = "3:00";
-//        horas[13] = "3:30";
-//        horas[14] = "4:00";
-//        horas[15] = "4:30";
-//        horas[16] = "5:00";
-//        horas[17] = "5:30";
-//        horas[18] = "6:00";
-//        horas[19] = "6:30";
-//        horas[20] = "7:00";
-//        horas[21] = "7:30";
-//        horas[22] = "8:00";
-//        horas[23] = "8:30";
-//        horas[24] = "9:00";
-//        for (int i = 0; i < 26; i++) {
-//            
-//        }
-    }
 }
