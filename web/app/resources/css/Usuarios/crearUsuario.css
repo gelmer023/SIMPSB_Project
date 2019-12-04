@@ -100,7 +100,13 @@ input:invalid, select:invalid{
     background-color: rgba(0,0,0,.8);
 }
 
+.ft{
+    padding: 50px;
+}
+
 .estilosFtPerfil{
     width: 250px;
-    height: 200px; 
+    height: 200px;
+    margin-left: 200px;
+    margin-right: 0px;
 }

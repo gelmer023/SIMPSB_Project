@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9d113947-fb04-46c5-801a-bd122b5b6444">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idCita" class="java.lang.Integer"/>
+	<field name="idCita" class="java.lang.Integer"/>
+	<field name="fecha" class="java.util.Date"/>
+	<field name="hora" class="java.util.Date"/>
+	<field name="idServicio" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="104" splitType="Stretch">
+			<image>
+				<reportElement x="141" y="0" width="286" height="69" uuid="24976f44-25fe-4649-b5c6-b3bc8c6e7eb7"/>
+				<imageExpression><![CDATA["C:\\Users\\Leonardo Lara\\Documents\\NetBeansProjects\\SIMPSB1\\web\\resources\\img\\logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="208" y="69" width="131" height="31" uuid="2b3c5202-a919-4185-9d71-def766f357c7"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Calle 62 #75-76
+4567303]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="94" splitType="Stretch">
+			<staticText>
+				<reportElement x="196" y="1" width="143" height="31" uuid="a4afb6a8-75b4-4368-95c0-1a9b71e2b296"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[CITAS MES]]></text>
+			</staticText>
+			<line>
+				<reportElement x="155" y="31" width="252" height="1" forecolor="#D4AF37" backcolor="#D4AF37" uuid="1cff0609-cdd7-4065-b433-c4c6af7133e9"/>
+				<graphicElement>
+					<pen lineWidth="3.5"/>
+				</graphicElement>
+			</line>
+			<image>
+				<reportElement x="109" y="0" width="70" height="32" uuid="699168ac-7b1e-408c-86db-d7579af6cf75"/>
+				<imageExpression><![CDATA["C:\\Users\\Leonardo Lara\\Documents\\NetBeansProjects\\SIMPSB1\\web\\app\\resources\\img\\icono_citas.png"]]></imageExpression>
+			</image>
+			<rectangle radius="10">
+				<reportElement x="10" y="65" width="533" height="29" forecolor="#D4AF37" backcolor="#D4AF37" uuid="92b9afb8-e869-4d7f-9fd8-1a6b6bb1f636"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="24" y="65" width="100" height="21" uuid="d9979f1c-4172-4951-96c0-74fea28e8ecf"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NUM CITA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="65" width="134" height="24" uuid="ec0cb182-c369-4045-b12a-2195286c10b1"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="233" y="65" width="121" height="25" uuid="5da31bff-4fe4-4435-b3df-d5d6075b3e7b"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORA]]></text>
+			</staticText>
+			<image>
+				<reportElement x="447" y="70" width="128" height="20" uuid="b74d1c50-b136-48b7-bd60-6542b7c2c462"/>
+				<imageExpression><![CDATA["C:\\Users\\Leonardo Lara\\Documents\\NetBeansProjects\\SIMPSB1\\web\\app\\resources\\img\\logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="24" y="12" width="100" height="20" uuid="c2e2e268-8da4-4da6-bdf6-a76f5656a811"/>
+				<textFieldExpression><![CDATA[$F{idCita}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="12" width="100" height="20" uuid="76d39e71-38b8-4228-8c24-37569bae82a7"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="254" y="12" width="100" height="20" uuid="80c2a993-b0e3-4bb0-b2de-14b2c4595161"/>
+				<textFieldExpression><![CDATA[$F{hora}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

@@ -60,6 +60,11 @@ and open the template in the editor.
                     <div class="row">
                         <div class="col-12">
                             <p class="text-uppercase"> <img src="../../resources/img/icono_citas.png" alt="Icono citas"/>#{citasEti.subtitulo_citas}</p>
+                             <h:form>
+                                 <h:commandButton actionListener="#{citascontroller.genenarPDF(actionEvent)}" value="PDF" styleClass="btn btn-warning">
+                  
+                            </h:commandButton>
+                             </h:form>
                             <h:form>
                                 <h:dataTable value="#{citasController.listarCitas()}" var="cita" class="display tablas table table-striped table-bordered dt-responsive nowrap text-center">
                                     <h:column>
@@ -110,11 +115,11 @@ and open the template in the editor.
                                     
                                     <h:column>
                                         <f:facet name="header">#{universEti.acciones}</f:facet>
-                                        <h:commandButton class="btn btn-warning" action="#{citasController.consultarCita(cita)}" value="#{universEti.modificar}"/>
+                                        <h:commandButton class="btn btn-warning" action="#{citascontroller.consultarCita(cita)}" value="#{universEti.modificar}"/>
                                         <h:commandButton class="btn btn-danger" 
                                                          onclick="javascript:if (!confirm('¿Está seguro que desea eliminar este horario?'))
                                                                      return false;" 
-                                                         action="#{citasController.eliminarCita(cita)}" 
+                                                         action="#{citascontroller.eliminarCita(cita)}" 
                                                          value="#{universEti.eliminar}"/>
                                     </h:column>
                                 </h:dataTable>
