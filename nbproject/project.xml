@@ -14,6 +14,9 @@
                     <file>${file.reference.mail.jar}</file>
                 </library>
                 <library dirs="200">
+                    <file>${&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD}</file>
+                </library>
+                <library dirs="200">
                     <file>${libs.JavaIReport-simpsb.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
