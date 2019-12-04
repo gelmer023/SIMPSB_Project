@@ -61,7 +61,7 @@ and open the template in the editor.
                         <div class="col-12">
                             <p class="text-uppercase"> <img src="../../resources/img/icono_citas.png" alt="Icono citas"/>#{citasEti.subtitulo_citas}</p>
                              <h:form>
-                                 <h:commandButton actionListener="#{reporteController.genenarPDF(actionEvent)}" value="PDF" styleClass="btn btn-warning">
+                                 <h:commandButton actionListener="#{citasControllerReport.genenarPDF(actionEvent)}" value="PDF" styleClass="btn btn-warning">
                   
                             </h:commandButton>
                              </h:form>
