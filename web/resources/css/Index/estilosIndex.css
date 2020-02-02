@@ -162,7 +162,7 @@
     opacity: 1;
     margin-top: 10px;
 }
-.navbar-nav {
+.navbar-nav{
     background: rgba(0,0,0, 0.8);
     padding: 15px;
     position: absolute;
@@ -441,8 +441,6 @@ button#sidebarCollapse
 .footer p{
     font-size: 10px;
 }
-
-
 span{
     color: #D4AF37;
 }
@@ -495,13 +493,13 @@ span{
     border: 1px solid rgba(0,0,0,.15);
     border-radius: .25rem;
 }
-.navbar .dropdown-menu a {
+.dropdown-menu a {
     padding: 10px;
     font-size: 1.3rem !important;
     font-weight: 300;
     color: #fff !important;
 }
-.navbar .dropdown-menu a:hover {
+.dropdown-menu a:hover {
     text-decoration: initial !important;
     background: rgba(0,0,0,.9) !important;
     color: #D4AF37 !important;

@@ -53,7 +53,7 @@ public class CitasController {
         usuario = new Usuario();
         listServicios = serviciosFacadeLocal.findAll();
         listEmpleados = empleadoFacadeLocal.findAll();
-        validarEstado();
+        //validarEstado();
         validarDia();
     }
     
