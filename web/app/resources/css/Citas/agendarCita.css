@@ -110,3 +110,8 @@ input:invalid, select:invalid{
 .swal-overlay{
     background-color: rgba(0,0,0,.8);
 }
+
+.estImage img{
+    width: 15px;
+    height: 15px;
+}

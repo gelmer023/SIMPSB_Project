@@ -48,22 +48,6 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         return usuario;
     }
     
-//    @Override
-//    public Usuario getId(long doc) {
-//       Usuario user = new Usuario();
-//        try {
-//            Query query = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.documento = :doc");
-//            query.setParameter("doc", doc);
-//            List<Usuario> lista = query.getResultList();
-//            if (!lista.isEmpty()) {
-//                user = lista.get(0);
-//            }
-//        } catch (Exception e) {
-//            throw e;
-//        }
-//        return user;
-//    }
-    
     @Override
     public Usuario getId(int doc) {
         Usuario user = new Usuario();
