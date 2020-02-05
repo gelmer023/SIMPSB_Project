@@ -12,7 +12,7 @@ import simpsb.entidades.Citas;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Stateless
 public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLocal {

@@ -8,6 +8,7 @@ package simpsb.entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Entity
 @Table(name = "empleado")
@@ -41,6 +42,8 @@ public class Empleado implements Serializable {
     private Integer idEmpleado;
     @Column(name = "descripcion")
     private String descripcion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEmpleadoFK")
+    private List<Porcentajepagos> porcentajepagosList;
     @OneToMany(mappedBy = "idEmpleado")
     private List<Citas> citasList;
     @OneToMany(mappedBy = "idEmpleado")
@@ -79,6 +82,14 @@ public class Empleado implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public List<Porcentajepagos> getPorcentajepagosList() {
+        return porcentajepagosList;
+    }
+
+    public void setPorcentajepagosList(List<Porcentajepagos> porcentajepagosList) {
+        this.porcentajepagosList = porcentajepagosList;
     }
 
     public List<Citas> getCitasList() {

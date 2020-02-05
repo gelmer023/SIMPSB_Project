@@ -11,7 +11,7 @@ import simpsb.entidades.Cliente;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Local
 public interface ClienteFacadeLocal {

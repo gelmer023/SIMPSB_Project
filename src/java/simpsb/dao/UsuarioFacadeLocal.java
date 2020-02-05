@@ -7,11 +7,11 @@ package simpsb.dao;
 
 import java.util.List;
 import javax.ejb.Local;
-import simpsb.entidades.*;
+import simpsb.entidades.Usuario;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Local
 public interface UsuarioFacadeLocal {
@@ -32,7 +32,5 @@ public interface UsuarioFacadeLocal {
     
     Usuario login(Usuario user);
     
-    Usuario getId(int numDocumento);
-    
-
+    Usuario getId(int doc);
 }

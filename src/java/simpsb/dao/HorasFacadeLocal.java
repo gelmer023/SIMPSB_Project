@@ -7,26 +7,26 @@ package simpsb.dao;
 
 import java.util.List;
 import javax.ejb.Local;
-import simpsb.entidades.Cargos;
+import simpsb.entidades.Horas;
 
 /**
  *
  * @author Sebastián
  */
 @Local
-public interface CargosFacadeLocal {
+public interface HorasFacadeLocal {
 
-    void create(Cargos cargos);
+    void create(Horas horas);
 
-    void edit(Cargos cargos);
+    void edit(Horas horas);
 
-    void remove(Cargos cargos);
+    void remove(Horas horas);
 
-    Cargos find(Object id);
+    Horas find(Object id);
 
-    List<Cargos> findAll();
+    List<Horas> findAll();
 
-    List<Cargos> findRange(int[] range);
+    List<Horas> findRange(int[] range);
 
     int count();
     

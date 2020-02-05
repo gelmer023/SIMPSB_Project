@@ -8,14 +8,14 @@ package simpsb.dao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import simpsb.entidades.Factura;
+import simpsb.entidades.Horas;
 
 /**
  *
  * @author Sebastián
  */
 @Stateless
-public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFacadeLocal {
+public class HorasFacade extends AbstractFacade<Horas> implements HorasFacadeLocal {
 
     @PersistenceContext(unitName = "SIMPSB1PU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFac
         return em;
     }
 
-    public FacturaFacade() {
-        super(Factura.class);
+    public HorasFacade() {
+        super(Horas.class);
     }
     
 }

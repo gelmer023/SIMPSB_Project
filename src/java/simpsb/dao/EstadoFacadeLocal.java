@@ -11,7 +11,7 @@ import simpsb.entidades.Estado;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Local
 public interface EstadoFacadeLocal {

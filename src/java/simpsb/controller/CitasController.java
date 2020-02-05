@@ -32,6 +32,10 @@ public class CitasController {
     private ClienteFacadeLocal clienteFacadeLocal;
     @EJB
     private EstadoFacadeLocal estadoFacadeLocal;
+    @EJB
+    private HorasFacadeLocal horasFacadeLocal;
+    @EJB
+    private DisponibilidadFacadeLocal disponibilidadFacadeLocal;
 
     private Citas citas;
     private Empleado empleado;
@@ -39,9 +43,12 @@ public class CitasController {
     private Usuario usuario;
     private Cliente cliente;
     private Estado estado;
+    private Horas horas;
+    private Disponibilidad disponibilidad;
 
     private List<Servicios> listServicios;
     private List<Empleado> listEmpleados;
+    private List<Horas> listHoras;
 
     @PostConstruct
     public void init() {
@@ -51,18 +58,45 @@ public class CitasController {
         estado = new Estado();
         cliente = new Cliente();
         usuario = new Usuario();
+        horas = new Horas();
+        disponibilidad = new Disponibilidad();
         listServicios = serviciosFacadeLocal.findAll();
         listEmpleados = empleadoFacadeLocal.findAll();
-        //validarEstado();
+        listHoras = disponibilidadFacadeLocal.disponibles();
+        validarEstado();
         validarDia();
     }
-    
+
     //GETTERS Y SETTERS CONTROLADOR
+    public Disponibilidad getDisponibilidad() {
+        return disponibilidad;
+    }
+
+    public void setDisponibilidad(Disponibilidad disponibilidad) {
+        this.disponibilidad = disponibilidad;
+    }
+
+    public Horas getHoras() {
+        return horas;
+    }
+
+    public void setHoras(Horas horas) {
+        this.horas = horas;
+    }
+
+    public List<Horas> getListHoras() {
+        return listHoras;
+    }
+
+    public void setListHoras(List<Horas> listHoras) {
+        this.listHoras = listHoras;
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {    
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
@@ -123,13 +157,23 @@ public class CitasController {
     }
 
     //FECHAS 
-    Calendar fecha = Calendar.getInstance();
-    int dia = fecha.get(Calendar.DATE);
-    int mes = fecha.get(Calendar.MONTH) + 1;
-    int año = fecha.get(Calendar.YEAR);
+    Calendar date = Calendar.getInstance();
+    int dia = date.get(Calendar.DATE);
+    int mes = date.get(Calendar.MONTH) + 1;
+    int año = date.get(Calendar.YEAR);
+
     String diaS;
+    String mesS;
 
     //GETTERS Y SETTERS FECHA
+    public String getMesS() {
+        return mesS;
+    }
+
+    public void setMesS(String mesS) {
+        this.mesS = mesS;
+    }
+
     public String getDiaS() {
         return diaS;
     }
@@ -162,18 +206,45 @@ public class CitasController {
         this.año = año;
     }
 
+    private void calcularTiempoEstimado() {
+    }
+
+    public void validarDisponibilidad() {
+        Citas ct = (Citas) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cita");
+        String tiempoEstimado = ct.getIdServicio().getTiempoEstimado();
+        Date fc = ct.getFecha();
+        try {
+            if (tiempoEstimado.equals(60)) {
+                horas.setIdHoras(horas.getIdHoras() + 2);
+                disponibilidad.setHoraFK(horas);
+                disponibilidad.setFecha(fc);
+                disponibilidad.setEstado("Agendada");
+            }
+        } catch (Exception e) {
+        }
+    }
+
     public void generarCita() {
         Cliente cl = null;
         try {
+            //TRAIGO DATOS DEL USUARIO QUE AGENDA LA CITA
             Usuario us = usuarioFacadeLocal.getId(usuario.getNumDocumento());
             int idUs = us.getIdUsuario();
             cl = clienteFacadeLocal.getIdCl(idUs);
             citas.setIdCliente(cl);
+            //ASIGNO LAS LLAVES FORANEAS DE LA CITA
             citas.setIdEmpleado(empleado);
             citas.setIdServicio(servicios);
             estado.setIdEstado(3);
             citas.setEstadoFK(estado);
+            //CREO LA CITA
             citasFacadeLocal.create(citas);
+            //CREO UNA VARIABLE DE SESIÓN CON EL OBJETO CITA
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("cita", citas);
+            //EJECUTO LOS METODOS EN EL BACKGROUND
+            validarDisponibilidad();
+            calcularTiempoEstimado();
+            //ENVIO MENSAJES
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente la cita"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
         } catch (Exception e) {
@@ -181,12 +252,14 @@ public class CitasController {
         }
     }
 
-    public void eliminarCita(Citas cita) {
+    public void cancelarCita(Citas citas) {
         try {
-            citasFacadeLocal.remove(cita);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha eliminado exitosamente la cita"));
+            estado.setIdEstado(1);
+            citas.setEstadoFK(estado);
+            citasFacadeLocal.edit(citas);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha cancelado exitosamente la cita"));
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al eliminar la cita"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al cancelar la cita"));
         }
     }
 
@@ -250,8 +323,9 @@ public class CitasController {
                 int fechaActualInt = Integer.parseInt(fechaActual);
                 //VERIFICO QUE LA LISTA DE LAS CITAS NO ESTÉ VACIA
                 if (listaCitas != null) {
-                    //HAGO UNA CONDICION PARA CAMBIAR EL ESTADO DE LA CITA A VENCIDA
-                    if (fechaInt < fechaActualInt) {
+                    //HAGO UNA CONDICION PARA CAMBIAR EL ESTADO DE LA CITA A VENCIDA SIEMPRE Y CUANDO ESTE ACTIVA 
+                    Estado es = ct.getEstadoFK();
+                    if (fechaInt < fechaActualInt && es.equals(3)) {
                         estado.setIdEstado(2);
                         ct.setEstadoFK(estado);
                         citasFacadeLocal.edit(ct);
@@ -270,6 +344,10 @@ public class CitasController {
         diaS = dia + "";
         if (diaS.length() == 1) {
             diaS = "0" + diaS;
+        }
+        mesS = mes + "";
+        if (mesS.length() == 1) {
+            mesS = "0" + mesS;
         }
     }
 

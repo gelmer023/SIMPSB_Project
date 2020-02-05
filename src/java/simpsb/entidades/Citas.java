@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Entity
 @Table(name = "citas")

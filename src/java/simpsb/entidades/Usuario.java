@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Entity
 @Table(name = "usuario")
@@ -61,8 +61,6 @@ public class Usuario implements Serializable {
     private String pass;
     @Column(name = "foto")
     private String foto;
-    @OneToMany(mappedBy = "idUsuario")
-    private List<Cliente> clienteList;
     @OneToMany(mappedBy = "idUsuario")
     private List<Empleado> empleadoList;
     @JoinColumn(name = "idRol", referencedColumnName = "idRol")
@@ -143,14 +141,6 @@ public class Usuario implements Serializable {
 
     public void setFoto(String foto) {
         this.foto = foto;
-    }
-
-    public List<Cliente> getClienteList() {
-        return clienteList;
-    }
-
-    public void setClienteList(List<Cliente> clienteList) {
-        this.clienteList = clienteList;
     }
 
     public List<Empleado> getEmpleadoList() {

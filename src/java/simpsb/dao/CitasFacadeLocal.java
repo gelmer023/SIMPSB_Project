@@ -11,7 +11,7 @@ import simpsb.entidades.Citas;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Local
 public interface CitasFacadeLocal {
@@ -29,5 +29,6 @@ public interface CitasFacadeLocal {
     List<Citas> findRange(int[] range);
 
     int count();
+    
     
 }

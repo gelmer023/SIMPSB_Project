@@ -11,7 +11,7 @@ import simpsb.entidades.Contacto;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Local
 public interface ContactoFacadeLocal {
