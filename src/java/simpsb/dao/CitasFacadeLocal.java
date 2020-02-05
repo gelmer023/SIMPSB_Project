@@ -7,7 +7,7 @@ package simpsb.dao;
 
 import java.util.List;
 import javax.ejb.Local;
-import simpsb.entidades.Citas;
+import simpsb.entidades.*;
 
 /**
  *
@@ -30,5 +30,5 @@ public interface CitasFacadeLocal {
 
     int count();
     
-    
+    List<Citas> citasCli(Cliente idCli);
 }

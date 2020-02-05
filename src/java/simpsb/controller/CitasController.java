@@ -226,11 +226,11 @@ public class CitasController {
 
     public void generarCita() {
         Cliente cl = null;
+        Usuario us = null;
         try {
             //TRAIGO DATOS DEL USUARIO QUE AGENDA LA CITA
-            Usuario us = usuarioFacadeLocal.getId(usuario.getNumDocumento());
-            int idUs = us.getIdUsuario();
-            cl = clienteFacadeLocal.getIdCl(idUs);
+            us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+            cl = clienteFacadeLocal.find(us);
             citas.setIdCliente(cl);
             //ASIGNO LAS LLAVES FORANEAS DE LA CITA
             citas.setIdEmpleado(empleado);
@@ -352,8 +352,18 @@ public class CitasController {
     }
 
     //MÉTODOS ESPECIALES PARA EL PERFIL CLIENTE
-    public void listarCitasUs() {
-
+    public List<Citas> listarCitasUs() {
+        Usuario us = null;
+        Cliente cl = null;
+        List<Citas> listCitas = null;
+        us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        cl = clienteFacadeLocal.find(us);
+        try {
+            listCitas = citasFacadeLocal.citasCli(cl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listCitas;
     }
 
 }

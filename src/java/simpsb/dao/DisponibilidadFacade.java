@@ -5,18 +5,12 @@
  */
 package simpsb.dao;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Spliterator;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import simpsb.entidades.Citas;
-import simpsb.entidades.Disponibilidad;
-import simpsb.entidades.Horas;
+import simpsb.entidades.*;
 
 /**
  *
@@ -36,41 +30,22 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
     public DisponibilidadFacade() {
         super(Disponibilidad.class);
     }
-    @EJB
-    DisponibilidadFacadeLocal disponibilidadFacadeLocal;
-    @EJB
-    CitasFacadeLocal citasFacadeLocal;
 
+    @Override
     public List<Horas> disponibles() {
-        List<Horas> lista = null;
-        List<Disponibilidad> listDis = null;
-        List<Citas> listCitas = null;
-        listDis = disponibilidadFacadeLocal.findAll();
-        listCitas = citasFacadeLocal.findAll();
-        //Hago la validación de que si no hay citas activas le salgan todas las horas 
-        for (Citas cita : listCitas) {
-            Date fechaCita = cita.getFecha();
-            for (Disponibilidad dis : listDis) {
-                Date fechaDis = dis.getFecha();
-                if (fechaDis == fechaCita) {
-                    try {
-                        Query query = em.createQuery("SELECT h FROM Horas h INNER JOIN h.disponibilidadList d WHERE d.estado = :estado");
-                        query.setParameter("estado", "Disponible");
-                        lista = query.getResultList();
-                    } catch (Exception e) {
-                        throw e;
-                    }
-                } else {
-                    try {
-                        Query query = em.createQuery("SELECT h FROM Horas h");
-                        lista = query.getResultList();
-                    } catch (Exception e) {
-                        throw e;
-                    }
-                }
+        List<Horas> listDis = null;
+        try {
+            Query query = em.createQuery("SELECT h from Horas h INNER JOIN h.disponibilidadList d WHERE d.estado = :estado");
+            query.setParameter("estado", "Disponible");
+            listDis = query.getResultList();
+            if (!listDis.isEmpty()) {
+                listDis.get(0);
             }
-
+        } catch (Exception e) {
+            throw e;
         }
-        return lista;
+        return listDis;
     }
+    
+    
 }

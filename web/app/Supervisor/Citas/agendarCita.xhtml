@@ -25,6 +25,7 @@
                 <div class="dropdown d-flex justify-content-end">
                     <button type="button" class="lanbtn btn dropdown-toggle"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="../../resources/img/banderas partidas 2.png" alt="" style="width:25px; height:20px;"/>
                         #{pagesEti[languages.idiomaSeleccionado.language]}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -43,11 +44,6 @@
                     </div>
 
                     <h:form>
-                        <div class="form-group">
-                            <h:outputLabel for="doc" value="Documento"/>
-                            <h:inputText id="doc" styleClass="form form-control" a:type="number" value="#{citasController.usuario.numDocumento}" a:placeholder="Ingrese su documento"/>
-                            <h:message for="doc"/>
-                        </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="fecha" value="#{citasEti.fecha}"/>

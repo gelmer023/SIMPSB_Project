@@ -31,5 +31,4 @@ public interface DisponibilidadFacadeLocal {
     int count();
     
     List<Horas> disponibles();
-
 }

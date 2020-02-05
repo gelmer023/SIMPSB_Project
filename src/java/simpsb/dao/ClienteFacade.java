@@ -5,13 +5,12 @@
  */
 package simpsb.dao;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import simpsb.entidades.Cliente;
-import java.util.List;
-
 
 /**
  *
@@ -35,7 +34,7 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
     public Cliente getIdCl(Object idUs) {
        Cliente cl = new Cliente();
        try {
-           Query query = em.createQuery("SELECT c FROM Cliente c WHERE c.idUsuarios = :idUs");
+           Query query = em.createQuery("SELECT c FROM Cliente c WHERE c.idUsuario.idUsuario = :idUs");
            query.setParameter("idUs", idUs);
            List<Cliente> lista = query.getResultList();
            if (!lista.isEmpty()) {

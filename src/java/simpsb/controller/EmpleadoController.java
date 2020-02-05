@@ -1,3 +1,4 @@
+
 package simpsb.controller;
 
 import java.util.List;
@@ -161,7 +162,7 @@ public class EmpleadoController {
             usuario.setIdRol(roles);
             usuarioFacadeLocal.edit(usuario);
             //Elimino el cliente
-            usuario = cliente.getIdUsuario();
+            int idCliente = cliente.getIdUsuario();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha asignado correctamente el rol"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("consultarUsuario.xhtml");
         } catch (Exception e) {

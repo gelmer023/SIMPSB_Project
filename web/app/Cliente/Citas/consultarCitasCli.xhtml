@@ -21,7 +21,7 @@ and open the template in the editor.
         <link href="../../../resources/css/Tablas/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
         <link href="../../../resources/css/Tablas/datatables.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../../resources/css/Tablas/buttons.dataTables.min.css" rel="stylesheet" type="text/css"/>
-        
+
         <!-- ICONOS Y ALERTAS -->
         <link href="../../../resources/css/Bootstrap/all.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../../resources/css/Tablas/responsive.dataTables.min.css" rel="stylesheet" type="text/css"/>
@@ -42,6 +42,7 @@ and open the template in the editor.
                 <div class="dropdown d-flex justify-content-end">
                     <button type="button" class="lanbtn btn dropdown-toggle"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="../../resources/img/banderas partidas 2.png" alt="" style="width:25px; height:20px;"/>
                         #{pagesEti[languages.idiomaSeleccionado.language]}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -107,7 +108,7 @@ and open the template in the editor.
                                         <h:outputText id="estado" value="#{cita.estadoFK.estado}"/>
                                         <h:message for="estado"/>
                                     </h:column>
-                                    
+
                                     <h:column>
                                         <f:facet name="header">#{universEti.acciones}</f:facet>
                                         <h:commandButton class="btn btn-warning" action="#{citasController.consultarCita(cita)}" value="#{universEti.modificar}"/>
