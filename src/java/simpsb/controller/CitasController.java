@@ -17,8 +17,6 @@ import simpsb.entidades.*;
 public class CitasController {
 
     MailController mailC = new MailController();
-    @Inject
-    Utils util;
 
     @EJB
     private CitasFacadeLocal citasFacadeLocal;
@@ -230,7 +228,7 @@ public class CitasController {
         try {
             //TRAIGO DATOS DEL USUARIO QUE AGENDA LA CITA
             us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-            cl = clienteFacadeLocal.find(us);
+            cl = clienteFacadeLocal.getIdCl(us);
             citas.setIdCliente(cl);
             //ASIGNO LAS LLAVES FORANEAS DE LA CITA
             citas.setIdEmpleado(empleado);
@@ -324,11 +322,13 @@ public class CitasController {
                 //VERIFICO QUE LA LISTA DE LAS CITAS NO ESTÉ VACIA
                 if (listaCitas != null) {
                     //HAGO UNA CONDICION PARA CAMBIAR EL ESTADO DE LA CITA A VENCIDA SIEMPRE Y CUANDO ESTE ACTIVA 
-                    Estado es = ct.getEstadoFK();
-                    if (fechaInt < fechaActualInt && es.equals(3)) {
-                        estado.setIdEstado(2);
-                        ct.setEstadoFK(estado);
-                        citasFacadeLocal.edit(ct);
+                    int es = ct.getEstadoFK().getIdEstado();
+                    if (fechaInt < fechaActualInt) {
+                        if (es == 3) {
+                            estado.setIdEstado(2);
+                            ct.setEstadoFK(estado);
+                            citasFacadeLocal.edit(ct);
+                        }
                     }
                 }
             }
@@ -357,7 +357,7 @@ public class CitasController {
         Cliente cl = null;
         List<Citas> listCitas = null;
         us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        cl = clienteFacadeLocal.find(us);
+        cl = clienteFacadeLocal.getIdCl(us);
         try {
             listCitas = citasFacadeLocal.citasCli(cl);
         } catch (Exception e) {

@@ -162,7 +162,7 @@ public class EmpleadoController {
             usuario.setIdRol(roles);
             usuarioFacadeLocal.edit(usuario);
             //Elimino el cliente
-            int idCliente = cliente.getIdUsuario();
+            clienteFacadeLocal.remove(cl);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha asignado correctamente el rol"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("consultarUsuario.xhtml");
         } catch (Exception e) {
