@@ -23,7 +23,7 @@ public class SesionController implements Serializable {
     private UsuarioFacadeLocal usuarioFacadeLocal;
     private Usuario usuario;
     private Usuario us;
-
+    
     @PostConstruct
     public void init() {
         usuario = new Usuario();
@@ -103,10 +103,27 @@ public class SesionController implements Serializable {
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso:", "Credenciales incorrectas"));
             }
+                buscarUsuario();
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", "Error al iniciar sesion"));
             e.printStackTrace();
         }
         return url;
+    }
+     
+         
+     public void buscarUsuario() {
+        Usuario user;
+        try {
+            user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+            usuario = usuarioFacadeLocal.find(user.getIdUsuario());
+            usuario = usuarioFacadeLocal.find(user.getNombre());
+            usuario = usuarioFacadeLocal.find(user.getApellido());
+            usuario = usuarioFacadeLocal.find(user.getNumDocumento());
+            usuario = usuarioFacadeLocal.find(user.getGenero());
+            usuarioFacadeLocal.edit(usuario);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", usuario);
+        } catch (Exception e) {
+        }
     }
 }

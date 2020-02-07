@@ -10,7 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import simpsb.entidades.*;
+import simpsb.entidades.Usuario;
 
 /**
  *
@@ -32,6 +32,22 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     }
     
     @Override
+    public Usuario getId(int doc) {
+        Usuario user = new Usuario();
+        try {
+            Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.numDocumento = :doc");
+            query.setParameter("doc", doc);
+            List<Usuario> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                user = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return user;
+    }
+
+    @Override
     public Usuario login(Usuario user) {
         Usuario usuario = null;
         try {
@@ -47,21 +63,6 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         }
         return usuario;
     }
-    
-    @Override
-    public Usuario getId(int doc) {
-        Usuario user = new Usuario();
-        try {
-            Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.numDocumento = :doc");
-            query.setParameter("doc", doc);
-            List<Usuario> lista = query.getResultList();
-            if (!lista.isEmpty()) {
-                user = lista.get(0);
-            }
-        } catch (Exception e) {
-            throw e;
-        }
-        return user;
-    }
+
     
 }

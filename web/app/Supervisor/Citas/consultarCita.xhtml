@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -116,7 +111,7 @@ and open the template in the editor.
 
                                     <h:column>
                                         <f:facet name="header">#{universEti.acciones}</f:facet>
-                                        <h:commandButton id="ocultar" class="btn btn-warning" action="#{citascontroller.consultarCita(cita)}" value="#{universEti.modificar}"/>
+                                        <h:commandButton id="ocultar" class="btn btn-warning" action="#{citasController.consultarCita(cita)}" value="#{universEti.modificar}"/>
                                         <h:commandButton id="ocultar1" class="btn btn-danger" 
                                                          onclick="javascript:if (!confirm('¿Está seguro que desea eliminar este horario?'))
                                                                      return false;" 

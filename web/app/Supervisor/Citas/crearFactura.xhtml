@@ -33,9 +33,10 @@
                 </div>
                 <h:form>
                     <div class="form-row" style="margin-top: 20px">
+                        <h:inputHidden value="#{citasController.citas.idCita}"/>
                         <h:inputHidden value="#{citasController.servicios.idServicio}"/>
-                        <h:inputHidden value="#{citasController.empleado.idEmpleado}"/>
-                        <div class="form-group col-md-2" style="margin-left: 100px;">
+                        <h:inputHidden value="#{citasController.empleado.idEmpleado}"/>    
+                        <!-- <div class="form-group col-md-2" style="margin-left: 100px;">
                            <h:outputLabel for="documento" value="Documento:  "/> 
                         </div>
                         <div class="form-group col-md-7">
@@ -48,7 +49,7 @@
                         <div class="form-group col-md-7">
                             <h:inputText value="#{usuarioController.usuario.nombre}" id="nombre" a:type="text" styleClass="form-control form"/>
                             <h:message for="nombre"/>
-                        </div>
+                        </div> -->
                          <div class="form-group col-md-2" style="margin-left: 100px;">
                             <h:outputLabel for="servicio" value="#{citasEti.servicio}"/>
                         </div>
@@ -66,10 +67,16 @@
                             <h:outputLabel for="empleado" value="Empleado:  "/>
                         </div>
                         
-                        <div class="form-group col-md-7">
-                            <h:inputText value="#{usuarioController.empleado.idEmpleado}" id="empleado" styleClass="form-control form"/>
-                            <h:message for="emafierr"/>
+                         <div class="form-group col-md-7">
+                            <h:selectOneMenu id="empleado" value="#{citasController.empleado.idEmpleado}" styleClass="form form-control">
+                                <f:selectItem itemLabel="#{agcitaEti.seleccionar}" itemValue="0"/>
+                                <f:selectItems value="#{citasController.listEmpleados}" var="emp" 
+                                               itemValue="#{emp.idEmpleado}" 
+                                               itemLabel="#{emp.idUsuario.nombre}"/>
+                            </h:selectOneMenu>
+                            <h:message for="empleado"/>
                         </div>
+                        
                          <div class="form-group col-md-2" style="margin-left: 100px;">
                             <h:outputLabel for="subtotal" value="Total"/>
                         </div>
@@ -77,11 +84,14 @@
                             <h:inputText styleClass="form-control form-fondo form" id="subtotal" value="#{facturaController.detalle.subTotal}"/>
                             <h:message for="total"/>
                         </div>
-                         <div class="form-group col-md-12">
+                         <div class="form-group col-md-4">
                             <h:commandButton value="Agregar Servicios" styleClass="btn boton d-block mx-auto" action="#{facturaController.generarFactura()}" style="width : 200px; margin-top: 30px; margin-bottom: 20px ;" />
                         </div>
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-4">
                             <h:commandButton value="Facturar" styleClass="btn boton d-block mx-auto" action="#{facturaController.generarFactura()}" style="margin-top: 30px; margin-bottom: 20px;"/>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <h:commandButton value="Calificar" styleClass="btn boton d-block mx-auto" action="#{facturaController.generarFactura()}" style="margin-top: 30px; margin-bottom: 20px;"/>
                         </div>
                     </div>
                 </h:form>

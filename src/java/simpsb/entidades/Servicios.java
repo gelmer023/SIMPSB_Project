@@ -40,16 +40,21 @@ public class Servicios implements Serializable {
     @Basic(optional = false)
     @Column(name = "idServicio")
     private Integer idServicio;
+    @Size(max = 45)
     @Column(name = "nombre")
     private String nombre;
+    @Size(max = 45)
     @Column(name = "estado")
     private String estado;
     @Column(name = "valor")
     private Integer valor;
+    @Size(max = 45)
     @Column(name = "tiempoEstimado")
     private String tiempoEstimado;
     @OneToMany(mappedBy = "idServicio")
     private List<Citas> citasList;
+    @OneToMany(mappedBy = "idServicio")
+    private List<Serviciosextra> serviciosextraList;
 
     public Servicios() {
     }
@@ -104,6 +109,14 @@ public class Servicios implements Serializable {
 
     public void setCitasList(List<Citas> citasList) {
         this.citasList = citasList;
+    }
+
+    public List<Serviciosextra> getServiciosextraList() {
+        return serviciosextraList;
+    }
+
+    public void setServiciosextraList(List<Serviciosextra> serviciosextraList) {
+        this.serviciosextraList = serviciosextraList;
     }
 
     @Override

@@ -7,29 +7,27 @@ package simpsb.dao;
 
 import java.util.List;
 import javax.ejb.Local;
-import simpsb.entidades.Cliente;
+import simpsb.entidades.Horas;
 
 /**
  *
  * @author Leonardo Lara
  */
 @Local
-public interface ClienteFacadeLocal {
+public interface HorasFacadeLocal {
 
-    void create(Cliente cliente);
+    void create(Horas horas);
 
-    void edit(Cliente cliente);
+    void edit(Horas horas);
 
-    void remove(Cliente cliente);
+    void remove(Horas horas);
 
-    Cliente find(Object id);
+    Horas find(Object id);
 
-    List<Cliente> findAll();
+    List<Horas> findAll();
 
-    List<Cliente> findRange(int[] range);
+    List<Horas> findRange(int[] range);
 
     int count();
-    
-     Cliente getIdCl(Object idUs);
     
 }

@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -33,7 +34,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Citas.findAll", query = "SELECT c FROM Citas c")
     , @NamedQuery(name = "Citas.findByIdCita", query = "SELECT c FROM Citas c WHERE c.idCita = :idCita")
     , @NamedQuery(name = "Citas.findByFecha", query = "SELECT c FROM Citas c WHERE c.fecha = :fecha")
-    , @NamedQuery(name = "Citas.findByHora", query = "SELECT c FROM Citas c WHERE c.hora = :hora")})
+    , @NamedQuery(name = "Citas.findByHora", query = "SELECT c FROM Citas c WHERE c.hora = :hora")
+    , @NamedQuery(name = "Citas.findByValorTotal", query = "SELECT c FROM Citas c WHERE c.valorTotal = :valorTotal")})
 public class Citas implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,6 +50,9 @@ public class Citas implements Serializable {
     @Column(name = "hora")
     @Temporal(TemporalType.TIME)
     private Date hora;
+    @Size(max = 45)
+    @Column(name = "valorTotal")
+    private String valorTotal;
     @JoinColumn(name = "idServicio", referencedColumnName = "idServicio")
     @ManyToOne
     private Servicios idServicio;
@@ -60,6 +65,8 @@ public class Citas implements Serializable {
     @JoinColumn(name = "estadoFK", referencedColumnName = "idEstado")
     @ManyToOne
     private Estado estadoFK;
+    @OneToMany(mappedBy = "idCita")
+    private List<Serviciosextra> serviciosextraList;
     @OneToMany(mappedBy = "idCita")
     private List<Factura> facturaList;
 
@@ -94,6 +101,14 @@ public class Citas implements Serializable {
         this.hora = hora;
     }
 
+    public String getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(String valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
     public Servicios getIdServicio() {
         return idServicio;
     }
@@ -124,6 +139,14 @@ public class Citas implements Serializable {
 
     public void setEstadoFK(Estado estadoFK) {
         this.estadoFK = estadoFK;
+    }
+
+    public List<Serviciosextra> getServiciosextraList() {
+        return serviciosextraList;
+    }
+
+    public void setServiciosextraList(List<Serviciosextra> serviciosextraList) {
+        this.serviciosextraList = serviciosextraList;
     }
 
     public List<Factura> getFacturaList() {

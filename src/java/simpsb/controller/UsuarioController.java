@@ -250,5 +250,14 @@ public class UsuarioController {
         } catch (Exception e) {
         }
     }
-    
+
+    public void editarUsuario(){
+        Usuario user;
+        try {
+            user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+            usuario = user;
+            usuarioFacadeLocal.edit(usuario);
+        } catch (Exception e) {
+        }
+    }
 }

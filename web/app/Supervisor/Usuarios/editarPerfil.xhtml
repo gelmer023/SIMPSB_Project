@@ -60,32 +60,32 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="nombre" value="#{usuariosEti.nombre}"/>
-                                <h:inputText value="#{usuarioController.usuario.nombre}" id="nombre" a:type="text" styleClass="form-control form" a:placeholder="#{usuariosEti.placeNom}"/>
+                                <h:inputText value="#{sesionController.usuario.nombre}" id="nombre" a:type="text" styleClass="form-control form" a:placeholder="#{usuariosEti.placeNom}"/>
                                 <h:message for="nombre"/>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="apellido" value="#{usuariosEti.apellido}"/>
-                                <h:inputText required="true" value="#{usuarioController.usuario.apellido}" id="apellido" a:type="text" styleClass="form-control form" a:placeholder="#{usuariosEti.placeApe}"/>
+                                <h:inputText required="true" value="#{sesionController.usuario.apellido}" id="apellido" a:type="text" styleClass="form-control form" a:placeholder="#{usuariosEti.placeApe}"/>
                                 <h:message for="apellido"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <h:outputLabel for="correo" value="#{usuariosEti.correo}"/>
-                            <h:inputText value="#{usuarioController.usuario.correo}" id="correo" styleClass="form-control form" a:type="email" a:placeholder="#{usuariosEti.placeCorr}"/>
+                            <h:inputText value="#{sesionController.usuario.correo}" id="correo" styleClass="form-control form" a:type="email" a:placeholder="#{usuariosEti.placeCorr}"/>
                             <h:message for="correo"/> 
                         </div>
 
                         <div class="form-row">
                             <div class="form-group  col-md-6">
                                 <h:outputLabel for="documento" value="#{usuariosEti.documento}"/>
-                                <h:inputText value="#{usuarioController.usuario.numDocumento}" id="documento" a:type="number" styleClass="form-control form" a:placeholder="#{usuariosEti.placeDoc}"/>
+                                <h:inputText value="#{sesionController.usuario.numDocumento}" id="documento" a:type="number" styleClass="form-control form" a:placeholder="#{usuariosEti.placeDoc}"/>
                                 <h:message for="documento"/>
                             </div>
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="genero" value="#{usuariosEti.genero}"/>
-                                <h:selectOneMenu value="#{usuarioController.usuario.genero}" styleClass="form-control form">
+                                <h:selectOneMenu value="#{sesionController.usuario.genero}" styleClass="form-control form">
                                     <f:selectItem itemValue="0" itemLabel="-- Seleccionar --" noSelectionOption="true"/>
                                     <f:selectItem itemValue="Femenino" itemLabel="#{usuariosEti.feme}"/>
                                     <f:selectItem itemValue="Masculino" itemLabel="#{usuariosEti.mascu}"/>
@@ -93,7 +93,7 @@
                             </div>
                         </div>
 
-                        <h:commandButton action="#{usuarioController.modificarUsuario()}" styleClass="btn boton d-block mx-auto" value="#{usuariosEti.btn_registrar}"/>
+                        <h:commandButton action="#{usuarioController.editarUsuario()}" styleClass="btn boton d-block mx-auto" value="#{usuariosEti.btn_registrar}"/>
                     </h:form>
                 </div>
             </div>

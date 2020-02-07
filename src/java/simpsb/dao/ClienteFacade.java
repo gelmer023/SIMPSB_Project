@@ -30,7 +30,8 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
     public ClienteFacade() {
         super(Cliente.class);
     }
-
+   
+    @Override
     public Cliente getIdCl(Object idUs) {
         Cliente cl = new Cliente();
         try {
@@ -45,5 +46,4 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
         }
         return cl;
     }
-
 }

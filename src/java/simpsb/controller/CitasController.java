@@ -213,7 +213,7 @@ public class CitasController {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al modificar su cita"));
         }
-        return "modificarCita";
+        return "crearFactura";
 
     }
 
