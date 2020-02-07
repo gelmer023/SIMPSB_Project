@@ -52,19 +52,34 @@ and open the template in the editor.
                         <div class="form-group">
                             <h:outputLabel for="nombreServicio" value="#{servisEti.nombreServicio}"/>
                             <h:inputText id="nombreServicio" value="#{serviciosController.servicios.nombre}" a:placeholder="#{servisEti.placeNombre}" styleClass="form form-control"/>
+                            <h:message for="nombreServicio"/>
 
                             <h:outputLabel for="estado" value="#{servisEti.estadoServicio}"/>
                             <h:selectOneMenu value="#{serviciosController.servicios.estado}" styleClass="form form-control">
+                                <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
                                 <f:selectItem itemLabel="Activo" itemValue="Activo"/>
                                 <f:selectItem itemLabel="Inactivo" itemValue="Inactivo"/>
-                                <f:selectItem itemLabel="-- Seleccionar --" itemValue="0"/>
                             </h:selectOneMenu>
-
+                            <h:message for="estado"/>
+                            
                             <h:outputLabel for="valor" value="#{servisEti.valorServicio}"/>
                             <h:inputText id="valor" value="#{serviciosController.servicios.valor}" a:placeholder="#{servisEti.placeValor}" styleClass="form form-control" />
-
+                            <h:message for="valor"/>
+                            
                             <h:outputLabel for="tiempoEstimado" value="#{servisEti.tiempoServicio}"/>
-                            <h:inputText id="tiempoEstimado" value="#{serviciosController.servicios.tiempoEstimado}" a:placeholder="#{servisEti.placeTiempo}" styleClass="form form-control"/>
+                            <h:selectOneMenu value="#{serviciosController.servicios.tiempoEstimado}" styleClass="form form-control">
+                                <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
+                                <f:selectItem itemLabel="30 Minutos" itemValue="30"/>
+                                <f:selectItem itemLabel="1 Hora" itemValue="60"/>
+                                <f:selectItem itemLabel="1 Hora y 30 Minutos" itemValue="90"/>
+                                <f:selectItem itemLabel="2 Horas" itemValue="120"/>
+                                <f:selectItem itemLabel="2 Horas y 30 Minutos" itemValue="150"/>
+                                <f:selectItem itemLabel="3 Horas" itemValue="180"/>
+                                <f:selectItem itemLabel="3 Horas y 30 Minutos" itemValue="210"/>
+                                <f:selectItem itemLabel="4 Horas" itemValue="240"/>
+                                <f:selectItem itemLabel="4 Horas y 30 Minutos" itemValue="270"/>
+                            </h:selectOneMenu>
+                            <h:message for="tiempoEstimado"/>
                         </div>
 
                         <div class="text-center">

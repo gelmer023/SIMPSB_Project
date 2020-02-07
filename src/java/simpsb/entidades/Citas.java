@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Entity
 @Table(name = "citas")

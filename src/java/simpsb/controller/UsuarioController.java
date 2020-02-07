@@ -15,8 +15,6 @@ import simpsb.entidades.*;
 @RequestScoped
 public class UsuarioController {
 
-    @Inject
-    private Utils util;
     @EJB
     private UsuarioFacadeLocal usuarioFacadeLocal;
     @EJB
@@ -51,14 +49,6 @@ public class UsuarioController {
 
     public void setContra(String contra) {
         this.contra = contra;
-    }
-
-    public Utils getUtil() {
-        return util;
-    }
-
-    public void setUtil(Utils util) {
-        this.util = util;
     }
 
     public UsuarioFacadeLocal getUsuarioFacadeLocal() {

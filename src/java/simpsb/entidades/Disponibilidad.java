@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Entity
 @Table(name = "disponibilidad")
@@ -44,7 +44,6 @@ public class Disponibilidad implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Size(max = 45)
     @Column(name = "estado")
     private String estado;
     @JoinColumn(name = "horaFK", referencedColumnName = "idHoras")

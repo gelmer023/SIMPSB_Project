@@ -8,6 +8,7 @@
         <title>Supervisor</title>
         <link href="../../resources/css/Bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="../resources/css/estilos-perfiles.css" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" href="../resources/img/logo.png"/>
     </h:head>
     <f:event type="preRenderView" listener="#{sesionController.verificarSesion()}"/>
     <h:body class="fondo">
@@ -33,13 +34,13 @@
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_facturacion.png" alt=""/>
                             <h5>
-                                <a href="#">{perfilEti.Facturacion}</a>
+                                <a href="#">#{perfilEti.Facturacion}</a>
                             </h5>
                             <p>
-                                <a href="Facturacion/crearFactura.xhtml" target="area-trabajo">{perfilEti.crearFactura}</a>
+                                <a href="Facturacion/crearFactura.xhtml" target="area-trabajo">#{perfilEti.crearFactura}</a>
                             </p>
                             <p>
-                                <a href="Facturacion/consultarFactura.xhtml" target="area-trabajo">{perfilEti.consultarFactura}</a>
+                                <a href="Facturacion/consultarFactura.xhtml" target="area-trabajo">#{perfilEti.consultarFactura}</a>
                             </p>
                         </div> 
                         <!-- SERVICIOS -->
@@ -121,14 +122,12 @@
                                     <a href="#"><img src="../resources/img/config.png" alt=""/></a>
                                     <ul>
                                         <li>
-                                            <img src="../resources/img/editar-perfil.png" alt=""/> <a class="text-left" href="Usuarios/loginFoto.xhtml" target="area-trabajo">Editar Perfil</a> 
+                                            <img src="../resources/img/editar-perfil.png" alt=""/><a class="text-left" href="Usuarios/editarPerfil.xhtml?faces-redirect=true"  target="area-trabajo">Editar Perfil</a>
                                         </li>
                                         <li>
                                             <img src="../resources/img/ajustes.png" alt=""/><a class="text-left" href="Config/cambiarContra.xhtml?faces-redirect=true" target="area-trabajo">Cambiar contraseña</a>
                                         </li>
-                                        <li>	
-                                            <img src="../resources/img/logout.png" alt=""/><a class="text-left" href="#{sesionController.logout()}">#{perfilEti.cerrarSesion}</a>
-                                        </li>
+                                        
                                     </ul>
                                 </li>
                             </ul>

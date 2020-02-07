@@ -3,6 +3,7 @@ package simpsb.controller;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -13,12 +14,9 @@ import simpsb.entidades.*;
 import simpsb.controller.*;
 
 @Named
-@SessionScoped
-public class SesionController implements Serializable {
+@RequestScoped
+public class SesionController{
 
-    @Inject 
-    private Utils util;
-    
     @EJB
     private UsuarioFacadeLocal usuarioFacadeLocal;
     private Usuario usuario;

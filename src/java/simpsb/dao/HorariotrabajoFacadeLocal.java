@@ -11,7 +11,7 @@ import simpsb.entidades.Horariotrabajo;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Local
 public interface HorariotrabajoFacadeLocal {

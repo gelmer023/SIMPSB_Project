@@ -11,7 +11,7 @@ import simpsb.entidades.Cargos;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Local
 public interface CargosFacadeLocal {

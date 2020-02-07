@@ -44,26 +44,24 @@
                     </div>
 
                     <h:form>
-                        <div class="form-group">
-                            <h:outputLabel for="doc" value="Documento"/>
-                            <h:inputText id="doc" styleClass="form form-control" a:type="number" value="#{citasController.usuario.numDocumento}" a:placeholder="Ingrese su documento"/>
-                            <h:message for="doc"/>
-                        </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="fecha" value="#{citasEti.fecha}"/>
                                 <h:inputText id="fecha" styleClass="form form-control" a:type="date"
-                                             value="#{citasController.citas.fecha}" a:min="#{citasController.año}-#{citasController.mes}-#{citasController.diaS}"> 
+                                             value="#{citasController.citas.fecha}" a:min="#{citasController.año}-#{citasController.mesS}-#{citasController.diaS}"> 
                                     <f:convertDateTime for="fecha" type="date" pattern="yyyy-MM-dd"></f:convertDateTime>
                                 </h:inputText>
                                 <h:message for="fecha"/>
                             </div>
+
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="hora" value="#{citasEti.hora}"/>
-                                <h:inputText id="hora" styleClass="form form-control" a:type="time" a:min="9:00" a:max="20:00" a:step="1800"
-                                             value="#{citasController.citas.hora}">
-                                    <f:convertDateTime dateStyle="full" pattern="HH:mm"></f:convertDateTime>
-                                </h:inputText>
+                                <h:selectOneMenu id="hora" value="#{citasController.horas.idHoras}" styleClass="form form-control">
+                                    <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
+                                    <f:selectItems value="#{citasController.listHoras}" var="horas" 
+                                                   itemValue="#{horas.idHoras}" 
+                                                   itemLabel="#{horas.hora}"/>
+                                </h:selectOneMenu>
                                 <h:message for="hora"/>
                             </div>
                         </div>
