@@ -110,3 +110,14 @@ input:invalid, select:invalid{
     margin-left: 200px;
     margin-right: 0px;
 }
+.boton{
+    width: 100px;
+    margin-right: 10px;
+    background-color: #D4AF37;
+}
+.boton:hover{
+    color: #D4AF37;
+    background: rgb(0,0,0);
+    border-bottom: 1px solid #D4AF37;
+
+}

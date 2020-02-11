@@ -32,68 +32,53 @@
                     <h1 class="text-center">FACTURAR CITA</h1>
                 </div>
                 <h:form>
-                    <div class="form-row" style="margin-top: 20px">
-                        <h:inputHidden value="#{citasController.citas.idCita}"/>
-                        <h:inputHidden value="#{citasController.servicios.idServicio}"/>
-                        <h:inputHidden value="#{citasController.empleado.idEmpleado}"/>    
-                        <!-- <div class="form-group col-md-2" style="margin-left: 100px;">
-                           <h:outputLabel for="documento" value="Documento:  "/> 
-                        </div>
-                        <div class="form-group col-md-7">
-                           <h:inputText value="#{usuarioController.usuario.numDocumento}" id="documento" a:type="number" styleClass="form-control form"/>
-                            <h:message for="documento"/>
-                        </div>
-                         <div class="form-group col-md-2" style="margin-left: 100px;">
-                            <h:outputLabel for="nombre" value="Nombre:  "/>
-                        </div>
-                        <div class="form-group col-md-7">
-                            <h:inputText value="#{usuarioController.usuario.nombre}" id="nombre" a:type="text" styleClass="form-control form"/>
-                            <h:message for="nombre"/>
-                        </div> -->
-                         <div class="form-group col-md-2" style="margin-left: 100px;">
-                            <h:outputLabel for="servicio" value="#{citasEti.servicio}"/>
-                        </div>
-                        <div class="form-group col-md-7">
-                            <h:selectOneMenu id="servicio" value="#{citasController.servicios.idServicio}" styleClass="form form-control">
-                                <f:selectItem itemLabel="#{agcitaEti.seleccionar}" itemValue="0"/>
-                                <f:selectItems value="#{citasController.listServicios}" var="servicio" 
-                                               itemValue="#{servicio.idServicio}" 
-                                               itemLabel="#{servicio.nombre}"/>
-                            </h:selectOneMenu>
-                            <h:message for="servicio"/>
-                        </div>
-
-                        <div class="form-group col-md-2" style="margin-left: 100px;">
-                            <h:outputLabel for="empleado" value="Empleado:  "/>
-                        </div>
-                        
-                         <div class="form-group col-md-7">
-                            <h:selectOneMenu id="empleado" value="#{citasController.empleado.idEmpleado}" styleClass="form form-control">
-                                <f:selectItem itemLabel="#{agcitaEti.seleccionar}" itemValue="0"/>
-                                <f:selectItems value="#{citasController.listEmpleados}" var="emp" 
-                                               itemValue="#{emp.idEmpleado}" 
-                                               itemLabel="#{emp.idUsuario.nombre}"/>
-                            </h:selectOneMenu>
-                            <h:message for="empleado"/>
-                        </div>
-                        
-                         <div class="form-group col-md-2" style="margin-left: 100px;">
-                            <h:outputLabel for="subtotal" value="Total"/>
-                        </div>
-                        <div class="form-group col-md-7">
-                            <h:inputText styleClass="form-control form-fondo form" id="subtotal" value="#{facturaController.detalle.subTotal}"/>
-                            <h:message for="total"/>
-                        </div>
-                         <div class="form-group col-md-4">
-                            <h:commandButton value="Agregar Servicios" styleClass="btn boton d-block mx-auto" action="#{facturaController.generarFactura()}" style="width : 200px; margin-top: 30px; margin-bottom: 20px ;" />
-                        </div>
-                        <div class="form-group col-md-4">
-                            <h:commandButton value="Facturar" styleClass="btn boton d-block mx-auto" action="#{facturaController.generarFactura()}" style="margin-top: 30px; margin-bottom: 20px;"/>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <h:commandButton value="Calificar" styleClass="btn boton d-block mx-auto" action="#{facturaController.generarFactura()}" style="margin-top: 30px; margin-bottom: 20px;"/>
+                    <h:inputHidden value="#{citasController.servicios.idServicio}"/>
+                    <h:inputHidden value="#{citasController.empleado.idEmpleado}"/>
+                    <div class="form-group row">
+                        <h:outputLabel value="Nombre: " for="nombre"/>
+                        <div class="col-sm-10">
+                            <h:inputText a:type="text" readonly="true" class="form form-control" id="nombre" value="#{citasController.citas.idCliente.idUsuario.nombre} #{citasController.citas.idCliente.idUsuario.apellido}"/>
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <h:outputLabel class="" value="Documento: " for="doc"/>
+                        <div class="col-sm-10">
+                            <h:inputText a:type="text" readonly="true" class="form form-control" id="doc" value="#{citasController.citas.idCliente.idUsuario.numDocumento}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <h:outputLabel value="Servicio: " for="servicio"/>
+                        <div class="col-sm-10">
+                            <h:inputText a:type="text" readonly="true" class="form form-control" id="servicio" value="#{citasController.citas.idServicio.nombre}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <h:outputLabel value="Empleado: " for="empleado"/>
+                        <div class="col-sm-10">
+                            <h:inputText a:type="text" readonly="true" class="form form-control" id="empleado" value="#{citasController.citas.idEmpleado.idUsuario.nombre} #{citasController.citas.idEmpleado.idUsuario.apellido}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <h:outputLabel class="" value="Total: " for="total"/>
+                        <div class="col-sm-10">
+                            <h:inputText a:type="text" readonly="true" class="form form-control" id="total" value="#{citasController.citas.valorTotal}"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <h:commandButton value="Agregar Servicios" styleClass="btn boton d-block mx-auto" action="agregarServicios?faces-redirect=true" style="width : 200px; margin-top: 30px; margin-bottom: 20px ;" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <h:commandButton value="Facturar" styleClass="btn boton d-block mx-auto" action="#{facturaController.generarFactura()}" style="margin-top: 30px; margin-bottom: 20px;"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <h:commandButton value="Calificar" styleClass="btn boton d-block mx-auto" action="calificacion?faces-redirect=true" style="margin-top: 30px; margin-bottom: 20px;"/>
+                    </div>
+
                 </h:form>
             </div>
         </div> 

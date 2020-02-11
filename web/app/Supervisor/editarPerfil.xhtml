@@ -6,13 +6,12 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <title>Editar Perfil</title>
-        <link href="../../../resources/css/Bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="../../resources/css/Usuarios/crearUsuario.css" rel="stylesheet" type="text/css"/>
+        <link href="../../resources/css/Bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../resources/css/Usuarios/crearUsuario.css" rel="stylesheet" type="text/css"/>
 
     </h:head>
     <h:body styleClass="fondo">
         <f:view locale="#{languages.idiomaSeleccionado}">           
-            <h:messages globalOnly="true" showDetail="true" class="text-info h4"/>
             <!--Migas de Pan-->
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -25,7 +24,7 @@
                 <div class="dropdown d-flex justify-content-end">
                     <button type="button" class="lanbtn btn dropdown-toggle"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="../../resources/img/banderas partidas 2.png" alt="" style="width:25px; height:20px;"/>
+                        <img src="../resources/img/banderas partidas 2.png" alt="" style="width:25px; height:20px;"/>
                         #{pagesEti[languages.idiomaSeleccionado.language]}
                     </button>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -60,32 +59,32 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="nombre" value="#{usuariosEti.nombre}"/>
-                                <h:inputText value="#{sesionController.usuario.nombre}" id="nombre" a:type="text" styleClass="form-control form" a:placeholder="#{usuariosEti.placeNom}"/>
+                                <h:inputText value="#{usuarioController.usuario.nombre}" id="nombre" a:type="text" styleClass="form-control form" a:placeholder="#{usuariosEti.placeNom}"/>
                                 <h:message for="nombre"/>
                             </div>
 
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="apellido" value="#{usuariosEti.apellido}"/>
-                                <h:inputText required="true" value="#{sesionController.usuario.apellido}" id="apellido" a:type="text" styleClass="form-control form" a:placeholder="#{usuariosEti.placeApe}"/>
+                                <h:inputText required="true" value="#{usuarioController.usuario.apellido}" id="apellido" a:type="text" styleClass="form-control form" a:placeholder="#{usuariosEti.placeApe}"/>
                                 <h:message for="apellido"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <h:outputLabel for="correo" value="#{usuariosEti.correo}"/>
-                            <h:inputText value="#{sesionController.usuario.correo}" id="correo" styleClass="form-control form" a:type="email" a:placeholder="#{usuariosEti.placeCorr}"/>
+                            <h:inputText value="#{usuarioController.usuario.correo}" id="correo" styleClass="form-control form" a:type="email" a:placeholder="#{usuariosEti.placeCorr}"/>
                             <h:message for="correo"/> 
                         </div>
 
                         <div class="form-row">
                             <div class="form-group  col-md-6">
                                 <h:outputLabel for="documento" value="#{usuariosEti.documento}"/>
-                                <h:inputText value="#{sesionController.usuario.numDocumento}" id="documento" a:type="number" styleClass="form-control form" a:placeholder="#{usuariosEti.placeDoc}"/>
+                                <h:inputText value="#{usuarioController.usuario.numDocumento}" id="documento" a:type="number" styleClass="form-control form" a:placeholder="#{usuariosEti.placeDoc}"/>
                                 <h:message for="documento"/>
                             </div>
                             <div class="form-group col-md-6">
                                 <h:outputLabel for="genero" value="#{usuariosEti.genero}"/>
-                                <h:selectOneMenu value="#{sesionController.usuario.genero}" styleClass="form-control form">
+                                <h:selectOneMenu value="#{usuarioController.usuario.genero}" styleClass="form-control form">
                                     <f:selectItem itemValue="0" itemLabel="-- Seleccionar --" noSelectionOption="true"/>
                                     <f:selectItem itemValue="Femenino" itemLabel="#{usuariosEti.feme}"/>
                                     <f:selectItem itemValue="Masculino" itemLabel="#{usuariosEti.mascu}"/>
@@ -93,14 +92,14 @@
                             </div>
                         </div>
 
-                        <h:commandButton action="#{usuarioController.editarUsuario()}" styleClass="btn boton d-block mx-auto" value="#{usuariosEti.btn_registrar}"/>
+                        <h:commandButton action="#{usuarioController.modificarUsuario()}" styleClass="btn boton d-block mx-auto" value="#{usuariosEti.btn_registrar}"/>
                     </h:form>
                 </div>
             </div>
         </f:view>
         <!-- BOOTSTRAP -->
-        <script src="../../../resources/js/Bootstrap/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
-        <script src="../../../resources/js/Bootstrap/popper.min.js" type="text/javascript"></script>
-        <script src="../../../resources/js/Bootstrap/bootstrap.min.js" type="text/javascript"></script>
+        <script src="../../resources/js/Bootstrap/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
+        <script src="../../resources/js/Bootstrap/popper.min.js" type="text/javascript"></script>
+        <script src="../../resources/js/Bootstrap/bootstrap.min.js" type="text/javascript"></script>
     </h:body>
 </html>

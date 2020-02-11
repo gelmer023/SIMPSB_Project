@@ -122,10 +122,17 @@
                                     <a href="#"><img src="../resources/img/config.png" alt=""/></a>
                                     <ul>
                                         <li>
-                                            <img src="../resources/img/editar-perfil.png" alt=""/><a class="text-left" href="Usuarios/editarPerfil.xhtml?faces-redirect=true"  target="area-trabajo">Editar Perfil</a>
+                                            <h:form>
+                                                <img src="../resources/img/editar-perfil.png" alt=""/>
+                                                <h:commandLink action="#{usuarioController.editarU(us)}" 
+                                                                 value="Editar Perfil"  a:target="area-trabajo" styleClass="btn boton" style="color: #fff; margin-top: 10px;"/>
+                                            </h:form>
                                         </li>
                                         <li>
-                                            <img src="../resources/img/ajustes.png" alt=""/><a class="text-left" href="Config/cambiarContra.xhtml?faces-redirect=true" target="area-trabajo">Cambiar contraseña</a>
+                                            <h:form>
+                                            <img src="../resources/img/ajustes.png" alt="" style="margin-left: 10px; "/><h:commandLink    action="Config/cambiarContra.xhtml?faces-redirect=true" value="Cambiar Contraseña" a:target="area-trabajo" 
+                                                                                                             style="color: #fff; margin-top: 0px; margin-left: 0px; text-align: center"/>
+                                            </h:form>
                                         </li>
                                         
                                     </ul>

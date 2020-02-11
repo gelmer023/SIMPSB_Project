@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import simpsb.entidades.*;
+import static simpsb.entidades.Servicios_.valor;
 
 /**
  *
@@ -46,6 +47,20 @@ public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLoc
         }
         return listaCitas;
     }
-    
-    
+        @Override
+       public Citas getIdCita(Object idCit) {
+        Citas cit = new Citas();
+        try {
+            Query query = em.createQuery("SELECT c FROM citas c WHERE c.idCita = :idCit");
+            query.setParameter("idCita", idCit);
+            List<Citas> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                cit = lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return cit;
+    }
+       
 }

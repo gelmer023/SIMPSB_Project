@@ -58,7 +58,7 @@ public class CitasController {
         usuario = new Usuario();
         horas = new Horas();
         disponibilidad = new Disponibilidad();
-        listServicios = serviciosFacadeLocal.findAll();
+        listServicios = serviciosFacadeLocal.servActivos();
         listEmpleados = empleadoFacadeLocal.findAll();
         listHoras = disponibilidadFacadeLocal.disponibles();
         validarEstado();
@@ -225,6 +225,8 @@ public class CitasController {
     public void generarCita() {
         Cliente cl = null;
         Usuario us = null;
+        Servicios sv = null;
+        Citas cit = null;
         try {
             //TRAIGO DATOS DEL USUARIO QUE AGENDA LA CITA
             us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
@@ -289,13 +291,15 @@ public class CitasController {
     }
     
     public String hacerFactura(Citas ct) {
+        Servicios sv = null;
         try {
+            sv = serviciosFacadeLocal.getValor(servicios);
+            citas.setValorTotal(sv.toString());
             citas = citasFacadeLocal.find(ct.getIdCita());
             servicios = citas.getIdServicio();
             empleado = citas.getIdEmpleado();
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../Facturacion/crearFactura.xhtml");
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al consultar su cita"));

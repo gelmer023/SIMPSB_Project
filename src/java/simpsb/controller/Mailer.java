@@ -10,8 +10,8 @@ import javax.mail.internet.MimeMessage;
 public class Mailer {
 
     public void send(String destinatario, String asunto, String mensaje) throws UnsupportedEncodingException {
-        final String user = "physep17@gmail.com";
-        final String pass = "1000320221a";
+        final String user = "jleonardolc2002@gmail.com";
+        final String pass = "leonardo1007";
         final String host = "smtp.gmail.com";
 
         //SE CREA LA VARIABLE PROPERTIES
@@ -49,6 +49,6 @@ public class Mailer {
             Transport.send(message);
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
+        }   
     }
 }

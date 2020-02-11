@@ -30,9 +30,9 @@ public class UsuarioController {
     private Empleado empleado;
 
     private UploadController imagen;
-    
+
     private String contra;
-    
+
     @PostConstruct
     public void init() {
         //ENTIDADES
@@ -122,7 +122,7 @@ public class UsuarioController {
     public void setImagen(UploadController imagen) {
         this.imagen = imagen;
     }
-    
+
     //MÉTODOS CRUD DE USUARIOS
     public void registrarUsuario() {
         Usuario user = null;
@@ -241,13 +241,19 @@ public class UsuarioController {
         }
     }
 
-    public void editarUsuario(){
+    public String editarU(Usuario us) {
         Usuario user;
+
         try {
             user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-            usuario = user;
-            usuarioFacadeLocal.edit(usuario);
+            usuario = usuarioFacadeLocal.find(user.getIdUsuario());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
         } catch (Exception e) {
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al consultar su cita"));
         }
+        return "editarPerfil";
+
     }
+
 }

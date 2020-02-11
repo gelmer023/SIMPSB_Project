@@ -53,16 +53,16 @@ and open the template in the editor.
                             <h:selectOneMenu id="empleado" value="#{pagosController.empleado.idEmpleado}" styleClass="form form-control">
                                 <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
                                 <f:selectItems value="#{pagosController.listEmpleado}" var="emp" 
-                                               itemValue="#{emp.idUsuario}" 
+                                               itemValue="#{emp.idEmpleado}" 
                                                itemLabel="#{emp.idUsuario.nombre}"/>
                             </h:selectOneMenu>
 
                             <h:outputLabel value="#{pagosEti.factura}" for="idFactura"/>
                             <h:selectOneMenu id="factura" value="#{pagosController.factura.idFactura}" styleClass="form form-control">
                                 <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
-                                <f:selectItems value="#{pagosController.listFactura}" var="factura" 
-                                               itemValue="#{factura.idFactura}" 
-                                               itemLabel="#{factura.idFactura}"/>
+                                <f:selectItems value="#{pagosController.listFactura}" var="fact" 
+                                               itemValue="#{fact.idFactura}" 
+                                               itemLabel="#{fact.idFactura}"/>
                             </h:selectOneMenu>
                         </div>
                         <h:commandButton value="#{usuariosEti.enviar}" action="#{pagosController.generarPago()}" styleClass="btn boton d-block mx-auto"/>
