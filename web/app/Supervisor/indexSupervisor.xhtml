@@ -20,6 +20,8 @@
                         <p class="text-center text-uppercase">Supervisor</p>
                         <h:graphicImage value="#{user.getFoto()}" class="estilosFtPerfil"/>
                         <p class="text-center text-uppercase">#{user.getNombre()} #{user.getApellido()}</p>
+                        <h:commandButton action="#{sesionController.logout()}" value="Cerrar Sesion"
+                                         styleClass="btn text-warning d-block mx-auto" style="color: #fff; margin-top: 10px; margin-left: 80px; background: black;"/>
                     </div>
                     <div class="modulos">
                         <!-- HOME -->

@@ -32,5 +32,5 @@ public interface ServiciosFacadeLocal {
     
     List<Servicios> servActivos();
     
-    Servicios getValor(Servicios serv);
+    Servicios getValor();
 }

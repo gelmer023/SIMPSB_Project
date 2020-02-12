@@ -47,8 +47,7 @@ public class Servicios implements Serializable {
     @Column(name = "estado")
     private String estado;
     @Column(name = "valor")
-    private Integer valor;
-    @Size(max = 45)
+    private String valor;
     @Column(name = "tiempoEstimado")
     private String tiempoEstimado;
     @OneToMany(mappedBy = "idServicio")
@@ -87,11 +86,11 @@ public class Servicios implements Serializable {
         this.estado = estado;
     }
 
-    public Integer getValor() {
+    public String getValor() {
         return valor;
     }
 
-    public void setValor(Integer valor) {
+    public void setValor(String valor) {
         this.valor = valor;
     }
 

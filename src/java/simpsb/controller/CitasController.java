@@ -225,16 +225,19 @@ public class CitasController {
     public void generarCita() {
         Cliente cl = null;
         Usuario us = null;
-        Servicios sv = null;
         Citas cit = null;
         try {
             //TRAIGO DATOS DEL USUARIO QUE AGENDA LA CITA
             us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
             cl = clienteFacadeLocal.getIdCl(us);
             citas.setIdCliente(cl);
+            //TRAIGO Y REGISTRO EL VALOR DEL SERVICIO
+            citas.setIdServicio(servicios);
+            Servicios serv = serviciosFacadeLocal.getValor();
+            String valor = serv.getValor();
+            citas.setValorTotal(valor);
             //ASIGNO LAS LLAVES FORANEAS DE LA CITA
             citas.setIdEmpleado(empleado);
-            citas.setIdServicio(servicios);
             estado.setIdEstado(3);
             citas.setEstadoFK(estado);
             //CREO LA CITA
@@ -289,12 +292,10 @@ public class CitasController {
         return "modificarCita";
 
     }
-    
+
     public String hacerFactura(Citas ct) {
         Servicios sv = null;
         try {
-            sv = serviciosFacadeLocal.getValor(servicios);
-            citas.setValorTotal(sv.toString());
             citas = citasFacadeLocal.find(ct.getIdCita());
             servicios = citas.getIdServicio();
             empleado = citas.getIdEmpleado();

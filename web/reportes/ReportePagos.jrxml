@@ -1,112 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d74302c6-4f7d-4cdd-80c6-ccca9cd488a7">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6d7ad972-998c-4cdf-9407-bd765dd5966b">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="7"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="idComision" class="java.lang.Integer"/>
-	<field name="idComisiones" class="java.lang.Integer"/>
-	<field name="valor" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+     comisiones.idComisiones as Id,sum(comisiones.`valor`) AS Valor, concat(
+     usuario.`nombre` ,
+     usuario.`apellido`) as Empleado
+FROM
+     `empleado` empleado INNER JOIN `comisiones` comisiones ON empleado.`idEmpleado` = comisiones.`idEmpleado`
+     INNER JOIN `usuario` usuario ON empleado.`idUsuario` = usuario.`idUsuario` group by comisiones.idEmpleado]]>
+	</queryString>
+	<field name="Id" class="java.lang.Integer"/>
+	<field name="Valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Empleado" class="java.lang.String"/>
 	<background>
-		<band splitType="Stretch"/>
+		<band/>
 	</background>
 	<title>
-		<band height="117" splitType="Stretch">
+		<band height="106">
 			<staticText>
-				<reportElement x="215" y="78" width="131" height="31" uuid="6e4fb89c-aeaa-4577-a19e-79ae079881b0"/>
+				<reportElement x="213" y="73" width="131" height="31" uuid="59c12cad-ce7c-48fa-b43b-a1d4e4dd13b7"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Calle 62 #75-76
 4567303]]></text>
 			</staticText>
-			<image>
-				<reportElement x="124" y="0" width="286" height="69" uuid="41c29322-8ba1-4cd0-93b8-3223031a97d1"/>
-				<imageExpression><![CDATA["C:\\Users\\Leonardo Lara\\Documents\\NetBeansProjects\\SIMPSB1\\web\\resources\\img\\logo.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="109" splitType="Stretch">
-			<rectangle radius="10">
-				<reportElement x="13" y="80" width="533" height="29" forecolor="#D4AF37" backcolor="#D4AF37" uuid="6093f3a7-1687-453a-9df3-3a24160a8d66"/>
-			</rectangle>
+		<band height="80">
 			<staticText>
-				<reportElement x="18" y="80" width="141" height="29" uuid="da726b3c-3f8d-4dd7-930a-259f9f8653f7"/>
-				<textElement textAlignment="Center">
-					<font size="16" isBold="true"/>
-				</textElement>
-				<text><![CDATA[NUM COMISION]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="215" y="80" width="121" height="29" uuid="70d08849-7d6a-4487-b6b2-d51d484c82d2"/>
-				<textElement textAlignment="Center">
-					<font size="16" isBold="true"/>
-				</textElement>
-				<text><![CDATA[VALOR]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="159" y="11" width="252" height="31" uuid="d94f816a-c20a-49f5-92d7-0e639d18e5df"/>
+				<reportElement x="146" y="0" width="252" height="31" uuid="8746dcab-7c35-45c8-a832-82359cd436e7"/>
 				<textElement>
 					<font size="24" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[PAGOS REALIZADOS]]></text>
 			</staticText>
 			<line>
-				<reportElement x="159" y="42" width="252" height="1" forecolor="#D4AF37" backcolor="#D4AF37" uuid="e6655247-2c74-44ff-a4ff-7de26af00d72"/>
+				<reportElement x="146" y="31" width="252" height="1" forecolor="#D4AF37" backcolor="#D4AF37" uuid="8d4e2879-e9d8-4fdf-a2df-e462b1a87d74"/>
 				<graphicElement>
 					<pen lineWidth="3.5"/>
 				</graphicElement>
 			</line>
-			<image>
-				<reportElement x="434" y="80" width="185" height="29" uuid="838c7fe5-83a3-44a7-8dd8-388973e93fdb"/>
-				<imageExpression><![CDATA["C:\\Users\\Leonardo Lara\\Documents\\NetBeansProjects\\SIMPSB1\\web\\app\\resources\\img\\logo.png"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement x="104" y="5" width="40" height="38" uuid="680e590c-96c4-4068-b6ad-76f9e5cec1e4"/>
-				<imageExpression><![CDATA["C:\\Users\\Leonardo Lara\\Documents\\NetBeansProjects\\SIMPSB1\\web\\app\\resources\\img\\icono_pagos.png"]]></imageExpression>
-			</image>
+			<rectangle radius="10">
+				<reportElement x="11" y="51" width="533" height="29" forecolor="#D4AF37" backcolor="#D4AF37" uuid="a8b21dd7-b692-4317-84de-2943e955fc25"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="46" y="60" width="37" height="20" uuid="97bcd750-fb2d-45f3-881e-c15f1ea3dba7"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="113" y="60" width="100" height="20" uuid="51e123c0-1731-435e-a2e5-4f29b8b85753"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="60" width="100" height="20" uuid="d7016fc1-a091-48cb-89f3-16a5210b7d35"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empleado]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="92" splitType="Stretch">
+		<band height="54">
 			<textField>
-				<reportElement x="18" y="12" width="141" height="31" uuid="037dce7a-784b-4072-a90b-f5b679513bbb"/>
-				<textElement textAlignment="Center">
-					<font size="16"/>
+				<reportElement x="46" y="19" width="37" height="20" uuid="11e6c5a8-f474-457a-b0da-918cf1e06caa"/>
+				<textElement>
+					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{idComisiones}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="236" y="12" width="110" height="31" uuid="842becbf-e430-4a0b-b3d0-b4323192b714"/>
+				<reportElement x="113" y="19" width="100" height="20" uuid="70b1ab7f-39e6-4dca-86bb-aa87bcd87965"/>
 				<textElement>
-					<font size="16"/>
+					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Valor}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="236" y="12" width="12" height="31" uuid="37d487e1-60c5-4c95-a218-af7a4c292b56"/>
+			<textField>
+				<reportElement x="270" y="19" width="100" height="20" uuid="96546566-2429-4d6b-9bee-31057b0b82ff"/>
 				<textElement>
-					<font size="16" isBold="true"/>
+					<font size="12"/>
 				</textElement>
-				<text><![CDATA[$]]></text>
-			</staticText>
-			<image>
-				<reportElement x="699" y="93" width="74" height="0" uuid="911319a1-60dc-4236-9572-f333d199106b"/>
-				<imageExpression><![CDATA["C:\\Users\\Leonardo Lara\\Documents\\NetBeansProjects\\SIMPSB1\\web\\app\\resources\\img\\FIRMA.png"]]></imageExpression>
-			</image>
+				<textFieldExpression><![CDATA[$F{Empleado}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
-			<line>
-				<reportElement x="388" y="20" width="148" height="1" uuid="8584e65c-8758-4d82-98f4-46bc8a024407"/>
-			</line>
-			<staticText>
-				<reportElement x="424" y="20" width="100" height="20" uuid="0eeb689b-5d0c-4e4c-8334-037d5cec6431"/>
-				<text><![CDATA[Firma]]></text>
-			</staticText>
-			<image>
-				<reportElement x="410" y="0" width="190" height="20" uuid="64813280-ca65-4695-a466-ce26ab19f849"/>
-				<imageExpression><![CDATA["C:\\Users\\Leonardo Lara\\Documents\\NetBeansProjects\\SIMPSB1\\web\\app\\resources\\img\\FIRMA.png"]]></imageExpression>
-			</image>
+		<band height="54">
+			<textField>
+				<reportElement x="201" y="36" width="80" height="13" uuid="546159e7-e2e8-4df0-8d5b-684313782f94"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="281" y="36" width="40" height="13" uuid="e96d72b8-1a3d-4de0-8b39-17b83a4510c2"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="0" y="36" width="100" height="13" uuid="346bfda3-ac7b-462b-9ea4-fe3daeac07f4"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 </jasperReport>

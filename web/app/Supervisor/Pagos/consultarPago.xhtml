@@ -58,7 +58,7 @@
                         <div class="col-12">
                             <p class="text-uppercase"> <img src="../../resources/img/icono_pagos.png" alt=""/>#{pagosEti.pagos} </p>
                             <h:form>
-                                <h:commandButton actionListener="#{pagosControllerReport.genenarPDF(actionEvent)}" value="PDF" styleClass="btn btn-warning">
+                                <h:commandButton actionListener="#{pagosController.verReporte()}" value="PDF" styleClass="btn btn-warning">
 
                                 </h:commandButton>
                             </h:form>

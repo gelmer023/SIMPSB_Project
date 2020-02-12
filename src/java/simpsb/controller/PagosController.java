@@ -10,6 +10,14 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import simpsb.dao.*;
 import simpsb.entidades.*;
+import java.io.*;
+import java.sql.*;
+import java.util.*;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 @Named
 @RequestScoped
@@ -32,15 +40,7 @@ public class PagosController {
     private List<Empleado> listEmpleado;
     private List<Factura> listFactura;
     
-    @PostConstruct
-    public void init(){
-        comisiones = new Comisiones();
-        empleado = new Empleado();
-        usuario = new Usuario();
-        factura = new Factura();
-        listEmpleado = empleadoFacadeLocal.findAll();
-        listFactura = facturaFacadeLocal.findAll();
-    }
+    
 
     public ComisionesFacadeLocal getComisionesFacadeLocal() {
         return comisionesFacadeLocal;
@@ -176,5 +176,35 @@ public class PagosController {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al modificar su cita"));
         }
     }
+  
+    //Metodo para invocar el reporte y enviarle los parametros si es que necesita
+    public void verReporte2() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        
+        //Instancia hacia la clase reporteClientes        
+           Reportes rCliente = new Reportes();
+        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("reportes/reporteGrafico.jasper");
+       
+        rCliente.getReporte(ruta);        
+        FacesContext.getCurrentInstance().responseComplete();               
+    }
+     
+     
+//Metodo para invocar el reporte y enviarle los parametros si es que necesita
+    public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        
+        //Instancia hacia la clase reporteClientes        
+           Reportes rCliente = new Reportes();
+        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("reportes/reportePagos.jasper");
+       
+        rCliente.getReporte(ruta);        
+        FacesContext.getCurrentInstance().responseComplete();               
+    }
+
     
 }
