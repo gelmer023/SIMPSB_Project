@@ -22,7 +22,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -50,7 +49,6 @@ public class Citas implements Serializable {
     @Column(name = "hora")
     @Temporal(TemporalType.TIME)
     private Date hora;
-    @Size(max = 45)
     @Column(name = "valorTotal")
     private String valorTotal;
     @JoinColumn(name = "idServicio", referencedColumnName = "idServicio")
@@ -65,8 +63,8 @@ public class Citas implements Serializable {
     @JoinColumn(name = "estadoFK", referencedColumnName = "idEstado")
     @ManyToOne
     private Estado estadoFK;
-    @OneToMany(mappedBy = "idCita")
-    private List<Serviciosextra> serviciosextraList;
+    @OneToMany(mappedBy = "citaFK")
+    private List<Disponibilidad> disponibilidadList;
     @OneToMany(mappedBy = "idCita")
     private List<Factura> facturaList;
 
@@ -141,12 +139,12 @@ public class Citas implements Serializable {
         this.estadoFK = estadoFK;
     }
 
-    public List<Serviciosextra> getServiciosextraList() {
-        return serviciosextraList;
+    public List<Disponibilidad> getDisponibilidadList() {
+        return disponibilidadList;
     }
 
-    public void setServiciosextraList(List<Serviciosextra> serviciosextraList) {
-        this.serviciosextraList = serviciosextraList;
+    public void setDisponibilidadList(List<Disponibilidad> disponibilidadList) {
+        this.disponibilidadList = disponibilidadList;
     }
 
     public List<Factura> getFacturaList() {

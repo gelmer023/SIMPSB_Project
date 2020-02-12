@@ -70,6 +70,8 @@ public class Usuario implements Serializable {
     private String foto;
     @OneToMany(mappedBy = "idUsuario")
     private List<Cliente> clienteList;
+    @OneToMany(mappedBy = "idUsuario")
+    private List<Empleado> empleadoList;
     @JoinColumn(name = "idRol", referencedColumnName = "idRol")
     @ManyToOne
     private Roles idRol;
@@ -156,6 +158,14 @@ public class Usuario implements Serializable {
 
     public void setClienteList(List<Cliente> clienteList) {
         this.clienteList = clienteList;
+    }
+
+    public List<Empleado> getEmpleadoList() {
+        return empleadoList;
+    }
+
+    public void setEmpleadoList(List<Empleado> empleadoList) {
+        this.empleadoList = empleadoList;
     }
 
     public Roles getIdRol() {

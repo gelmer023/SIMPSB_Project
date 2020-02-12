@@ -7,7 +7,8 @@ package simpsb.dao;
 
 import java.util.List;
 import javax.ejb.Local;
-import simpsb.entidades.*;
+import simpsb.entidades.Disponibilidad;
+import simpsb.entidades.Horas;
 
 /**
  *

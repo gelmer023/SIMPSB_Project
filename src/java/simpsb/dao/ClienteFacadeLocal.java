@@ -30,6 +30,6 @@ public interface ClienteFacadeLocal {
 
     int count();
     
-     Cliente getIdCl(Object idUs);
+    Cliente getIdCl(Object idUs);
     
 }

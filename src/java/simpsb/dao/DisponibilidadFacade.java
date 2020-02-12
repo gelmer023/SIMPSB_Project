@@ -10,7 +10,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import simpsb.entidades.*;
+import simpsb.entidades.Disponibilidad;
+import simpsb.entidades.Horas;
 
 /**
  *
@@ -30,12 +31,12 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
     public DisponibilidadFacade() {
         super(Disponibilidad.class);
     }
-
+    
     @Override
     public List<Horas> disponibles() {
         List<Horas> listDis = null;
         try {
-            Query query = em.createQuery("SELECT h from Horas h INNER JOIN h.disponibilidadList d WHERE d.estado = :estado");
+            Query query = em.createQuery("SELECT h from Horas h INNER JOIN h.disponibilidadList d WHERE d.estado = :estado ");
             query.setParameter("estado", "Disponible");
             listDis = query.getResultList();
             if (!listDis.isEmpty()) {
@@ -46,6 +47,4 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
         }
         return listDis;
     }
-    
-    
 }

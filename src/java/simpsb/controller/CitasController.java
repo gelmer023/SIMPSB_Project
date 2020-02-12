@@ -7,7 +7,6 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
 import simpsb.dao.*;
 import simpsb.entidades.*;
@@ -161,6 +160,7 @@ public class CitasController {
     int año = date.get(Calendar.YEAR);
 
     String diaS;
+    String diaMax;
     String mesS;
 
     //GETTERS Y SETTERS FECHA
@@ -178,6 +178,14 @@ public class CitasController {
 
     public void setDiaS(String diaS) {
         this.diaS = diaS;
+    }
+
+    public String getDiaMax() {
+        return diaMax;
+    }
+
+    public void setDiaMax(String diaMax) {
+        this.diaMax = diaMax;
     }
 
     public int getDia() {
@@ -204,21 +212,28 @@ public class CitasController {
         this.año = año;
     }
 
-    private void calcularTiempoEstimado() {
+    private void mostrarHoras() {
+        
     }
 
     public void validarDisponibilidad() {
         Citas ct = (Citas) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cita");
-        String tiempoEstimado = ct.getIdServicio().getTiempoEstimado();
-        Date fc = ct.getFecha();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        //FORMATOS FECHA ACTUAL
+        String fechaLocal = año + "0" + mes + "0" + dia;
+        int fechaActual = Integer.parseInt(fechaLocal);
+        //FORMATOS FECHA DE MAÑANA
+        String fechaLocalMañana = año + "0" + mes + "0" + dia;
+        int fechaMañana = Integer.parseInt(fechaLocal);
+        //FORMATOS FECHA DE LA CITA
+        String fechaString = sdf.format(ct.getFecha());
+        int fechaCita = Integer.parseInt(fechaString);
         try {
-            if (tiempoEstimado.equals(60)) {
-                horas.setIdHoras(horas.getIdHoras() + 2);
-                disponibilidad.setHoraFK(horas);
-                disponibilidad.setFecha(fc);
-                disponibilidad.setEstado("Agendada");
+            if (fechaCita == fechaActual) {
+                disponibilidadFacadeLocal.disponibles();
             }
         } catch (Exception e) {
+
         }
     }
 
@@ -230,6 +245,9 @@ public class CitasController {
             us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
             cl = clienteFacadeLocal.getIdCl(us);
             citas.setIdCliente(cl);
+            //ASIGNO EL VALOR DE LA CITA
+            String valor = servicios.getValor();
+            citas.setValorTotal(valor);
             //ASIGNO LAS LLAVES FORANEAS DE LA CITA
             citas.setIdEmpleado(empleado);
             citas.setIdServicio(servicios);
@@ -241,7 +259,6 @@ public class CitasController {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("cita", citas);
             //EJECUTO LOS METODOS EN EL BACKGROUND
             validarDisponibilidad();
-            calcularTiempoEstimado();
             //ENVIO MENSAJES
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente la cita"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
@@ -287,7 +304,7 @@ public class CitasController {
         return "modificarCita";
 
     }
-    
+
     public String hacerFactura(Citas ct) {
         try {
             citas = citasFacadeLocal.find(ct.getIdCita());
@@ -307,6 +324,7 @@ public class CitasController {
     //METODO PARA MODIFICAR LA CITA
     public void modificarCita() {
         try {
+
             citas.setIdEmpleado(empleado);
             citas.setIdServicio(servicios);
             citasFacadeLocal.edit(citas);
@@ -365,6 +383,13 @@ public class CitasController {
         if (mesS.length() == 1) {
             mesS = "0" + mesS;
         }
+
+        int a;
+        a = dia + 1;
+        diaMax = a + "";
+        if (diaMax.length() == 1) {
+            diaMax = "0" + diaMax;
+        }
     }
 
     //MÉTODOS ESPECIALES PARA EL PERFIL CLIENTE
@@ -373,9 +398,9 @@ public class CitasController {
         Cliente cl = null;
         List<Citas> listCitas = null;
         us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        cl = clienteFacadeLocal.getIdCl(us);
+        cl = clienteFacadeLocal.getIdCl(us.getIdUsuario());
         try {
-            listCitas = citasFacadeLocal.citasCli(cl);
+            listCitas = citasFacadeLocal.citasCli(cl.getIdCliente());
         } catch (Exception e) {
             e.printStackTrace();
         }

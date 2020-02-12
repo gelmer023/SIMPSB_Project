@@ -32,11 +32,11 @@ public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLoc
     }
 
     @Override
-    public List<Citas> citasCli(Cliente idCli) {
+    public List<Citas> citasCli(Object idCli) {
         List<Citas> listaCitas = null;
         try {
-            Query query = em.createQuery("SELECT c FROM Citas c WHERE c.idCliente.idUsuario = :user");
-            query.setParameter("user", idCli);
+            Query query = em.createQuery("SELECT c FROM Citas c WHERE c.idCliente = :cli");
+            query.setParameter("cli", idCli);
             listaCitas = query.getResultList();
             if (!listaCitas.isEmpty()) {
                 listaCitas.get(0);
