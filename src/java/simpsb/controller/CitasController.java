@@ -168,6 +168,7 @@ public class CitasController {
     int año = date.get(Calendar.YEAR);
 
     String diaS;
+    String diaMax;
     String mesS;
 
     //GETTERS Y SETTERS FECHA
@@ -185,6 +186,14 @@ public class CitasController {
 
     public void setDiaS(String diaS) {
         this.diaS = diaS;
+    }
+
+    public String getDiaMax() {
+        return diaMax;
+    }
+
+    public void setDiaMax(String diaMax) {
+        this.diaMax = diaMax;
     }
 
     public int getDia() {
@@ -325,6 +334,7 @@ public class CitasController {
     //METODO PARA MODIFICAR LA CITA
     public void modificarCita() {
         try {
+
             citas.setIdEmpleado(empleado);
             citas.setIdServicio(servicios);
             citasFacadeLocal.edit(citas);
@@ -383,6 +393,13 @@ public class CitasController {
         if (mesS.length() == 1) {
             mesS = "0" + mesS;
         }
+
+        int a;
+        a = dia + 1;
+        diaMax = a + "";
+        if (diaMax.length() == 1) {
+            diaMax = "0" + diaMax;
+        }
     }
 
     //MÉTODOS ESPECIALES PARA EL PERFIL CLIENTE
@@ -391,9 +408,9 @@ public class CitasController {
         Cliente cl = null;
         List<Citas> listCitas = null;
         us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-        cl = clienteFacadeLocal.getIdCl(us);
+        cl = clienteFacadeLocal.getIdCl(us.getIdUsuario());
         try {
-            listCitas = citasFacadeLocal.citasCli(cl);
+            listCitas = citasFacadeLocal.citasCli(cl.getIdCliente());
         } catch (Exception e) {
             e.printStackTrace();
         }

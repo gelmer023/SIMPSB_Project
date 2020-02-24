@@ -22,9 +22,6 @@
     background-color: #D4AF37; 
     background-image: -webkit-linear-gradient(90deg,rgba(255, 255, 255, .2) 25%,transparent 25%,transparent 50%,rgba(255, 255, 255, .2) 50%,rgba(255, 255, 255, .2) 75%,transparent 75%,transparent)
 }
-.cambio:hover{
-    opacity: .5;
-}
 .fondo{
     background-image: url(../../../resources/img/fondo.jpg);
     background-size: 100% 100%;
@@ -56,9 +53,6 @@
     margin: auto;
     width: 145px;
     height: 145px;
-}
-.perfil img:hover{
-    opacity: .5;
 }
 .perfil p{
     margin-bottom: 0;

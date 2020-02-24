@@ -32,6 +32,7 @@
 .breadcrumb{
     border-radius: 0;
     background: rgba(42, 43, 42, 1);  
+    margin-bottom: 0;
 }
 .breadcrumb a{
     color: #D4AF37;
@@ -42,7 +43,8 @@
 }
 
 .bienvenido{
-    font-size: 40px;
+    font-size: 45px;
+    background-color: #D4AF37;
     color: #000;
 }
 p img{
@@ -51,7 +53,8 @@ p img{
     margin-right: 50px;
 }
 .table{
-    background:  rgb(210, 210, 210);
+    background: rgb(210, 210, 210);
+    width: 100%;
 }
 .atajos{
     border-radius: 5px;

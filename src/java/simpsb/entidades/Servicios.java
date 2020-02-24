@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Entity
 @Table(name = "servicios")
@@ -34,16 +34,17 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Servicios.findByTiempoEstimado", query = "SELECT s FROM Servicios s WHERE s.tiempoEstimado = :tiempoEstimado")})
 public class Servicios implements Serializable {
 
+    @OneToMany(mappedBy = "idServicio")
+    private List<Serviciosextra> serviciosextraList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idServicio")
     private Integer idServicio;
-    @Size(max = 45)
     @Column(name = "nombre")
     private String nombre;
-    @Size(max = 45)
     @Column(name = "estado")
     private String estado;
     @Size(max = 45)
@@ -54,8 +55,6 @@ public class Servicios implements Serializable {
     private String tiempoEstimado;
     @OneToMany(mappedBy = "idServicio")
     private List<Citas> citasList;
-    @OneToMany(mappedBy = "idServicio")
-    private List<Serviciosextra> serviciosextraList;
 
     public Servicios() {
     }
@@ -112,14 +111,6 @@ public class Servicios implements Serializable {
         this.citasList = citasList;
     }
 
-    public List<Serviciosextra> getServiciosextraList() {
-        return serviciosextraList;
-    }
-
-    public void setServiciosextraList(List<Serviciosextra> serviciosextraList) {
-        this.serviciosextraList = serviciosextraList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -143,6 +134,14 @@ public class Servicios implements Serializable {
     @Override
     public String toString() {
         return "simpsb.entidades.Servicios[ idServicio=" + idServicio + " ]";
+    }
+
+    public List<Serviciosextra> getServiciosextraList() {
+        return serviciosextraList;
+    }
+
+    public void setServiciosextraList(List<Serviciosextra> serviciosextraList) {
+        this.serviciosextraList = serviciosextraList;
     }
     
 }

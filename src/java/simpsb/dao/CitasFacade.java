@@ -10,8 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import simpsb.entidades.Citas;
-import simpsb.entidades.Cliente;
+import simpsb.entidades.*;
 
 /**
  *
@@ -31,13 +30,13 @@ public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLoc
     public CitasFacade() {
         super(Citas.class);
     }
-    
-     @Override
-    public List<Citas> citasCli(Cliente idCli) {
+
+    @Override
+    public List<Citas> citasCli(int idCli) {
         List<Citas> listaCitas = null;
         try {
-            Query query = em.createQuery("SELECT c FROM Citas c WHERE c.idCliente.idUsuario = :user");
-            query.setParameter("user", idCli);
+            Query query = em.createQuery("SELECT c FROM Citas c WHERE c.idCliente = :cli");
+            query.setParameter("cli", idCli);
             listaCitas = query.getResultList();
             if (!listaCitas.isEmpty()) {
                 listaCitas.get(0);

@@ -5,23 +5,24 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
-        <title>Supervisor</title>
+        <title>Cliente</title>
         <link href="../../resources/css/Bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="../resources/css/estilos-perfiles.css" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" href="../resources/img/shortcut-logo.png"/>
 
     </h:head>
 
     <h:body class="fondo">
+        <!-- SIDEBAR -->
         <f:view locale="#{languages.idiomaSeleccionado}">
-            <!-- SIDEBAR -->
-            <div class="col-2 sidebar float-left">
-                <div class="perfil">
-                    <p class="text-center text-uppercase">cliente</p>
-                    <img src="../resources/img/perfil.png" alt=""/>
-                    <p class="text-center text-uppercase">#{session.getValue("user").getNombre()} #{session.getValue("user").getApellido()}</p>
-                </div>
-                <div class="modulos">
-                    <h:form>
+            <h:form enctype="multipart/form-data">
+                <div class="col-2 sidebar float-left">
+                    <div class="perfil">
+                        <p class="text-center text-uppercase">cliente</p>
+                        <h:graphicImage value="#{user.getFoto()}" class="estilosFtPerfil"/>
+                        <p class="text-center text-uppercase">#{user.getNombre()} #{user.getApellido()}</p>
+                    </div>
+                    <div class="modulos">
                         <!-- HOME -->
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_home.png" alt=""/>
@@ -45,9 +46,9 @@
                             </p>
                         </div>
                         
-                    </h:form>
                 </div>
             </div>
+        </h:form>
             <!-- AREA DE TRABAJO -->
             <div class="col-10 derecho float-right">
                 <nav class="navbarra float-right col-12">
@@ -62,7 +63,7 @@
                                     <a href="#"><img src="../resources/img/config.png" alt=""/></a>
                                     <ul>
                                         <li>
-                                            <img src="../resources/img/editar-perfil.png" alt=""/><a class="text-left" href="../Supervisor/Usuarios/loginFoto.xhtml" target="area-trabajo">Editar Perfil</a>
+                                            <img src="../resources/img/editar-perfil.png" alt=""/><a class="text-left" href="../Supervisor/Usuarios/editarPerfil.xhtml" target="area-trabajo">Editar Perfil</a>
                                         </li>
                                         <li>
                                             <img src="../resources/img/ajustes.png" alt=""/><a class="text-left" href="../Supervisor/Config/cambiarContra.xhtml?faces-redirect=true" target="area-trabajo">Cambiar contraseña</a>

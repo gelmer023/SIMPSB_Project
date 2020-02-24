@@ -5,6 +5,7 @@
  */
 package simpsb.dao;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -27,6 +28,9 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
     
     @PersistenceContext(unitName = "SIMPSB1PU")
     private EntityManager em;
+
+    @EJB
+    DisponibilidadFacadeLocal disponibilidadFacadeLocal;
 
     @Override
     protected EntityManager getEntityManager() {
