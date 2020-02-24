@@ -28,10 +28,6 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
     
     @PersistenceContext(unitName = "SIMPSB1PU")
     private EntityManager em;
-
-    @EJB
-    DisponibilidadFacadeLocal disponibilidadFacadeLocal;
-
     @Override
     protected EntityManager getEntityManager() {
         return em;

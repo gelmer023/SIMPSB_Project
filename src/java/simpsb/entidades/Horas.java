@@ -32,7 +32,7 @@ import javax.validation.constraints.Size;
 public class Horas implements Serializable {
 
     @OneToMany(mappedBy = "horaFK")
-    private List<Citas> citasList;
+    private List<Citas> listCitas;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -71,12 +71,12 @@ public class Horas implements Serializable {
         this.hora = hora;
     }
 
-    public List<Citas> getCitasList() {
-        return citasList;
+    public List<Citas> getListCitas() {
+        return listCitas;
     }
 
-    public void setCitasList(List<Citas> citasList) {
-        this.citasList = citasList;
+    public void setListCitas(List<Citas> listCitas) {
+        this.listCitas = listCitas;
     }
 
     public List<Disponibilidad> getDisponibilidadList() {
@@ -112,12 +112,5 @@ public class Horas implements Serializable {
         return "simpsb.entidades.Horas[ idHoras=" + idHoras + " ]";
     }
 
-    public List<Citas> getCitasList() {
-        return citasList;
-    }
-
-    public void setCitasList(List<Citas> citasList) {
-        this.citasList = citasList;
-    }
     
 }
