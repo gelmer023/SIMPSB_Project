@@ -30,4 +30,7 @@ public interface ServiciosFacadeLocal {
 
     int count();
     
+    List<Servicios> servActivos();
+    
+    Servicios getValor();
 }

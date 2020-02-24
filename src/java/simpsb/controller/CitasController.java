@@ -57,7 +57,7 @@ public class CitasController {
         usuario = new Usuario();
         horas = new Horas();
         disponibilidad = new Disponibilidad();
-        listServicios = serviciosFacadeLocal.findAll();
+        listServicios = serviciosFacadeLocal.servActivos();
         listEmpleados = empleadoFacadeLocal.findAll();
         validarEstado();
         validarDia();
@@ -228,7 +228,6 @@ public class CitasController {
             
             //ASIGNO LAS LLAVES FORANEAS DE LA CITA
             citas.setIdEmpleado(empleado);
-            citas.setIdServicio(servicios);
             estado.setIdEstado(3);
             citas.setEstadoFK(estado);
             citas.setHoraFK(horas);
@@ -295,13 +294,13 @@ public class CitasController {
     }
 
     public String hacerFactura(Citas ct) {
+        Servicios sv = null;
         try {
             citas = citasFacadeLocal.find(ct.getIdCita());
             servicios = citas.getIdServicio();
             empleado = citas.getIdEmpleado();
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("../Facturacion/crearFactura.xhtml");
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al consultar su cita"));

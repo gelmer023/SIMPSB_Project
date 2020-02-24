@@ -31,4 +31,6 @@ public interface CitasFacadeLocal {
     int count();
     
     List<Citas> citasCli(int idCli);
+    
+    Citas getIdCita(int idCit);
 }

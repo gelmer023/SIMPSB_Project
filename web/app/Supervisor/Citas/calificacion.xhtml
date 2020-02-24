@@ -34,15 +34,15 @@
                 <h:form>
                     <div class="form-row" style="margin-top: 20px">
                         <h:inputHidden value="#{citasController.citas.idCita}"/>
+                        <h:inputHidden value="#{calificacionController.calificacion.idFactura}"/>
                         <h:inputHidden value="#{citasController.servicios.idServicio}"/>
                         <h:inputHidden value="#{citasController.empleado.idEmpleado}"/>    
-                         <div class="form-group col-md-2" style="margin-left: 100px;">
+                        <div class="form-group col-md-2" style="margin-left: 100px;">
                             <h:outputLabel for="servicio" value="#{citasEti.servicio}"/>
                         </div>
                         <div class="form-group col-md-7">
-                            <h:selectOneMenu value="Calificacion" styleClass="form form-control">
-                                <f:selectItem itemLabel="-- Selec
-                                              cionar --" itemValue="0"/>
+                            <h:selectOneMenu value="#{calificacionController.calificacion.valoracion}" styleClass="form form-control">
+                                <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
                                 <f:selectItem itemLabel="Muy malo" itemValue="Muy malo"/>
                                 <f:selectItem itemLabel="Malo" itemValue="Malo"/>
                                 <f:selectItem itemLabel="Regular" itemValue="Regular"/>
@@ -51,25 +51,15 @@
                             </h:selectOneMenu>
                             <h:message for="calificacion"/>
                         </div>
-
                         <div class="form-group col-md-2" style="margin-left: 100px;">
-                            <h:outputLabel for="empleado" value="Empleado:  "/>
-                        </div>
-                        
-                         <div class="form-group col-md-7">
-                           
-                            <h:message for="empleado"/>
-                        </div>
-                        
-                         <div class="form-group col-md-2" style="margin-left: 100px;">
                             <h:outputLabel for="Observacion" value="Observacion"/>
                         </div>
                         <div class="form-group col-md-7">
-                            <h:inputText styleClass="form-control form-fondo form" id="subtotal" value="#{facturaController.detalle.subTotal}"/>
+                            <h:inputTextarea styleClass="form-control form-fondo form" id="observacion" value="#{calificacionController.calificacion.comentario}"/>
                             <h:message for="total"/>
                         </div>
                         <div class="form-group col-md-12">
-                            <h:commandButton value="Calificar" styleClass="btn boton d-block mx-auto" action="#{facturaController.generarFactura()}" style="margin-top: 30px; margin-bottom: 20px;"/>
+                            <h:commandButton value="Calificar" styleClass="btn boton d-block mx-auto" action="#{calificacionController.registrarCalifiacion()}"   style="margin-top: 30px; margin-bottom: 20px;"/>
                         </div>
                     </div>
                 </h:form>

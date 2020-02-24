@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6d7ad972-998c-4cdf-9407-bd765dd5966b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="122"/>
+	<queryString>
+		<![CDATA[SELECT
+     concat(usuario.`nombre`,usuario.`apellido`) AS Empleado,
+     citas.`estadoFK` AS Estado, count(citas.idCita)AS cantidad
+FROM
+     `usuario` usuario INNER JOIN `empleado` empleado ON usuario.`idUsuario` = empleado.`idUsuario`
+     INNER JOIN `citas` citas ON empleado.`idEmpleado` = citas.`idEmpleado` where estadoFK=4
+GROUP BY
+     citas.idEmpleado]]>
+	</queryString>
+	<field name="Empleado" class="java.lang.String"/>
+	<field name="Estado" class="java.lang.Integer"/>
+	<field name="cantidad" class="java.lang.Long"/>
+	<title>
+		<band height="190">
+			<staticText>
+				<reportElement x="213" y="73" width="131" height="31" uuid="59c12cad-ce7c-48fa-b43b-a1d4e4dd13b7"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Calle 62 #75-76
+4567303]]></text>
+			</staticText>
+			<image>
+				<reportElement x="159" y="0" width="253" height="63" uuid="8a0389c1-9853-4540-b0ee-e77c34bb0a8c"/>
+				<imageExpression><![CDATA["C:\\Users\\usuario\\Documents\\NetBeansProjects\\copiasimpsb1234\\SIMPSB1\\web\\resources\\img\\logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="136" y="135" width="383" height="31" uuid="81b727b5-6418-4371-a6ac-895c4138eab4"/>
+				<textElement>
+					<font size="24" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[EMPLEADO CON MAS CITAS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="136" y="166" width="328" height="1" forecolor="#D4AF37" backcolor="#D4AF37" uuid="c14c60e2-2a76-46eb-974d-a6a0a8d08d26"/>
+				<graphicElement>
+					<pen lineWidth="3.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<summary>
+		<band height="552">
+			<pie3DChart>
+				<chart>
+					<reportElement x="11" y="23" width="561" height="345" uuid="88d3db80-ee2e-419d-9523-e37fbc904564"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{Empleado}]]></keyExpression>
+					<valueExpression><![CDATA[$F{cantidad}]]></valueExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+			<textField>
+				<reportElement x="213" y="532" width="80" height="20" uuid="c4ab0917-6035-4279-9ed8-d169dd712343"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="293" y="532" width="40" height="20" uuid="a095285e-c2fa-40f2-a252-0d33b0164cb0"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="532" width="100" height="20" uuid="96a0b220-ec96-4f7b-9159-1262df725dfa"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="469" y="523" width="103" height="29" uuid="fb1762a4-1a12-4fe1-93a9-6135da9305ec"/>
+				<imageExpression><![CDATA["C:\\Users\\usuario\\Documents\\NetBeansProjects\\copiasimpsb1234\\SIMPSB1\\web\\app\\resources\\img\\logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</summary>
+</jasperReport>
