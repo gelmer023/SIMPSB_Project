@@ -1,4 +1,5 @@
 package simpsb.controller;
+
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import java.awt.event.ActionEvent;
@@ -32,6 +33,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @Named
 @RequestScoped
 public class FacturaController {
+
     @EJB
     private FacturaFacadeLocal facturaFacadeLocal;
     @EJB
@@ -44,36 +46,31 @@ public class FacturaController {
     private ServiciosFacadeLocal serviciosFacadeLocal;
     @EJB
     private UsuarioFacadeLocal usuarioFacadeLocal;
-    
+
     private Citas citas;
     private Factura factura;
     private Cliente cliente;
     private Empleado empleado;
     private Usuario usuario;
     private Servicios servicios;
-    
-    
-    
-    
+
     private List<Factura> listFactura;
     private List<Citas> listCitas;
     private List<Cliente> listCliente;
-    private List<Empleado> listEmpleado; 
-     private List<Servicios> listServicios;
-    
-     @PostConstruct
-    public void init(){
-        citas= new Citas();
-        factura= new Factura();
-        usuario = new Usuario();
-        servicios=new Servicios();
-        listCitas= citasFacadeLocal.findAll();
-        listCliente = clienteFacadeLocal.findAll();
-        listEmpleado= empleadoFacadeLocal.findAll();
-        listServicios= serviciosFacadeLocal.findAll();
-    }
+    private List<Empleado> listEmpleado;
+    private List<Servicios> listServicios;
 
-   
+    @PostConstruct
+    public void init() {
+        citas = new Citas();
+        factura = new Factura();
+        usuario = new Usuario();
+        servicios = new Servicios();
+        listCitas = citasFacadeLocal.findAll();
+        listCliente = clienteFacadeLocal.findAll();
+        listEmpleado = empleadoFacadeLocal.findAll();
+        listServicios = serviciosFacadeLocal.findAll();
+    }
 
     public FacturaController() {
     }
@@ -213,16 +210,7 @@ public class FacturaController {
     public void setListServicios(List<Servicios> listServicios) {
         this.listServicios = listServicios;
     }
-public void generarFactura(){
-        try {
-            facturaFacadeLocal.create(factura);
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente su factura"));
-             FacesContext.getCurrentInstance().getExternalContext().redirect("consultarFactura.xhtml");
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al generar su factura"));
-        }
-        
-    }
+
 
     public List<Factura> listarFactura() {
         List<Factura> listFactura = null;
@@ -234,9 +222,10 @@ public void generarFactura(){
         }
         return listFactura;
     }
+
     public String consultarUsuariosFa(Citas ct) {
         try {
-           citas = citasFacadeLocal.find(ct.getIdCita());
+            citas = citasFacadeLocal.find(ct.getIdCita());
             servicios = citas.getIdServicio();
             empleado = citas.getIdEmpleado();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Funciona correcto"));
@@ -246,7 +235,7 @@ public void generarFactura(){
         }
         return "crearFactura";
     }
-    
+
     public String consultarFactura(Factura factu) {
         try {
             factura = facturaFacadeLocal.find(factu.getIdFactura());
@@ -256,7 +245,7 @@ public void generarFactura(){
         }
         return "modificarFactura";
     }
-    
+
     public List<Usuario> listarUsuarios() {
         List<Usuario> listUsu = null;
         try {
@@ -266,6 +255,7 @@ public void generarFactura(){
         }
         return listUsu;
     }
+
     public void modificarFactura() {
         try {
             facturaFacadeLocal.edit(factura);
@@ -275,6 +265,7 @@ public void generarFactura(){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al modificar su factura"));
         }
     }
+
     public List<Citas> listarCitas() {
         List<Citas> listCitas = null;
         try {
@@ -298,15 +289,11 @@ public void generarFactura(){
         }
         return "crearFactura";
     }
-    
-    
-    
-    
+
     public void genenarPDF(ActionEvent actionEvent) {
         //Genero un Hash Map para los parametros del reporte
         Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("idComision",1);
-        
+        parametros.put("idComision", 1);
 
         //Genero la lista para los Fields del reporte
         listarUsuarios();
@@ -317,24 +304,18 @@ public void generarFactura(){
         try {
             //Generar el Reporte
             JasperPrint jasperPrint = JasperFillManager.fillReport(ruta + "/Prueba.jasper", parametros, beanCollectionDataSource);
-            
+
             //Con estas lineas mi navegador puede leer el PDF y lo puede descargar
             HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
             httpServletResponse.addHeader("Content-disposition", "attachment; filename=ReporteFactura.pdf");
             ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
-            
+
             JasperExportManager.exportReportToPdfStream(jasperPrint, servletOutputStream);
             FacesContext.getCurrentInstance().responseComplete();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 }
-
-   
-    
-    
-    
-

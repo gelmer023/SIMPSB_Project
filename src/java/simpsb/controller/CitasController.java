@@ -38,6 +38,8 @@ public class CitasController {
     private CalificacionFacadeLocal calificacionFacadeLocal;
     @EJB
     private ServiciosextraFacadeLocal serviciosExtraFacadeLocal;
+    @EJB
+    private FacturaFacadeLocal facturaFacadeLocal;
 
     private Citas citas;
     private Empleado empleado;
@@ -46,6 +48,7 @@ public class CitasController {
     private Cliente cliente;
     private Estado estado;
     private Horas horas;
+    private Factura factura;
     private Disponibilidad disponibilidad;
     private Calificacion calificacion;
     private Serviciosextra serviciosExtra;
@@ -63,6 +66,7 @@ public class CitasController {
         cliente = new Cliente();
         usuario = new Usuario();
         horas = new Horas();
+        factura = new Factura();
         serviciosExtra = new Serviciosextra();
         calificacion = new Calificacion();
         disponibilidad = new Disponibilidad();
@@ -458,9 +462,42 @@ public class CitasController {
 
     public void generarFactura() {
         try {
+            //Asigno fecha actual
+            String fechaHoy = año + "-" + mes + "-" + dia;
+            Date fechaHoyD = new SimpleDateFormat("yyyy-MM-dd").parse(fechaHoy);
+            factura.setFecha(fechaHoyD);
+
+            //Asigno ID CITA
+            Citas ct = (Citas) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cta");
+            factura.setIdCita(ct.getIdCita());
+
+            //Asigno total
+            factura.setValorTotal(citas.getValorTotal());
+
+            //Asigno IVA
+            int valorTotal = Integer.parseInt(citas.getValorTotal());
+            int valorIVA = (int) (valorTotal * 0.19);
+            String IVA = Integer.toString(valorIVA);
+            factura.setIva(IVA);
+
+            //Asigno subtotal
+            int subtotal = valorTotal - valorIVA;
+            String subTotal = Integer.toString(subtotal);
+            factura.setSubTotal(subTotal);
+
+            //Creo la factura
+            facturaFacadeLocal.create(factura);
+            estado.setIdEstado(4);
+            ct.setEstadoFK(estado);
+            citasFacadeLocal.edit(ct);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
 
         } catch (Exception e) {
-        }
-    }
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al generar la factura"));
 
+        }
+
+    }
 }
