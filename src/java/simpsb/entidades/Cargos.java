@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Entity
 @Table(name = "cargos")

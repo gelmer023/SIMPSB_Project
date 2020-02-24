@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Entity
 @Table(name = "calificacion")
@@ -33,7 +33,6 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Calificacion.findByIdCalificacion", query = "SELECT c FROM Calificacion c WHERE c.idCalificacion = :idCalificacion")
     , @NamedQuery(name = "Calificacion.findByValoracion", query = "SELECT c FROM Calificacion c WHERE c.valoracion = :valoracion")
     , @NamedQuery(name = "Calificacion.findByFecha", query = "SELECT c FROM Calificacion c WHERE c.fecha = :fecha")
-    , @NamedQuery(name = "Calificacion.findByHora", query = "SELECT c FROM Calificacion c WHERE c.hora = :hora")
     , @NamedQuery(name = "Calificacion.findByComentario", query = "SELECT c FROM Calificacion c WHERE c.comentario = :comentario")})
 public class Calificacion implements Serializable {
 
@@ -48,9 +47,6 @@ public class Calificacion implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Column(name = "hora")
-    @Temporal(TemporalType.TIME)
-    private Date hora;
     @Size(max = 220)
     @Column(name = "comentario")
     private String comentario;
@@ -87,14 +83,6 @@ public class Calificacion implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public Date getHora() {
-        return hora;
-    }
-
-    public void setHora(Date hora) {
-        this.hora = hora;
     }
 
     public String getComentario() {

@@ -87,7 +87,11 @@ public class SesionController{
 
     public String logout() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "index.xhtml";
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("../../index.xhtml");
+        } catch (Exception e) {
+        }
+        return "../../index?faces-redirect=true";
     }
     
      public String iniciarSesionFoto() {

@@ -10,12 +10,12 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import simpsb.entidades.*;
-import static simpsb.entidades.Servicios_.valor;
+import simpsb.entidades.Citas;
+import simpsb.entidades.Cliente;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Stateless
 public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLocal {
@@ -31,8 +31,8 @@ public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLoc
     public CitasFacade() {
         super(Citas.class);
     }
-
-    @Override
+    
+     @Override
     public List<Citas> citasCli(Cliente idCli) {
         List<Citas> listaCitas = null;
         try {
@@ -48,11 +48,11 @@ public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLoc
         return listaCitas;
     }
         @Override
-       public Citas getIdCita(Object idCit) {
+       public Citas getIdCita(int idCit) {
         Citas cit = new Citas();
         try {
-            Query query = em.createQuery("SELECT c FROM citas c WHERE c.idCita = :idCit");
-            query.setParameter("idCita", idCit);
+            Query query = em.createQuery("SELECT c FROM Citas c WHERE c.idCita = :idCit");
+            query.setParameter("idCit", idCit);
             List<Citas> lista = query.getResultList();
             if (!lista.isEmpty()) {
                 cit = lista.get(0);
@@ -62,5 +62,6 @@ public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLoc
         }
         return cit;
     }
-       
+
+
 }

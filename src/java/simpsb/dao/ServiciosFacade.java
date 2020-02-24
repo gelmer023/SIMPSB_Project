@@ -11,11 +11,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import simpsb.entidades.Servicios;
-import static simpsb.entidades.Servicios_.valor;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Stateless
 public class ServiciosFacade extends AbstractFacade<Servicios> implements ServiciosFacadeLocal {
@@ -63,4 +62,21 @@ public class ServiciosFacade extends AbstractFacade<Servicios> implements Servic
            }
         return sv;
        }
+
+    @Override
+    public Servicios obtenerValor(int id) {
+        Servicios sv = new Servicios();
+           List<Servicios> listSer= null;
+           try {
+               Query query = em.createQuery("SELECT s FROM Servicios s WHERE s.idServicio = :idServ");
+               query.setParameter("idServ", id);
+               listSer = query.getResultList();
+               if (!listSer.isEmpty()) {
+                    sv = listSer.get(0);
+               }
+           } catch (Exception e){
+               throw e;
+           }
+        return sv;
+    }
 }

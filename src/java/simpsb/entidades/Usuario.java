@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Entity
 @Table(name = "usuario")
@@ -46,23 +46,32 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "idUsuario")
     private Integer idUsuario;
+    @Size(max = 45)
     @Column(name = "nombre")
     private String nombre;
+    @Size(max = 45)
     @Column(name = "apellido")
     private String apellido;
+    @Size(max = 45)
     @Column(name = "genero")
     private String genero;
     @Column(name = "numDocumento")
     private Integer numDocumento;
+    @Size(max = 120)
     @Column(name = "correo")
     private String correo;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "pass")
     private String pass;
+    @Size(max = 150)
     @Column(name = "foto")
     private String foto;
     @OneToMany(mappedBy = "idUsuario")
     private List<Cliente> clienteList;
+    @OneToMany(mappedBy = "idUsuario")
+    private List<Empleado> empleadoList;
     @JoinColumn(name = "idRol", referencedColumnName = "idRol")
     @ManyToOne
     private Roles idRol;
@@ -149,6 +158,14 @@ public class Usuario implements Serializable {
 
     public void setClienteList(List<Cliente> clienteList) {
         this.clienteList = clienteList;
+    }
+
+    public List<Empleado> getEmpleadoList() {
+        return empleadoList;
+    }
+
+    public void setEmpleadoList(List<Empleado> empleadoList) {
+        this.empleadoList = empleadoList;
     }
 
     public Roles getIdRol() {

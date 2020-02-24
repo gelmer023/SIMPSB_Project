@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Entity
 @Table(name = "disponibilidad")
@@ -44,8 +44,12 @@ public class Disponibilidad implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
+    @Size(max = 45)
     @Column(name = "estado")
     private String estado;
+    @JoinColumn(name = "citaFK", referencedColumnName = "idCita")
+    @ManyToOne
+    private Citas citaFK;
     @JoinColumn(name = "horaFK", referencedColumnName = "idHoras")
     @ManyToOne
     private Horas horaFK;
@@ -79,6 +83,14 @@ public class Disponibilidad implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Citas getCitaFK() {
+        return citaFK;
+    }
+
+    public void setCitaFK(Citas citaFK) {
+        this.citaFK = citaFK;
     }
 
     public Horas getHoraFK() {

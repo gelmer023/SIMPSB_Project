@@ -46,8 +46,10 @@ public class Servicios implements Serializable {
     @Size(max = 45)
     @Column(name = "estado")
     private String estado;
+    @Size(max = 45)
     @Column(name = "valor")
     private String valor;
+    @Size(max = 45)
     @Column(name = "tiempoEstimado")
     private String tiempoEstimado;
     @OneToMany(mappedBy = "idServicio")

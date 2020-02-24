@@ -14,18 +14,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Entity
 @Table(name = "factura")
@@ -33,7 +32,10 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f")
     , @NamedQuery(name = "Factura.findByIdFactura", query = "SELECT f FROM Factura f WHERE f.idFactura = :idFactura")
     , @NamedQuery(name = "Factura.findByFecha", query = "SELECT f FROM Factura f WHERE f.fecha = :fecha")
-    , @NamedQuery(name = "Factura.findByHora", query = "SELECT f FROM Factura f WHERE f.hora = :hora")})
+    , @NamedQuery(name = "Factura.findByIdCita", query = "SELECT f FROM Factura f WHERE f.idCita = :idCita")
+    , @NamedQuery(name = "Factura.findBySubTotal", query = "SELECT f FROM Factura f WHERE f.subTotal = :subTotal")
+    , @NamedQuery(name = "Factura.findByIva", query = "SELECT f FROM Factura f WHERE f.iva = :iva")
+    , @NamedQuery(name = "Factura.findByValorTotal", query = "SELECT f FROM Factura f WHERE f.valorTotal = :valorTotal")})
 public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,19 +47,21 @@ public class Factura implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Column(name = "hora")
-    @Temporal(TemporalType.TIME)
-    private Date hora;
+    @Column(name = "idCita")
+    private Integer idCita;
+    @Size(max = 45)
+    @Column(name = "subTotal")
+    private String subTotal;
+    @Size(max = 45)
+    @Column(name = "iva")
+    private String iva;
+    @Size(max = 45)
+    @Column(name = "valorTotal")
+    private String valorTotal;
     @OneToMany(mappedBy = "idFactura")
     private List<Calificacion> calificacionList;
     @OneToMany(mappedBy = "idFactura")
     private List<Comisiones> comisionesList;
-    @JoinColumn(name = "idCita", referencedColumnName = "idCita")
-    @ManyToOne
-    private Citas idCita;
-    @JoinColumn(name = "idDetalleFactura", referencedColumnName = "idDetalleFactura")
-    @ManyToOne
-    private Detallefactura idDetalleFactura;
 
     public Factura() {
     }
@@ -82,12 +86,36 @@ public class Factura implements Serializable {
         this.fecha = fecha;
     }
 
-    public Date getHora() {
-        return hora;
+    public Integer getIdCita() {
+        return idCita;
     }
 
-    public void setHora(Date hora) {
-        this.hora = hora;
+    public void setIdCita(Integer idCita) {
+        this.idCita = idCita;
+    }
+
+    public String getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(String subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public String getIva() {
+        return iva;
+    }
+
+    public void setIva(String iva) {
+        this.iva = iva;
+    }
+
+    public String getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(String valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
     public List<Calificacion> getCalificacionList() {
@@ -104,22 +132,6 @@ public class Factura implements Serializable {
 
     public void setComisionesList(List<Comisiones> comisionesList) {
         this.comisionesList = comisionesList;
-    }
-
-    public Citas getIdCita() {
-        return idCita;
-    }
-
-    public void setIdCita(Citas idCita) {
-        this.idCita = idCita;
-    }
-
-    public Detallefactura getIdDetalleFactura() {
-        return idDetalleFactura;
-    }
-
-    public void setIdDetalleFactura(Detallefactura idDetalleFactura) {
-        this.idDetalleFactura = idDetalleFactura;
     }
 
     @Override

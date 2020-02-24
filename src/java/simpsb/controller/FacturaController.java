@@ -37,8 +37,6 @@ public class FacturaController {
     @EJB
     private CitasFacadeLocal citasFacadeLocal;
     @EJB
-    private DetallefacturaFacadeLocal detallefacturaFacadeLocal;
-    @EJB
     private ClienteFacadeLocal clienteFacadeLocal;
     @EJB
     private EmpleadoFacadeLocal empleadoFacadeLocal;
@@ -48,7 +46,6 @@ public class FacturaController {
     private UsuarioFacadeLocal usuarioFacadeLocal;
     
     private Citas citas;
-    private Detallefactura detalle;
     private Factura factura;
     private Cliente cliente;
     private Empleado empleado;
@@ -60,7 +57,6 @@ public class FacturaController {
     
     private List<Factura> listFactura;
     private List<Citas> listCitas;
-    private List<Detallefactura> listDetallefactura;
     private List<Cliente> listCliente;
     private List<Empleado> listEmpleado; 
      private List<Servicios> listServicios;
@@ -68,12 +64,10 @@ public class FacturaController {
      @PostConstruct
     public void init(){
         citas= new Citas();
-        detalle= new Detallefactura();
         factura= new Factura();
         usuario = new Usuario();
         servicios=new Servicios();
         listCitas= citasFacadeLocal.findAll();
-        listDetallefactura= detallefacturaFacadeLocal.findAll();
         listCliente = clienteFacadeLocal.findAll();
         listEmpleado= empleadoFacadeLocal.findAll();
         listServicios= serviciosFacadeLocal.findAll();
@@ -98,14 +92,6 @@ public class FacturaController {
 
     public void setCitasFacadeLocal(CitasFacadeLocal citasFacadeLocal) {
         this.citasFacadeLocal = citasFacadeLocal;
-    }
-
-    public DetallefacturaFacadeLocal getDetallefacturaFacadeLocal() {
-        return detallefacturaFacadeLocal;
-    }
-
-    public void setDetallefacturaFacadeLocal(DetallefacturaFacadeLocal detallefacturaFacadeLocal) {
-        this.detallefacturaFacadeLocal = detallefacturaFacadeLocal;
     }
 
     public ClienteFacadeLocal getClienteFacadeLocal() {
@@ -138,14 +124,6 @@ public class FacturaController {
 
     public void setCitas(Citas citas) {
         this.citas = citas;
-    }
-
-    public Detallefactura getDetalle() {
-        return detalle;
-    }
-
-    public void setDetalle(Detallefactura detalle) {
-        this.detalle = detalle;
     }
 
     public Factura getFactura() {
@@ -196,14 +174,6 @@ public class FacturaController {
         this.listCitas = listCitas;
     }
 
-    public List<Detallefactura> getListDetallefactura() {
-        return listDetallefactura;
-    }
-
-    public void setListDetallefactura(List<Detallefactura> listDetallefactura) {
-        this.listDetallefactura = listDetallefactura;
-    }
-
     public List<Cliente> getListCliente() {
         return listCliente;
     }
@@ -245,10 +215,6 @@ public class FacturaController {
     }
 public void generarFactura(){
         try {
-            factura.setIdCita(citas);
-            factura.setIdDetalleFactura(detalle);
-            detalle.setIva(16);
-            detallefacturaFacadeLocal.create(detalle);
             facturaFacadeLocal.create(factura);
              FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente su factura"));
              FacesContext.getCurrentInstance().getExternalContext().redirect("consultarFactura.xhtml");
@@ -284,7 +250,6 @@ public void generarFactura(){
     public String consultarFactura(Factura factu) {
         try {
             factura = facturaFacadeLocal.find(factu.getIdFactura());
-            detalle= detallefacturaFacadeLocal.find(factu.getIdDetalleFactura());
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al modificar su factura"));
@@ -304,7 +269,6 @@ public void generarFactura(){
     public void modificarFactura() {
         try {
             facturaFacadeLocal.edit(factura);
-            detallefacturaFacadeLocal.edit(detalle);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente su factura"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("consultarFactura.xhtml");
         } catch (Exception e) {

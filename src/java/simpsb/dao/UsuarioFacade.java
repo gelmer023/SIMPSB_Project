@@ -14,7 +14,7 @@ import simpsb.entidades.Usuario;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFacadeLocal {
@@ -30,9 +30,8 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     public UsuarioFacade() {
         super(Usuario.class);
     }
-   
-
-    @Override
+    
+     @Override
     public Usuario login(Usuario user) {
         Usuario usuario = null;
         try {
@@ -64,4 +63,6 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         }
         return user;
     }
+
+    
 }

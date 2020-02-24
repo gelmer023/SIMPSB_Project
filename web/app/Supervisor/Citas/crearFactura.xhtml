@@ -32,40 +32,36 @@
                     <h1 class="text-center">FACTURAR CITA</h1>
                 </div>
                 <h:form>
+                    <h:inputHidden value="#{citasController.citas.idCita}"/>
                     <h:inputHidden value="#{citasController.servicios.idServicio}"/>
                     <h:inputHidden value="#{citasController.empleado.idEmpleado}"/>
                     <div class="form-group row">
                         <h:outputLabel value="Nombre: " for="nombre"/>
                         <div class="col-sm-10">
-                            <h:inputText a:type="text" readonly="true" class="form form-control" id="nombre" value="#{citasController.citas.idCliente.idUsuario.nombre} #{citasController.citas.idCliente.idUsuario.apellido}"/>
+                            <h:inputText a:type="text" readonly="true" class="form-control-plaintext text-light" id="nombre" value="#{citasController.citas.idCliente.idUsuario.nombre} #{citasController.citas.idCliente.idUsuario.apellido}"/>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <h:outputLabel class="" value="Documento: " for="doc"/>
-                        <div class="col-sm-10">
-                            <h:inputText a:type="text" readonly="true" class="form form-control" id="doc" value="#{citasController.citas.idCliente.idUsuario.numDocumento}"/>
+                        <div cass="col-md-6">
+                            <h:outputLabel class="" value="Documento: " for="doc"/>
                         </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <h:outputLabel value="Servicio: " for="servicio"/>
-                        <div class="col-sm-10">
-                            <h:inputText a:type="text" readonly="true" class="form form-control" id="servicio" value="#{citasController.citas.idServicio.nombre}"/>
+                        <div class="col-md-6">
+                            <h:inputText a:type="text" readonly="true" class="form-control-plaintext text-light" id="doc" value="#{citasController.citas.idCliente.idUsuario.numDocumento}"/>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <h:outputLabel value="Empleado: " for="empleado"/>
                         <div class="col-sm-10">
-                            <h:inputText a:type="text" readonly="true" class="form form-control" id="empleado" value="#{citasController.citas.idEmpleado.idUsuario.nombre} #{citasController.citas.idEmpleado.idUsuario.apellido}"/>
+                            <h:inputText a:type="text" readonly="true" class="form-control-plaintext text-light" id="empleado" value="#{citasController.citas.idEmpleado.idUsuario.nombre} #{citasController.citas.idEmpleado.idUsuario.apellido}"/>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <h:outputLabel class="" value="Total: " for="total"/>
-                        <div class="col-sm-10">
-                            <h:inputText a:type="text" readonly="true" class="form form-control" id="total" value="#{citasController.citas.valorTotal}"/>
+                        <div class="col-md-3">
+                            <h:inputText a:type="text" readonly="true" class="form-control-plaintext text-light" id="total" value="#{citasController.citas.valorTotal}"/>
                         </div>
                     </div>
 
@@ -74,9 +70,6 @@
                     </div>
                     <div class="form-group col-md-4">
                         <h:commandButton value="Facturar" styleClass="btn boton d-block mx-auto" action="#{facturaController.generarFactura()}" style="margin-top: 30px; margin-bottom: 20px;"/>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <h:commandButton value="Calificar" styleClass="btn boton d-block mx-auto" action="calificacion?faces-redirect=true" style="margin-top: 30px; margin-bottom: 20px;"/>
                     </div>
 
                 </h:form>

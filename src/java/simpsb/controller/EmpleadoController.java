@@ -184,7 +184,7 @@ public class EmpleadoController {
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
         String ruta = servletContext.getRealPath("reportes/certificado.jasper");
        
-        rCliente.getReporte(ruta);        
+        rCliente.getCertificado(ruta);
         FacesContext.getCurrentInstance().responseComplete();               
     }
 

@@ -11,7 +11,7 @@ import simpsb.entidades.Comisiones;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Local
 public interface ComisionesFacadeLocal {

@@ -7,11 +7,13 @@ package simpsb.dao;
 
 import java.util.List;
 import javax.ejb.Local;
-import simpsb.entidades.*;
+import simpsb.entidades.Citas;
+import simpsb.entidades.Disponibilidad;
+import simpsb.entidades.Horas;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Local
 public interface DisponibilidadFacadeLocal {
@@ -30,5 +32,6 @@ public interface DisponibilidadFacadeLocal {
 
     int count();
     
-    List<Horas> disponibles();
+    List<Horas> disponibles(Citas ct);
+    
 }

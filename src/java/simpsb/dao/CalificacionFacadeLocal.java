@@ -11,7 +11,7 @@ import simpsb.entidades.Calificacion;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Local
 public interface CalificacionFacadeLocal {

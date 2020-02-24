@@ -45,9 +45,6 @@
                     </div>
 
                     <h:form>
-                        <h:inputHidden value="#{citasController.citas.idCita}"/>
-                        <h:inputHidden value="#{citasController.servicios.idServicio}"/>
-                        <h:inputHidden value="#{citasController.empleado.idEmpleado}"/>
                         <div class="form-group col-md-12">
                             <h:outputLabel for="servicio" value="#{citasEti.servicio}"/>
                             <h:selectOneMenu id="servicio" value="#{citasController.servicios.idServicio}" styleClass="form form-control">
@@ -59,7 +56,7 @@
                             <h:message for="servicio"/>
                         </div>
                         <h:commandButton styleClass="btn boton d-block mx-auto" 
-                                         action="#{serviciosExtra.registrarServEx()}" 
+                                         action="#{citasController.agregarServicios()}" 
                                          value="Agregar"/> 
                     </h:form>
                 </div>

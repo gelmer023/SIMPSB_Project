@@ -8,16 +8,12 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     empleado.`idEmpleado` AS idEmpleado,
      concat(usuario.`nombre`, 
      usuario.`apellido`) as Nombre,
      usuario.`numDocumento` AS numDocumento
 FROM
      `usuario` usuario INNER JOIN `empleado` empleado ON usuario.`idUsuario` = empleado.`idUsuario` where usuario.idUsuario=$P{idUsuario}]]>
 	</queryString>
-	<field name="idEmpleado" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="Nombre" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -30,7 +26,7 @@ FROM
 	<title>
 		<band height="106">
 			<staticText>
-				<reportElement x="213" y="73" width="131" height="31" uuid="59c12cad-ce7c-48fa-b43b-a1d4e4dd13b7"/>
+				<reportElement x="186" y="73" width="158" height="31" uuid="59c12cad-ce7c-48fa-b43b-a1d4e4dd13b7"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Calle 62 #75-76
 4567303]]></text>
@@ -55,7 +51,7 @@ FROM
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="224">
+		<band height="227">
 			<staticText>
 				<reportElement x="43" y="13" width="484" height="144" uuid="07011739-0fcb-4c35-9491-5f112fb71405"/>
 				<textElement>
@@ -86,7 +82,7 @@ Este certificado fue expedido a los dias
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="54">
+		<band height="56">
 			<textField>
 				<reportElement x="201" y="36" width="80" height="13" uuid="546159e7-e2e8-4df0-8d5b-684313782f94"/>
 				<textElement textAlignment="Right"/>

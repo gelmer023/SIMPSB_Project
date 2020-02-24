@@ -82,27 +82,21 @@ public class Reportes {
     
     
      public void getCertificado(String ruta) throws  ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-        Usuario usR = null;
         Connection conexion;
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "");
-        Cliente cl = null;
-        
-
-
-        try {
-            //Se definen los parametros si es que el reporte necesita
+         //Se definen los parametros si es que el reporte necesita
             Map<String, Object> parametros = new HashMap<String, Object>();
-            usR = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-            parametros.put("idUsuario",usR);
- 
+            parametros.put("idUsuario", 6);
+        try {
+           
             File file = new File(ruta);
 
             HttpServletResponse httpServletResponse = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
 
             httpServletResponse.setContentType("application/pdf");
             httpServletResponse.addHeader("Content-Type", "application/pdf");
-            httpServletResponse.addHeader("Content-disposition", "attachment; filename=ReporteUsuarios.pdf");
+            httpServletResponse.addHeader("Content-disposition", "attachment; filename=jk.pdf");
             ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
             
             JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());

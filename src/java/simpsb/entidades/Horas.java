@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Entity
 @Table(name = "horas")
@@ -37,8 +37,11 @@ public class Horas implements Serializable {
     @Basic(optional = false)
     @Column(name = "idHoras")
     private Integer idHoras;
+    @Size(max = 45)
     @Column(name = "hora")
     private String hora;
+    @OneToMany(mappedBy = "horaFK")
+    private List<Citas> citasList;
     @OneToMany(mappedBy = "horaFK")
     private List<Disponibilidad> disponibilidadList;
 
@@ -63,6 +66,14 @@ public class Horas implements Serializable {
 
     public void setHora(String hora) {
         this.hora = hora;
+    }
+
+    public List<Citas> getCitasList() {
+        return citasList;
+    }
+
+    public void setCitasList(List<Citas> citasList) {
+        this.citasList = citasList;
     }
 
     public List<Disponibilidad> getDisponibilidadList() {

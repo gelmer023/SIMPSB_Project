@@ -11,7 +11,7 @@ import simpsb.entidades.Cliente;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Local
 public interface ClienteFacadeLocal {
@@ -30,6 +30,5 @@ public interface ClienteFacadeLocal {
 
     int count();
     
-     Cliente getIdCl(Object idUs);
-    
+    Cliente getIdCl(Object idUs);
 }

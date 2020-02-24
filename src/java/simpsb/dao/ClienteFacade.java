@@ -14,7 +14,7 @@ import simpsb.entidades.Cliente;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Stateless
 public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFacadeLocal {
@@ -30,7 +30,7 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
     public ClienteFacade() {
         super(Cliente.class);
     }
-   
+    
     @Override
     public Cliente getIdCl(Object idUs) {
         Cliente cl = new Cliente();
@@ -46,4 +46,5 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
         }
         return cl;
     }
+
 }

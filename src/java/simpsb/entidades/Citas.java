@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Entity
 @Table(name = "citas")
@@ -34,7 +34,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Citas.findAll", query = "SELECT c FROM Citas c")
     , @NamedQuery(name = "Citas.findByIdCita", query = "SELECT c FROM Citas c WHERE c.idCita = :idCita")
     , @NamedQuery(name = "Citas.findByFecha", query = "SELECT c FROM Citas c WHERE c.fecha = :fecha")
-    , @NamedQuery(name = "Citas.findByHora", query = "SELECT c FROM Citas c WHERE c.hora = :hora")
     , @NamedQuery(name = "Citas.findByValorTotal", query = "SELECT c FROM Citas c WHERE c.valorTotal = :valorTotal")})
 public class Citas implements Serializable {
 
@@ -47,9 +46,6 @@ public class Citas implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Column(name = "hora")
-    @Temporal(TemporalType.TIME)
-    private Date hora;
     @Size(max = 45)
     @Column(name = "valorTotal")
     private String valorTotal;
@@ -65,10 +61,13 @@ public class Citas implements Serializable {
     @JoinColumn(name = "estadoFK", referencedColumnName = "idEstado")
     @ManyToOne
     private Estado estadoFK;
+    @JoinColumn(name = "horaFK", referencedColumnName = "idHoras")
+    @ManyToOne
+    private Horas horaFK;
     @OneToMany(mappedBy = "idCita")
     private List<Serviciosextra> serviciosextraList;
-    @OneToMany(mappedBy = "idCita")
-    private List<Factura> facturaList;
+    @OneToMany(mappedBy = "citaFK")
+    private List<Disponibilidad> disponibilidadList;
 
     public Citas() {
     }
@@ -91,14 +90,6 @@ public class Citas implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public Date getHora() {
-        return hora;
-    }
-
-    public void setHora(Date hora) {
-        this.hora = hora;
     }
 
     public String getValorTotal() {
@@ -141,6 +132,14 @@ public class Citas implements Serializable {
         this.estadoFK = estadoFK;
     }
 
+    public Horas getHoraFK() {
+        return horaFK;
+    }
+
+    public void setHoraFK(Horas horaFK) {
+        this.horaFK = horaFK;
+    }
+
     public List<Serviciosextra> getServiciosextraList() {
         return serviciosextraList;
     }
@@ -149,12 +148,12 @@ public class Citas implements Serializable {
         this.serviciosextraList = serviciosextraList;
     }
 
-    public List<Factura> getFacturaList() {
-        return facturaList;
+    public List<Disponibilidad> getDisponibilidadList() {
+        return disponibilidadList;
     }
 
-    public void setFacturaList(List<Factura> facturaList) {
-        this.facturaList = facturaList;
+    public void setDisponibilidadList(List<Disponibilidad> disponibilidadList) {
+        this.disponibilidadList = disponibilidadList;
     }
 
     @Override

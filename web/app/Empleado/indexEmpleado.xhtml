@@ -57,13 +57,15 @@
                         </div>
 
 
-                        <!-- REPORTES 
+                        <!-- REPORTES -->
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_reportes.png" alt=""/>
                             <h4>
-                                <a href="../Error/404.xhtml?faces-redirect=true" target="area-trabajo" >#{empleadoController.verCertificado()}</a>
+                                 <h:commandButton actionListener="#{empleadoController.verCertificado()}" value="Cer" styleClass="btn btn-warning">
+
+                                </h:commandButton>
                             </h4>
-                        </div> -->
+                        </div> 
                     </h:form>
                 </div>
             </div>
@@ -87,7 +89,7 @@
                                             <img src="../resources/img/ajustes.png" alt=""/><a class="text-left" href="../Supervisor/Config/cambiarContra.xhtml?faces-redirect=true" target="area-trabajo">Cambiar contraseña</a>
                                         </li>
                                         <li>	
-                                            <img src="../resources/img/logout.png" alt=""/><a class="text-left" href="#{sesionController.logout()}">#{perfilEti.cerrarSesion}</a>
+                                            <img src="../resources/img/logout.png" alt=""/><a class="text-left">#{perfilEti.cerrarSesion}</a>
                                         </li>
                                     </ul>
                                 </li>

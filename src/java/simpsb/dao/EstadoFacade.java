@@ -12,7 +12,7 @@ import simpsb.entidades.Estado;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Stateless
 public class EstadoFacade extends AbstractFacade<Estado> implements EstadoFacadeLocal {

@@ -11,7 +11,7 @@ import simpsb.entidades.Servicios;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Local
 public interface ServiciosFacadeLocal {
@@ -33,4 +33,8 @@ public interface ServiciosFacadeLocal {
     List<Servicios> servActivos();
     
     Servicios getValor();
+    
+    Servicios obtenerValor(int id);
+
+    
 }

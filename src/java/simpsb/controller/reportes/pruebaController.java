@@ -43,8 +43,6 @@ public class pruebaController {
     @EJB
     private CitasFacadeLocal citasFacadeLocal;
     @EJB
-    private DetallefacturaFacadeLocal detallefacturaFacadeLocal;
-    @EJB
     private ClienteFacadeLocal clienteFacadeLocal;
     @EJB
     private EmpleadoFacadeLocal empleadoFacadeLocal;
@@ -56,7 +54,6 @@ public class pruebaController {
     private ComisionesFacadeLocal comisionesFacadeLocal;
     
     private Citas citas;
-    private Detallefactura detalle;
     private Factura factura;
     private Cliente cliente;
     private Empleado empleado;
@@ -68,7 +65,6 @@ public class pruebaController {
     
     private List<Factura> listFactura;
     private List<Citas> listCitas;
-    private List<Detallefactura> listDetallefactura;
     private List<Cliente> listCliente;
     private List<Empleado> listEmpleado; 
     private List<Servicios> listServicios;
@@ -77,12 +73,10 @@ public class pruebaController {
      @PostConstruct
     public void init(){
         citas= new Citas();
-        detalle= new Detallefactura();
         factura= new Factura();
         usuario = new Usuario();
         servicios=new Servicios();
         listCitas= citasFacadeLocal.findAll();
-        listDetallefactura= detallefacturaFacadeLocal.findAll();
         listCliente = clienteFacadeLocal.findAll();
         listEmpleado= empleadoFacadeLocal.findAll();
         listServicios= serviciosFacadeLocal.findAll();
