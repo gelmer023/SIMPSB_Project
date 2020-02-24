@@ -5,13 +5,16 @@
  */
 package simpsb.dao;
 
+import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import simpsb.entidades.Disponibilidad;
 import simpsb.entidades.Horas;
+import simpsb.entidades.Citas;
 
 /**
  *
@@ -23,6 +26,9 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
     @PersistenceContext(unitName = "SIMPSB1PU")
     private EntityManager em;
 
+    @EJB
+    DisponibilidadFacadeLocal disponibilidadFacadeLocal;
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -31,16 +37,27 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
     public DisponibilidadFacade() {
         super(Disponibilidad.class);
     }
-    
+
     @Override
-    public List<Horas> disponibles() {
+    public List<Horas> disponibles(Citas ct) {
         List<Horas> listDis = null;
+
         try {
-            Query query = em.createQuery("SELECT h from Horas h INNER JOIN h.disponibilidadList d WHERE d.estado = :estado ");
-            query.setParameter("estado", "Disponible");
-            listDis = query.getResultList();
-            if (!listDis.isEmpty()) {
-                listDis.get(0);
+            List<Disponibilidad> lista = disponibilidadFacadeLocal.findAll();
+            if (!lista.isEmpty()) {
+                Query query = em.createQuery("SELECT h from Horas h INNER JOIN h.disponibilidadList d WHERE d.estado = :estado AND d.fecha = :fecha");
+                query.setParameter("estado", "Disponible");
+                query.setParameter("fecha", ct.getFecha());
+                listDis = query.getResultList();
+                if (!listDis.isEmpty()) {
+                    listDis.get(0);
+                }
+            } else {
+                Query query = em.createQuery("SELECT h from Horas h");
+                listDis = query.getResultList();
+                if (!listDis.isEmpty()) {
+                    listDis.get(0);
+                }
             }
         } catch (Exception e) {
             throw e;

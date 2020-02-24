@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Local;
 import simpsb.entidades.Disponibilidad;
 import simpsb.entidades.Horas;
+import simpsb.entidades.Citas;
 
 /**
  *
@@ -31,5 +32,5 @@ public interface DisponibilidadFacadeLocal {
 
     int count();
     
-    List<Horas> disponibles();
+    List<Horas> disponibles(Citas ct);
 }

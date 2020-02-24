@@ -59,7 +59,6 @@ public class CitasController {
         disponibilidad = new Disponibilidad();
         listServicios = serviciosFacadeLocal.findAll();
         listEmpleados = empleadoFacadeLocal.findAll();
-        listHoras = disponibilidadFacadeLocal.disponibles();
         validarEstado();
         validarDia();
     }
@@ -212,54 +211,44 @@ public class CitasController {
         this.año = año;
     }
 
-    private void mostrarHoras() {
-        
-    }
-
-    public void validarDisponibilidad() {
-        Citas ct = (Citas) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cita");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        //FORMATOS FECHA ACTUAL
-        String fechaLocal = año + "0" + mes + "0" + dia;
-        int fechaActual = Integer.parseInt(fechaLocal);
-        //FORMATOS FECHA DE MAÑANA
-        String fechaLocalMañana = año + "0" + mes + "0" + dia;
-        int fechaMañana = Integer.parseInt(fechaLocal);
-        //FORMATOS FECHA DE LA CITA
-        String fechaString = sdf.format(ct.getFecha());
-        int fechaCita = Integer.parseInt(fechaString);
-        try {
-            if (fechaCita == fechaActual) {
-                disponibilidadFacadeLocal.disponibles();
-            }
-        } catch (Exception e) {
-
-        }
+    public void consultarFecha() {
+        citas.getFecha();
+        listHoras = disponibilidadFacadeLocal.disponibles(citas);
     }
 
     public void generarCita() {
         Cliente cl = null;
         Usuario us = null;
+        Citas ct = null;
         try {
             //TRAIGO DATOS DEL USUARIO QUE AGENDA LA CITA
             us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
-            cl = clienteFacadeLocal.getIdCl(us);
+            cl = clienteFacadeLocal.getIdCl(us.getIdUsuario());
             citas.setIdCliente(cl);
-            //ASIGNO EL VALOR DE LA CITA
-            String valor = servicios.getValor();
-            citas.setValorTotal(valor);
+            
             //ASIGNO LAS LLAVES FORANEAS DE LA CITA
             citas.setIdEmpleado(empleado);
             citas.setIdServicio(servicios);
             estado.setIdEstado(3);
             citas.setEstadoFK(estado);
+            citas.setHoraFK(horas);
+            
+            //ASIGNO EL VALOR DE LA CITA
+            String valor = servicios.getValor();
+            citas.setValorTotal(valor);
+            
+            
             //CREO LA CITA
             citasFacadeLocal.create(citas);
-            //CREO UNA VARIABLE DE SESIÓN CON EL OBJETO CITA
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("cita", citas);
-            //EJECUTO LOS METODOS EN EL BACKGROUND
-            validarDisponibilidad();
-            //ENVIO MENSAJES
+            
+            //CREO DATOS DE LA TABLA DISPONIBILIDAD
+            disponibilidad.setEstado("Agendada");
+            disponibilidad.setCitaFK(citas);
+            Date f = citas.getFecha();
+            disponibilidad.setFecha(f);
+            disponibilidad.setHoraFK(horas);
+            disponibilidadFacadeLocal.create(disponibilidad);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("fecha");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente la cita"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
         } catch (Exception e) {

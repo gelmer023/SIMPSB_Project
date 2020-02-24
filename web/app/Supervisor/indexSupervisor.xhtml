@@ -63,7 +63,7 @@
                                 <a href="#">#{perfilEti.Citas}</a>
                             </h5>
                             <p>
-                                <a href="Citas/agendarCita.xhtml" target="area-trabajo">#{perfilEti.agendarCita}</a>
+                                <a href="Citas/agendarCita.xhtml" target="area-trabajo" onclick="validar()">#{perfilEti.agendarCita}</a>
                             </p>
                             <p>
                                 <a href="Citas/consultarCita.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.consultarCita}</a>
@@ -96,15 +96,6 @@
                             <p><a href="Usuarios/crearUsuario.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.registrarUsuario}</a></p>
                             <p><a href="Usuarios/consultarUsuario.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.consultarUsuarios}</a></p>
                         </div>
-
-                        <!-- REPORTES 
-                        <div class="modulo d-block mx-auto">
-                            <img class="float-left" src="../resources/img/icono_reportes.png" alt=""/>
-                            <h4>
-                                <a href="../Error/404.xhtml?faces-redirect=true" target="area-trabajo">{perfilEti.Reportes}</a>
-                            </h4>
-                        </div> -->
-
                     </div>
                 </div>
             </h:form>
@@ -140,7 +131,7 @@
             </div>
         </f:view>
     </h:body>
-
+    <script src="../resources/js/ocultar-mostrar.js" type="text/javascript"></script>
     <!-- SCRIPTS -->
     <script src="../../resources/js/Bootstrap/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
     <script src="../../resources/js/Bootstrap/popper.min.js" type="text/javascript"></script>

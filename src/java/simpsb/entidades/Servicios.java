@@ -34,6 +34,9 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Servicios.findByTiempoEstimado", query = "SELECT s FROM Servicios s WHERE s.tiempoEstimado = :tiempoEstimado")})
 public class Servicios implements Serializable {
 
+    @OneToMany(mappedBy = "idServicio")
+    private List<Serviciosextra> serviciosextraList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -129,6 +132,14 @@ public class Servicios implements Serializable {
     @Override
     public String toString() {
         return "simpsb.entidades.Servicios[ idServicio=" + idServicio + " ]";
+    }
+
+    public List<Serviciosextra> getServiciosextraList() {
+        return serviciosextraList;
+    }
+
+    public void setServiciosextraList(List<Serviciosextra> serviciosextraList) {
+        this.serviciosextraList = serviciosextraList;
     }
     
 }

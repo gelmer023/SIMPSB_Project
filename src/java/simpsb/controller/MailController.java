@@ -128,7 +128,7 @@ public class MailController {
                 + "<h1 style = \"margin-bottom: 40px;\">Se ha agendado correctamente su cita</h1>"
                 + "<p style = \"color: rgb(110,110,110); margin-bottom: -10px;\">" + citas.getIdCliente().getIdUsuario().getNombre() + " su cita se ha agendado exitosamente</p>"
                 + "<p style = \"color: rgb(110,110,110);\">Datos de la cita:</p>"
-                + "<p style = \"color: rgb(110,110,110);\"> Hora: " + citas.getHora() + "</p>"
+                + "<p style = \"color: rgb(110,110,110);\"> Hora: " + citas.getHoraFK().getHora() + "</p>"
                 + "<p style = \"color: rgb(110,110,110);\"> Fecha: " + citas.getFecha() + "</p>"
                 + "<p style = \"color: rgb(110,110,110);\"> " + citas.getIdEmpleado().getIdCargo().getCargo() + ": " + citas.getIdEmpleado().getIdUsuario().getNombre() + "</p>"
                 + "<p style = \"color: rgb(110,110,110);\"> Servicios: " + citas.getIdServicio().getNombre() + "</p>"

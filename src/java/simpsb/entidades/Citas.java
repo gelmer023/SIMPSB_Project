@@ -7,7 +7,6 @@ package simpsb.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,10 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -33,7 +32,6 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Citas.findAll", query = "SELECT c FROM Citas c")
     , @NamedQuery(name = "Citas.findByIdCita", query = "SELECT c FROM Citas c WHERE c.idCita = :idCita")
     , @NamedQuery(name = "Citas.findByFecha", query = "SELECT c FROM Citas c WHERE c.fecha = :fecha")
-    , @NamedQuery(name = "Citas.findByHora", query = "SELECT c FROM Citas c WHERE c.hora = :hora")
     , @NamedQuery(name = "Citas.findByValorTotal", query = "SELECT c FROM Citas c WHERE c.valorTotal = :valorTotal")})
 public class Citas implements Serializable {
 
@@ -46,9 +44,6 @@ public class Citas implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Column(name = "hora")
-    @Temporal(TemporalType.TIME)
-    private Date hora;
     @Column(name = "valorTotal")
     private String valorTotal;
     @JoinColumn(name = "idServicio", referencedColumnName = "idServicio")
@@ -63,10 +58,9 @@ public class Citas implements Serializable {
     @JoinColumn(name = "estadoFK", referencedColumnName = "idEstado")
     @ManyToOne
     private Estado estadoFK;
-    @OneToMany(mappedBy = "citaFK")
-    private List<Disponibilidad> disponibilidadList;
-    @OneToMany(mappedBy = "idCita")
-    private List<Factura> facturaList;
+    @JoinColumn(name = "horaFK", referencedColumnName = "idHoras")
+    @ManyToOne
+    private Horas horaFK;
 
     public Citas() {
     }
@@ -89,14 +83,6 @@ public class Citas implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public Date getHora() {
-        return hora;
-    }
-
-    public void setHora(Date hora) {
-        this.hora = hora;
     }
 
     public String getValorTotal() {
@@ -139,20 +125,12 @@ public class Citas implements Serializable {
         this.estadoFK = estadoFK;
     }
 
-    public List<Disponibilidad> getDisponibilidadList() {
-        return disponibilidadList;
+    public Horas getHoraFK() {
+        return horaFK;
     }
 
-    public void setDisponibilidadList(List<Disponibilidad> disponibilidadList) {
-        this.disponibilidadList = disponibilidadList;
-    }
-
-    public List<Factura> getFacturaList() {
-        return facturaList;
-    }
-
-    public void setFacturaList(List<Factura> facturaList) {
-        this.facturaList = facturaList;
+    public void setHoraFK(Horas horaFK) {
+        this.horaFK = horaFK;
     }
 
     @Override

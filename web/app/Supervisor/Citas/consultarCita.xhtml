@@ -91,7 +91,7 @@
 
                                     <h:column>
                                         <f:facet name="header">#{citasEti.enc_hora}</f:facet>
-                                        <h:outputText id="hora" value="#{cita.hora}">
+                                        <h:outputText id="hora" value="#{cita.horaFK.hora}">
                                             <f:convertDateTime dateStyle="full" pattern="h:mm a"></f:convertDateTime>
                                         </h:outputText>
                                         <h:message for="hora"/>
@@ -116,7 +116,7 @@
                                         <h:commandButton class="btn btn-danger ocultar" 
                                                          onclick="javascript:if (!confirm('¿Está seguro que desea cancelar esta cita?'))
                                                                      return false;" 
-                                                                     action="#{citasController.cancelarCita(cita)}" 
+                                                         action="#{citasController.cancelarCita(cita)}" 
                                                          value="Cancelar"/>
                                     </h:column>
                                 </h:dataTable>
@@ -126,20 +126,12 @@
                 </div>
             </div>
         </f:view>
+        <script src="../../resources/js/hideButtons.js" type="text/javascript"></script>
         <!-- BOOTSTRAP -->
         <script src="../../../resources/js/Bootstrap/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
         <script src="../../../resources/js/Bootstrap/popper.min.js" type="text/javascript"></script>
         <script src="../../../resources/js/Bootstrap/bootstrap.min.js" type="text/javascript"></script>
         <!-- DATATABLES -->
-        <script>
-            function hideButtons(){
-        var estado = document.getElementById("estado").innerHTML;
-        if (estado === "Cancelada") {
-        $(".ocultar").hide();
-        }
-     };
-     window.onload = hideButtons();
-    </script>
         <script src="../../../resources/js/Tablas/dataTables.buttons.min.js" type="text/javascript"></script>
         <script src="../../../resources/js/Tablas/datatables.min.js" type="text/javascript"></script>
         <script src="../../../resources/js/Tablas/jszip.min.js" type="text/javascript"></script>

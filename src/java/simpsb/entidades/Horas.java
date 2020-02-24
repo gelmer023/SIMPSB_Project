@@ -31,6 +31,9 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Horas.findByHora", query = "SELECT h FROM Horas h WHERE h.hora = :hora")})
 public class Horas implements Serializable {
 
+    @OneToMany(mappedBy = "horaFK")
+    private List<Citas> citasList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -97,6 +100,14 @@ public class Horas implements Serializable {
     @Override
     public String toString() {
         return "simpsb.entidades.Horas[ idHoras=" + idHoras + " ]";
+    }
+
+    public List<Citas> getCitasList() {
+        return citasList;
+    }
+
+    public void setCitasList(List<Citas> citasList) {
+        this.citasList = citasList;
     }
     
 }

@@ -32,7 +32,7 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
     }
    
     @Override
-    public Cliente getIdCl(Object idUs) {
+    public Cliente getIdCl(int idUs) {
         Cliente cl = new Cliente();
         try {
             Query query = em.createQuery("SELECT c FROM Cliente c WHERE c.idUsuario.idUsuario = :idUs");

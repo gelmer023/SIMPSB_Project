@@ -28,18 +28,22 @@
             </ol>
         </nav>
 
-        <div class="bienvenido text-center">BIENVENIDO #{session.getValue("user").getNombre()} #{session.getValue("user").getApellido()}</div>
+        <div class="bienvenido text-center">Bienvenid@ #{session.getValue("user").getNombre()} #{session.getValue("user").getApellido()}</div>
         <div class="row">
             <div class="atajos col-3">
                 <p class="text-uppercase"> <img src="../resources/img/icono_atajos.png" alt="Icono atajos"/>Atajos</p>
                 <div>
                     <h2>
                         <img src="../resources/img/icono-usuarios.png" alt="Consultar Usuarios"/>
-                        <a class="text-decoration-none text-uppercase" href="../Supervisor/Usuarios/consultarUsuario.xhtml">Consultar usuarios</a>
+                        <a class="text-decoration-none text-uppercase" href="../Supervisor/Usuarios/consultarUsuario.xhtml">Usuarios</a>
                     </h2>
                     <h2>
                         <img src="../resources/img/icono_citas.png" class="tamañoImg" alt="Citas Icono"/>
-                        <a class="text-decoration-none text-uppercase" href="#">Citas</a>
+                        <a class="text-decoration-none text-uppercase" href="../Supervisor/Citas/consultarCita.xhtml">Citas</a>
+                    </h2>
+                    <h2>
+                        <img src="../resources/img/icono_facturacion.png" class="tamañoImg" alt="Factura Icono"/>
+                        <a class="text-decoration-none text-uppercase" href="../Supervisor/Facturacion/crearFactura.xhtml">Facturar</a>
                     </h2>
                 </div>
             </div>
@@ -75,7 +79,7 @@
 
                         <h:column>
                             <f:facet name="header">#{citasEti.enc_hora}</f:facet>
-                            <h:outputText id="hora" value="#{cita.hora}">
+                            <h:outputText id="hora" value="#{cita.horaFK.hora}">
                                 <f:convertDateTime dateStyle="full" pattern="h:mm a"></f:convertDateTime>
                             </h:outputText>
                             <h:message for="hora"/>
@@ -95,11 +99,11 @@
 
                         <h:column>
                             <f:facet name="header">#{universEti.acciones}</f:facet>
-                            <h:commandButton class="btn btn-warning" action="#{reporteController.consultarCita(cita)}" value="#{universEti.modificar}"/>
+                            <h:commandButton class="btn btn-warning" action="#{usuarioController.consultarCita(cita)}" value="#{universEti.modificar}"/>
                             <h:commandButton class="btn btn-danger" 
                                              onclick="javascript:if (!confirm('¿Está seguro que desea eliminar este horario?'))
                                                          return false;" 
-                                             action="#{reporteController.eliminarCita(cita)}" 
+                                             action="#{usuarioController.eliminarCita(cita)}" 
                                              value="#{universEti.eliminar}"/>
                         </h:column>
                     </h:dataTable>
