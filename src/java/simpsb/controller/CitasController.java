@@ -71,7 +71,7 @@ public class CitasController {
         horas = new Horas();
         factura = new Factura();
         porcentajepagos = new Porcentajepagos();
-        
+
         serviciosExtra = new Serviciosextra();
         calificacion = new Calificacion();
         disponibilidad = new Disponibilidad();
@@ -526,16 +526,15 @@ public class CitasController {
             //Creo la factura
             facturaFacadeLocal.create(factura);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("factura", factura);
-            
+
             //Cambio el estado de la cita a completada
             estado.setIdEstado(4);
             ct.setEstadoFK(estado);
             citasFacadeLocal.edit(ct);
-            
+
             //Ejecuto el metodo para calcular el porcentaje
-            PagosController pagosC = new PagosController();
             generarPorcentaje();
-            
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
 
@@ -544,25 +543,25 @@ public class CitasController {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al generar la factura"));
 
         }
-
     }
-    public void generarPorcentaje(){
+
+    public void generarPorcentaje() {
         Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
         try {
             //Asigno el porcentaje
-//            int valorTotal = Integer.parseInt(bill.getValorTotal());
-//            int porcentaje = (int) (valorTotal * 0.15);
-//            porcentajepagos.setPorcentaje(porcentaje);
-//            
-//            //Asigno la fecha
-//            Date fechaHoyD = bill.getFecha();
-//            porcentajepagos.setFecha(fechaHoyD);
-            
+            int valorTotal = Integer.parseInt(bill.getValorTotal());
+            int porcentaje = (int) (valorTotal * 0.15);
+            porcentajepagos.setPorcentaje(porcentaje);
+
+            //Asigno la fecha
+            Date fechaHoyD = bill.getFecha();
+            porcentajepagos.setFecha(fechaHoyD);
+
             //Asigno el empleado
             Empleado idEmp = bill.getIdCita().getIdEmpleado();
             empleado.setIdEmpleado(idEmp.getIdEmpleado());
             porcentajepagos.setIdEmpleadoFK(empleado);
-            
+
             //Creo el registro
             porcentajepagosFacadeLocal.create(porcentajepagos);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Funciona correcto"));

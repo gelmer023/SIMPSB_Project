@@ -122,13 +122,13 @@ public class PagosController {
         Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
         try {
             //Asigno el porcentaje
-//            int valorTotal = Integer.parseInt(bill.getValorTotal());
-//            int porcentaje = (int) (valorTotal * 0.15);
-//            porcentajepagos.setPorcentaje(porcentaje);
-//            
-//            //Asigno la fecha
-//            Date fechaHoyD = bill.getFecha();
-//            porcentajepagos.setFecha(fechaHoyD);
+            int valorTotal = Integer.parseInt(bill.getValorTotal());
+            int porcentaje = (int) (valorTotal * 0.15);
+            porcentajepagos.setPorcentaje(porcentaje);
+            
+            //Asigno la fecha
+            Date fechaHoyD = bill.getFecha();
+            porcentajepagos.setFecha(fechaHoyD);
             
             //Asigno el empleado
             Empleado idEmp = bill.getIdCita().getIdEmpleado();
