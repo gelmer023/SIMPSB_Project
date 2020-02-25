@@ -26,7 +26,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Entity
 @Table(name = "citas")
@@ -68,6 +68,8 @@ public class Citas implements Serializable {
     private List<Serviciosextra> serviciosextraList;
     @OneToMany(mappedBy = "citaFK")
     private List<Disponibilidad> disponibilidadList;
+    @OneToMany(mappedBy = "idCita")
+    private List<Factura> facturaList;
 
     public Citas() {
     }
@@ -154,6 +156,14 @@ public class Citas implements Serializable {
 
     public void setDisponibilidadList(List<Disponibilidad> disponibilidadList) {
         this.disponibilidadList = disponibilidadList;
+    }
+
+    public List<Factura> getFacturaList() {
+        return facturaList;
+    }
+
+    public void setFacturaList(List<Factura> facturaList) {
+        this.facturaList = facturaList;
     }
 
     @Override

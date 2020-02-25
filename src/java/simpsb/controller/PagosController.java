@@ -1,7 +1,5 @@
-
 package simpsb.controller;
 
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -11,8 +9,11 @@ import javax.inject.Named;
 import simpsb.dao.*;
 import simpsb.entidades.*;
 import java.io.*;
-import java.sql.*;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.*;
@@ -22,7 +23,7 @@ import net.sf.jasperreports.engine.util.JRLoader;
 @Named
 @RequestScoped
 public class PagosController {
-    
+
     @EJB
     private ComisionesFacadeLocal comisionesFacadeLocal;
     @EJB
@@ -31,47 +32,36 @@ public class PagosController {
     private UsuarioFacadeLocal usuarioFacadeLocal;
     @EJB
     private FacturaFacadeLocal facturaFacadeLocal;
-    
+    @EJB
+    private PorcentajepagosFacadeLocal porcentajepagosFacadeLocal;
+
+    private Porcentajepagos porcentajepagos;
     private Comisiones comisiones;
     private Empleado empleado;
     private Usuario usuario;
     private Factura factura;
-    
+
     private List<Empleado> listEmpleado;
     private List<Factura> listFactura;
-    
-    
 
-    public ComisionesFacadeLocal getComisionesFacadeLocal() {
-        return comisionesFacadeLocal;
+    @PostConstruct
+    public void init() {
+        comisiones = new Comisiones();
+        empleado = new Empleado();
+        usuario = new Usuario();
+        factura = new Factura();
+        porcentajepagos = new Porcentajepagos();
+        listEmpleado = empleadoFacadeLocal.findAll();
+        listFactura = facturaFacadeLocal.findAll();
     }
 
-    public void setComisionesFacadeLocal(ComisionesFacadeLocal comisionesFacadeLocal) {
-        this.comisionesFacadeLocal = comisionesFacadeLocal;
+    //GETTER Y SETTERS CONTROLADOR
+    public Porcentajepagos getPorcentajepagos() {
+        return porcentajepagos;
     }
 
-    public EmpleadoFacadeLocal getEmpleadoFacadeLocal() {
-        return empleadoFacadeLocal;
-    }
-
-    public void setEmpleadoFacadeLocal(EmpleadoFacadeLocal empleadoFacadeLocal) {
-        this.empleadoFacadeLocal = empleadoFacadeLocal;
-    }
-
-    public UsuarioFacadeLocal getUsuarioFacadeLocal() {
-        return usuarioFacadeLocal;
-    }
-
-    public void setUsuarioFacadeLocal(UsuarioFacadeLocal usuarioFacadeLocal) {
-        this.usuarioFacadeLocal = usuarioFacadeLocal;
-    }
-
-    public FacturaFacadeLocal getFacturaFacadeLocal() {
-        return facturaFacadeLocal;
-    }
-
-    public void setFacturaFacadeLocal(FacturaFacadeLocal facturaFacadeLocal) {
-        this.facturaFacadeLocal = facturaFacadeLocal;
+    public void setPorcentajepagos(Porcentajepagos porcentajepagos) {
+        this.porcentajepagos = porcentajepagos;
     }
 
     public Comisiones getComisiones() {
@@ -121,7 +111,40 @@ public class PagosController {
     public void setListFactura(List<Factura> listFactura) {
         this.listFactura = listFactura;
     }
-    
+
+    //FECHAS 
+    Calendar date = Calendar.getInstance();
+    int dia = date.get(Calendar.DATE);
+    int mes = date.get(Calendar.MONTH) + 1;
+    int año = date.get(Calendar.YEAR);
+
+    public void generarPorcentaje(){
+        Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
+        try {
+            //Asigno el porcentaje
+//            int valorTotal = Integer.parseInt(bill.getValorTotal());
+//            int porcentaje = (int) (valorTotal * 0.15);
+//            porcentajepagos.setPorcentaje(porcentaje);
+//            
+//            //Asigno la fecha
+//            Date fechaHoyD = bill.getFecha();
+//            porcentajepagos.setFecha(fechaHoyD);
+            
+            //Asigno el empleado
+            Empleado idEmp = bill.getIdCita().getIdEmpleado();
+            empleado.setIdEmpleado(idEmp.getIdEmpleado());
+            porcentajepagos.setIdEmpleadoFK(empleado);
+            
+            //Creo el registro
+            porcentajepagosFacadeLocal.create(porcentajepagos);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Funciona correcto"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error"));
+        }
+
+    }
+
     public void generarPago() {
         try {
             comisiones.setIdEmpleado(empleado);
@@ -152,7 +175,7 @@ public class PagosController {
         }
         return listPagos;
     }
-    
+
     public String consultarPago(Comisiones comi) {
         try {
             comisiones = comisionesFacadeLocal.find(comi.getIdComisiones());
@@ -164,7 +187,7 @@ public class PagosController {
         }
         return "modificarPago";
     }
-    
+
     public void modificarPago() {
         try {
             comisiones.setIdEmpleado(empleado);
@@ -176,35 +199,33 @@ public class PagosController {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al modificar su cita"));
         }
     }
-  
+
     //Metodo para invocar el reporte y enviarle los parametros si es que necesita
     public void verReporte2() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        
+
         //Instancia hacia la clase reporteClientes        
-           Reportes rCliente = new Reportes();
-        
+        Reportes rCliente = new Reportes();
+
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
         String ruta = servletContext.getRealPath("reportes/reporteGrafico.jasper");
-       
-        rCliente.getReporte(ruta);        
-        FacesContext.getCurrentInstance().responseComplete();               
+
+        rCliente.getReporte(ruta);
+        FacesContext.getCurrentInstance().responseComplete();
     }
-     
-     
+
 //Metodo para invocar el reporte y enviarle los parametros si es que necesita
     public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        
+
         //Instancia hacia la clase reporteClientes        
-           Reportes rCliente = new Reportes();
-        
+        Reportes rCliente = new Reportes();
+
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
         String ruta = servletContext.getRealPath("reportes/reportePagos.jasper");
-       
-        rCliente.getReporte(ruta);        
-        FacesContext.getCurrentInstance().responseComplete();               
+
+        rCliente.getReporte(ruta);
+        FacesContext.getCurrentInstance().responseComplete();
     }
 
-    
 }
