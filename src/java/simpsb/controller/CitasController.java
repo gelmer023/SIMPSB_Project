@@ -457,7 +457,6 @@ public class CitasController {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al consultar su cita"));
         }
-
     }
 
     public void generarFactura() {

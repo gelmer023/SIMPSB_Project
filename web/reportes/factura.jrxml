@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6d7ad972-998c-4cdf-9407-bd765dd5966b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idFactura" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     concat(usuario.`nombre`,usuario.`apellido`) AS Nombre,
+     usuario.`numDocumento` AS N°Documento,
+     servicios.`nombre` AS Servicio,
+     servicios.`valor` AS Valorse,
+     factura.`subTotal` AS SubTotal,
+     factura.`iva` AS Iva,
+     factura.`valorTotal` AS Valor,
+     usuario.`correo` AS Email,
+     factura.`idFactura` AS ID,
+     citas.`fecha` AS Fecha,
+     citas.`horaFK` AS Hor,
+     citas.`valorTotal` AS citas_valorTotal
+FROM
+     `usuario` usuario INNER JOIN `empleado` empleado ON usuario.`idUsuario` = empleado.`idUsuario`
+     INNER JOIN `citas` citas ON empleado.`idEmpleado` = citas.`idEmpleado`
+     INNER JOIN `servicios` servicios ON citas.`idServicio` = servicios.`idServicio`
+     INNER JOIN `factura` factura ON citas.`idCita` = factura.`idCita` where factura.id=$P{idFactura}]]>
+	</queryString>
+	<field name="Nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="N°Documento" class="java.lang.Integer"/>
+	<field name="Servicio" class="java.lang.String"/>
+	<field name="Valorse" class="java.lang.String"/>
+	<field name="SubTotal" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Iva" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Valor" class="java.lang.String"/>
+	<field name="Email" class="java.lang.String"/>
+	<field name="ID" class="java.lang.Integer"/>
+	<field name="Fecha" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Hor" class="java.lang.Integer"/>
+	<field name="citas_valorTotal" class="java.lang.String"/>
+	<variable name="Nombre_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[$F{Nombre}]]></variableExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="106">
+			<staticText>
+				<reportElement x="213" y="73" width="131" height="31" uuid="59c12cad-ce7c-48fa-b43b-a1d4e4dd13b7"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Calle 62 #75-76
+4567303]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="165">
+			<staticText>
+				<reportElement x="146" y="0" width="252" height="31" uuid="8746dcab-7c35-45c8-a832-82359cd436e7"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[FACTURA]]></text>
+			</staticText>
+			<line>
+				<reportElement x="146" y="31" width="252" height="1" forecolor="#D4AF37" backcolor="#D4AF37" uuid="8d4e2879-e9d8-4fdf-a2df-e462b1a87d74"/>
+				<graphicElement>
+					<pen lineWidth="3.5"/>
+				</graphicElement>
+			</line>
+			<rectangle radius="10">
+				<reportElement x="0" y="127" width="555" height="29" forecolor="#D4AF37" backcolor="#D4AF37" uuid="6940ac96-756b-4c0d-b2c2-da3873695121"/>
+			</rectangle>
+			<textField>
+				<reportElement x="80" y="42" width="100" height="20" uuid="aff70dda-5e48-41de-8481-4a8e4754963d"/>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="376" y="42" width="100" height="20" uuid="4f6c6dbc-68ac-4395-8627-10c43a8e3c46"/>
+				<textFieldExpression><![CDATA[$F{N°Documento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="136" width="66" height="20" uuid="7c0aab27-19c4-450c-b246-0301796f369d"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Servicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="281" y="137" width="68" height="20" uuid="a3c192c4-cd6c-4a90-a2de-25523b8149fd"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="29" y="136" width="21" height="20" uuid="d014d2ef-67cb-414b-8f76-08bd0db27c81"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="42" width="58" height="20" uuid="9802f81d-b6cb-4a98-a035-104173f1388e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="42" width="89" height="20" uuid="f10102a7-0169-496d-a3db-d87647b324c0"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N°Documento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="137" width="58" height="20" uuid="0cc7a688-034f-45d9-9726-5c6cb94be010"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="75" width="100" height="20" uuid="b43fe3ef-2f8e-4669-b8a7-cd6d7744cfcf"/>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="75" width="100" height="20" uuid="e5dfcf18-fd4a-4057-9c95-2443a5ba60d0"/>
+				<textFieldExpression><![CDATA[$F{Hor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="75" width="69" height="20" uuid="a44c3925-7b56-4099-882c-d2e7721eb922"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Cita:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="213" y="75" width="58" height="20" uuid="e951122f-56e8-4a28-ac56-d20abfbbce82"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora Cita:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="137" width="31" height="20" uuid="d49ed524-e45c-4c0b-92c9-1ebf6f38888c"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Iva]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="49">
+			<textField>
+				<reportElement x="80" y="18" width="66" height="20" uuid="b2124781-b4e4-4d02-95dc-64b3fb1ba898"/>
+				<textFieldExpression><![CDATA[$F{Servicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="15" width="68" height="20" uuid="3facc27b-9a19-4f6f-b40f-7310c29fa9ec"/>
+				<textFieldExpression><![CDATA[$F{SubTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="26" y="15" width="24" height="20" uuid="e6f49229-bcba-4d80-96e4-445a4eec1c67"/>
+				<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="18" width="58" height="20" uuid="523d17b3-f847-42a3-88f8-646db3b5e16d"/>
+				<textFieldExpression><![CDATA[$F{Valorse}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="412" y="15" width="37" height="20" uuid="0ed70155-c7ae-4416-8440-c5a5dcfa4dd2"/>
+				<textFieldExpression><![CDATA[$F{Iva}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="50">
+			<rectangle radius="10">
+				<reportElement x="0" y="0" width="555" height="29" forecolor="#D4AF37" backcolor="#D4AF37" uuid="b71d5554-578e-4257-b9a0-db6f5f602b0c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="26" y="9" width="131" height="20" uuid="71c3911e-d671-4a75-a9d2-e7fd0f303739"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Servicio  Extra]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="98">
+			<rectangle radius="10">
+				<reportElement x="344" y="12" width="211" height="29" forecolor="#D4AF37" backcolor="#D4AF37" uuid="796870cd-e8c9-41b3-a60f-ac3c91361ec8"/>
+			</rectangle>
+			<textField>
+				<reportElement x="201" y="76" width="80" height="13" uuid="546159e7-e2e8-4df0-8d5b-684313782f94"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="281" y="76" width="40" height="13" uuid="e96d72b8-1a3d-4de0-8b39-17b83a4510c2"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="0" y="12" width="321" height="29" forecolor="#D4AF37" backcolor="#D4AF37" uuid="6ae9f941-c215-42e6-a244-64c98dce96be"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="11" y="12" width="146" height="29" uuid="2e98c696-8032-429a-80c1-fe6a40e166e1"/>
+				<textElement>
+					<font size="20" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total a Pagar:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="12" width="164" height="29" uuid="fa024394-0b66-40b0-819f-b12ce4e5ae6f"/>
+				<textElement>
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Valor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yy">
+				<reportElement x="381" y="12" width="117" height="29" uuid="346bfda3-ac7b-462b-9ea4-fe3daeac07f4"/>
+				<textElement textAlignment="Center">
+					<font size="20" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

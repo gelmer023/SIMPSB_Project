@@ -111,7 +111,7 @@
 
                                     <h:column>
                                         <f:facet name="header">#{universEti.acciones}</f:facet>
-                                        <h:commandButton class="btn btn-warning ocultar" action="#{citasController.consultarCita(cita)}" value="#{universEti.modificar}"/>
+                                        <h:commandButton class="btn btn-warning ocultar" id="btn" action="#{citasController.consultarCita(cita)}" value="#{universEti.modificar}"/>
                                         <h:commandButton class="btn btn-primary ocultar" action="#{citasController.hacerFactura(cita)}" value="#{universEti.facturar}"/>
                                         <h:commandButton class="btn btn-danger ocultar" 
                                                          onclick="javascript:if (!confirm('¿Está seguro que desea cancelar esta cita?'))
@@ -126,6 +126,24 @@
                 </div>
             </div>
         </f:view>
+        <style> 
+            
+        </style>
+        <script>
+            windows.onload = function () {
+                mostrar();
+            }
+            function mostrar() {
+                $(#btn).show();
+                $(#btn).removeClass('ocultar');
+                
+            }
+            estado = 3;
+            if (estado == 3) {
+                mostrar();
+            }
+
+        </script>
         <script src="../../resources/js/hideButtons.js" type="text/javascript"></script>
         <!-- BOOTSTRAP -->
         <script src="../../../resources/js/Bootstrap/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
