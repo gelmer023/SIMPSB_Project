@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Entity
 @Table(name = "factura")
@@ -55,6 +55,10 @@ public class Factura implements Serializable {
     @Size(max = 45)
     @Column(name = "valorTotal")
     private String valorTotal;
+    @OneToMany(mappedBy = "idFactura")
+    private List<Calificacion> calificacionList;
+    @OneToMany(mappedBy = "idFactura")
+    private List<Comisiones> comisionesList;
     @JoinColumn(name = "idCita", referencedColumnName = "idCita")
     @ManyToOne
     private Citas idCita;
@@ -104,6 +108,14 @@ public class Factura implements Serializable {
 
     public void setValorTotal(String valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    public Citas getIdCita() {
+        return idCita;
+    }
+
+    public void setIdCita(Citas idCita) {
+        this.idCita = idCita;
     }
 
     public Citas getIdCita() {

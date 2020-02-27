@@ -1,15 +1,19 @@
 package simpsb.controller;
 
-import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import simpsb.dao.*;
+import simpsb.entidades.*;
+import java.io.*;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Date;
 import javax.servlet.ServletContext;
 import simpsb.entidades.*;
 import simpsb.dao.*;
@@ -29,38 +33,37 @@ public class PagosController {
     @EJB
     FacturaFacadeLocal facturaFacadeLocal;
     @EJB
-    EmpleadoFacadeLocal empleadoFacadeLocal;
+    private FacturaFacadeLocal facturaFacadeLocal;
     @EJB
-    CitasFacadeLocal citasFacadeLocal;
+    private PorcentajepagosFacadeLocal porcentajepagosFacadeLocal;
 
-    Porcentajepagos porcentajePagos;
-    Comisiones comisiones;
-    Factura factura;
-    Empleado empleado;
-    Citas citas;
+    private Porcentajepagos porcentajepagos;
+    private Comisiones comisiones;
+    private Empleado empleado;
+    private Usuario usuario;
+    private Factura factura;
 
-    private List<Factura> listFactura;
     private List<Empleado> listEmpleado;
-    private List<Citas> listCitas;
+    private List<Factura> listFactura;
 
     @PostConstruct
     public void init() {
-        porcentajePagos = new Porcentajepagos();
         comisiones = new Comisiones();
-        factura = new Factura();
         empleado = new Empleado();
-        citas = new Citas();
+        usuario = new Usuario();
+        factura = new Factura();
+        porcentajepagos = new Porcentajepagos();
         listEmpleado = empleadoFacadeLocal.findAll();
         listFactura = facturaFacadeLocal.findAll();
-        listCitas = citasFacadeLocal.findAll();
     }
 
-    public Porcentajepagos getPorcentajePagos() {
-        return porcentajePagos;
+    //GETTER Y SETTERS CONTROLADOR
+    public Porcentajepagos getPorcentajepagos() {
+        return porcentajepagos;
     }
 
-    public void setPorcentajePagos(Porcentajepagos porcentajePagos) {
-        this.porcentajePagos = porcentajePagos;
+    public void setPorcentajepagos(Porcentajepagos porcentajepagos) {
+        this.porcentajepagos = porcentajepagos;
     }
 
     public Comisiones getComisiones() {
@@ -144,6 +147,43 @@ public class PagosController {
 
     }
 
+    public void setListFactura(List<Factura> listFactura) {
+        this.listFactura = listFactura;
+    }
+
+    //FECHAS 
+    Calendar date = Calendar.getInstance();
+    int dia = date.get(Calendar.DATE);
+    int mes = date.get(Calendar.MONTH) + 1;
+    int año = date.get(Calendar.YEAR);
+
+    public void generarPorcentaje(){
+        Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
+        try {
+            //Asigno el porcentaje
+            int valorTotal = Integer.parseInt(bill.getValorTotal());
+            int porcentaje = (int) (valorTotal * 0.15);
+            porcentajepagos.setPorcentaje(porcentaje);
+            
+            //Asigno la fecha
+            Date fechaHoyD = bill.getFecha();
+            porcentajepagos.setFecha(fechaHoyD);
+            
+            //Asigno el empleado
+            Empleado idEmp = bill.getIdCita().getIdEmpleado();
+            empleado.setIdEmpleado(idEmp.getIdEmpleado());
+            porcentajepagos.setIdEmpleadoFK(empleado);
+            
+            //Creo el registro
+            porcentajepagosFacadeLocal.create(porcentajepagos);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Funciona correcto"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error"));
+        }
+
+    }
+
     public void generarPago() {
         try {
             comisiones.setIdEmpleado(empleado);
@@ -213,7 +253,7 @@ public class PagosController {
         FacesContext.getCurrentInstance().responseComplete();
     }
 
-    //Metodo para invocar el reporte y enviarle los parametros si es que necesita
+//Metodo para invocar el reporte y enviarle los parametros si es que necesita
     public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         //Instancia hacia la clase reporteClientes        
