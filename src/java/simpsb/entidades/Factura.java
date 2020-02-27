@@ -59,8 +59,6 @@ public class Factura implements Serializable {
     private String valorTotal;
     @OneToMany(mappedBy = "idFactura")
     private List<Calificacion> calificacionList;
-    @OneToMany(mappedBy = "idFactura")
-    private List<Comisiones> comisionesList;
     @JoinColumn(name = "idCita", referencedColumnName = "idCita")
     @ManyToOne
     private Citas idCita;
@@ -118,14 +116,6 @@ public class Factura implements Serializable {
 
     public void setCalificacionList(List<Calificacion> calificacionList) {
         this.calificacionList = calificacionList;
-    }
-
-    public List<Comisiones> getComisionesList() {
-        return comisionesList;
-    }
-
-    public void setComisionesList(List<Comisiones> comisionesList) {
-        this.comisionesList = comisionesList;
     }
 
     public Citas getIdCita() {

@@ -364,14 +364,6 @@ public class CitasController {
 
     }
 
-    public void calificarCita() {
-        try {
-
-        } catch (Exception e) {
-
-        }
-    }
-
     //METODO PARA MODIFICAR LA CITA
     public void modificarCita() {
         try {
@@ -533,7 +525,8 @@ public class CitasController {
             citasFacadeLocal.edit(ct);
 
             //Ejecuto el metodo para calcular el porcentaje
-            generarPorcentaje();
+            PagosController pc = new PagosController();
+            pc.generarPorcentaje();
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
@@ -543,32 +536,5 @@ public class CitasController {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al generar la factura"));
 
         }
-    }
-
-    public void generarPorcentaje() {
-        Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
-        try {
-            //Asigno el porcentaje
-            int valorTotal = Integer.parseInt(bill.getValorTotal());
-            int porcentaje = (int) (valorTotal * 0.15);
-            porcentajepagos.setPorcentaje(porcentaje);
-
-            //Asigno la fecha
-            Date fechaHoyD = bill.getFecha();
-            porcentajepagos.setFecha(fechaHoyD);
-
-            //Asigno el empleado
-            Empleado idEmp = bill.getIdCita().getIdEmpleado();
-            empleado.setIdEmpleado(idEmp.getIdEmpleado());
-            porcentajepagos.setIdEmpleadoFK(empleado);
-
-            //Creo el registro
-            porcentajepagosFacadeLocal.create(porcentajepagos);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Funciona correcto"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error"));
-        }
-
     }
 }
