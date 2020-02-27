@@ -31,4 +31,5 @@ public interface FacturaFacadeLocal {
     int count();
     
     List<Factura> validezFactura(Factura ft);
+    
 }

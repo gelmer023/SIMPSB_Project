@@ -2,7 +2,6 @@ package simpsb.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -11,7 +10,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import simpsb.dao.*;
-import simpsb.entidades.*;
 import java.io.*;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -20,7 +18,6 @@ import java.util.*;
 import java.util.Date;
 import javax.servlet.ServletContext;
 import simpsb.entidades.*;
-import simpsb.dao.*;
 
 /**
  *
@@ -28,8 +25,8 @@ import simpsb.dao.*;
  */
 @Named
 @RequestScoped
-public class PagosController {
 
+public class PagosController {
     @EJB
     PorcentajepagosFacadeLocal porcentajepagosFacadeLocal;
     @EJB
@@ -39,10 +36,11 @@ public class PagosController {
     @EJB
     EmpleadoFacadeLocal empleadoFacadeLocal;
     @EJB
+
     CitasFacadeLocal citasFacadeLocal;
 
     private Comisiones comisiones;
-    private Porcentajepagos porcentajePagos;
+    private Porcentajepagos porcentajepagos;
     private Factura factura;
     private Empleado empleado;
     private Usuario usuario;
@@ -53,12 +51,14 @@ public class PagosController {
     @PostConstruct
     public void init() {
         comisiones = new Comisiones();
-        porcentajePagos = new Porcentajepagos();
+        porcentajepagos = new Porcentajepagos();
         factura = new Factura();
         empleado = new Empleado();
         usuario = new Usuario();
         citas = new Citas();
         empleado = new Empleado();
+        factura = new Factura();
+        porcentajepagos = new Porcentajepagos();
         listEmpleado = empleadoFacadeLocal.findAll();
         listFactura = facturaFacadeLocal.findAll();
     }
@@ -154,19 +154,19 @@ public class PagosController {
             //Asigno el porcentaje
             int valorTotal = Integer.parseInt(bill.getValorTotal());
             int porcentaje = (int) (valorTotal * 0.15);
-            porcentajePagos.setPorcentaje(porcentaje);
+            porcentajepagos.setPorcentaje(porcentaje);
 
             //Asigno la fecha
             Date fechaHoyD = bill.getFecha();
-            porcentajePagos.setFecha(fechaHoyD);
+            porcentajepagos.setFecha(fechaHoyD);
 
             //Asigno el empleado
             Empleado idEmp = bill.getIdCita().getIdEmpleado();
             empleado.setIdEmpleado(idEmp.getIdEmpleado());
-            porcentajePagos.setIdEmpleadoFK(empleado);
+            porcentajepagos.setIdEmpleadoFK(empleado);
 
             //Creo el registro
-            porcentajepagosFacadeLocal.create(porcentajePagos);
+            porcentajepagosFacadeLocal.create(porcentajepagos);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Funciona correcto"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -174,14 +174,9 @@ public class PagosController {
         }
     }
 
-    public void registrarPago() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        List<Porcentajepagos> listPagos;
+    public void generarPago() {
+        List<Porcentajepagos> listPagos = null;
         try {
-            String fecha = año + "-" + mes + "-" + dia;
-            Date fechaActual = sdf.parse(fecha);
-            comisiones.setFecha(fechaActual);
-            
             comisiones.setIdEmpleado(empleado);
             
             //Asigno el valor
@@ -204,4 +199,55 @@ public class PagosController {
             e.printStackTrace();
         }
     }
+
+    public String consultarPago(Comisiones comi) {
+        try {
+            comisiones = comisionesFacadeLocal.find(comi.getIdComisiones());
+            empleado = comisiones.getIdEmpleado();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al modificar su cita"));
+        }
+        return "modificarPago";
+    }
+
+    public void modificarPago() {
+        try {
+            comisiones.setIdEmpleado(empleado);
+            comisionesFacadeLocal.edit(comisiones);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente su cita"));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("consultarPago.xhtml");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al modificar su cita"));
+        }
+    }
+
+    //Metodo para invocar el reporte y enviarle los parametros si es que necesita
+    public void verReporte2() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        Reportes rCliente = new Reportes();
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("reportes/reporteGrafico.jasper");
+
+        rCliente.getReporte(ruta);
+        FacesContext.getCurrentInstance().responseComplete();
+    }
+
+    //Metodo para invocar el reporte y enviarle los parametros si es que necesita
+    public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        Reportes rCliente = new Reportes();
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("reportes/reportePagos.jasper");
+
+        rCliente.getReporte(ruta);
+        FacesContext.getCurrentInstance().responseComplete();
+    }
+
 }

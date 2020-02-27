@@ -23,10 +23,11 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Entity
 @Table(name = "comisiones")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Comisiones.findAll", query = "SELECT c FROM Comisiones c")
     , @NamedQuery(name = "Comisiones.findByIdComisiones", query = "SELECT c FROM Comisiones c WHERE c.idComisiones = :idComisiones")

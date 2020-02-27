@@ -23,13 +23,17 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Entity
 @Table(name = "citas")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Citas.findAll", query = "SELECT c FROM Citas c")
     , @NamedQuery(name = "Citas.findByIdCita", query = "SELECT c FROM Citas c WHERE c.idCita = :idCita")
@@ -142,6 +146,8 @@ public class Citas implements Serializable {
         this.horaFK = horaFK;
     }
 
+    @XmlTransient
+    @JsonIgnore
     public List<Serviciosextra> getServiciosextraList() {
         return serviciosextraList;
     }
@@ -150,6 +156,8 @@ public class Citas implements Serializable {
         this.serviciosextraList = serviciosextraList;
     }
 
+    @XmlTransient
+    @JsonIgnore
     public List<Disponibilidad> getDisponibilidadList() {
         return disponibilidadList;
     }
@@ -158,6 +166,8 @@ public class Citas implements Serializable {
         this.disponibilidadList = disponibilidadList;
     }
 
+    @XmlTransient
+    @JsonIgnore
     public List<Factura> getFacturaList() {
         return facturaList;
     }

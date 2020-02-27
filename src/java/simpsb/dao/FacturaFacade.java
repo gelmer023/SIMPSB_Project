@@ -31,6 +31,7 @@ public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFac
         super(Factura.class);
     }
     
+        
     @Override
     public List<Factura> validezFactura(Factura ft) {
         List<Factura> listFac = null;
