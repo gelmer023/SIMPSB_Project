@@ -5,9 +5,11 @@
  */
 package simpsb.dao;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import simpsb.entidades.Factura;
 
 /**
@@ -29,4 +31,20 @@ public class FacturaFacade extends AbstractFacade<Factura> implements FacturaFac
         super(Factura.class);
     }
     
+    @Override
+    public List<Factura> validezFactura(Factura ft) {
+        List<Factura> listFac = null;
+        try {
+            Query query = em.createQuery("SELECT c FROM Citas INNER JOIN c.Factura f WHERE c.idCita = f.idCita");
+            query.setParameter("idCita", ft);
+            listFac = query.getResultList();
+            if (!listFac.isEmpty()) {
+                listFac.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+
+        }
+        return listFac;
+    }
 }

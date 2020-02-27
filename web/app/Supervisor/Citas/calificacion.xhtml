@@ -55,11 +55,11 @@
                             <h:outputLabel for="Observacion" value="Observacion"/>
                         </div>
                         <div class="form-group col-md-7">
-                            <h:inputTextarea styleClass="form-control form-fondo form" id="observacion" value="#{calificacionController.calificacion.comentario}"/>
+                            <h:inputTextarea styleClass="form-control form-fondo form" id="observacion" value="#{citasController.calificacion.comentario}"/>
                             <h:message for="total"/>
                         </div>
                         <div class="form-group col-md-12">
-                            <h:commandButton value="Calificar" styleClass="btn boton d-block mx-auto" action="#{calificacionController.registrarCalifiacion()}"   style="margin-top: 30px; margin-bottom: 20px;"/>
+                            <h:commandButton value="Calificar" styleClass="btn boton d-block mx-auto" action="#{citasController.calificarCita()}"   style="margin-top: 30px; margin-bottom: 20px;"/>
                         </div>
                     </div>
                 </h:form>

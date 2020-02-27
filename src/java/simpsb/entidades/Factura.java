@@ -110,14 +110,6 @@ public class Factura implements Serializable {
         this.valorTotal = valorTotal;
     }
 
-    public List<Calificacion> getCalificacionList() {
-        return calificacionList;
-    }
-
-    public void setCalificacionList(List<Calificacion> calificacionList) {
-        this.calificacionList = calificacionList;
-    }
-
     public Citas getIdCita() {
         return idCita;
     }

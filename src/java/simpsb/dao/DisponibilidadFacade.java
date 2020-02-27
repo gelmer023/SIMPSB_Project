@@ -39,7 +39,7 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
     
     @Override
     public List<Horas> disponibles(Citas ct) {
-        List<Horas> listDis = null;
+            List<Horas> listDis = null;
 
         try {
             List<Disponibilidad> lista = disponibilidadFacadeLocal.findAll();

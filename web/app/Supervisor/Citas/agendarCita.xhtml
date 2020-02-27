@@ -56,59 +56,74 @@
                             </h:inputText>
                             <h:message for="fecha"/>
                         </div>
-                        <h:commandButton styleClass="btn boton d-block mx-auto" 
-                                         value="Consultar" 
-                                         id="btnConsult"
-                                         action="#{citasController.consultarFecha()}"
-                                         onclick="holi()"
-                                         />
-                        <div class="form-row ocultar" id="cont"> 
-                            <style>
-                                .ocultar{
-                                    
-                                }
-                            </style>
-                            <script type="text/javascript">
-                                function holi(){
-                                    $("#cont").toggleClass("ocultar")
-                                };
-                            </script>
-                            <div class="form-group col">
-                                <h:outputLabel for="hora" value="#{citasEti.hora}"/>
-                                <h:selectOneMenu id="hora" value="#{citasController.horas.idHoras}" styleClass="form form-control">
-                                    <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
-                                    <f:selectItems value="#{citasController.listHoras}" var="horas" 
-                                                   itemValue="#{horas.idHoras}" 
-                                                   itemLabel="#{horas.hora}"/>
-                                </h:selectOneMenu>
-                                <h:message for="hora"/>
-                            </div> 
+                        <h:form>
+                            <h:commandButton styleClass="btn boton" 
+                                             value="Consultar" 
+                                             action="#{citasController.consultarFecha()}">
+                                <f:ajax execute="@this" render=":cadastro"></f:ajax>
+                                <f:ajax render="outerDiv cadastro"/>
+                                <f:passThroughAttribute name="data-toggle" value="modal" />
+                                <f:passThroughAttribute name="data-target" value="#exampleModal" />
+                            </h:commandButton>
+                        </h:form>
 
-                            <div class="form-group col-md-12">
-                                <h:outputLabel for="servicio" value="#{citasEti.servicio}"/>
-                                <h:selectOneMenu id="servicio" value="#{citasController.servicios.idServicio}" styleClass="form form-control">
-                                    <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
-                                    <f:selectItems value="#{citasController.listServicios}" var="servicio" 
-                                                   itemValue="#{servicio.idServicio}" 
-                                                   itemLabel="#{servicio.nombre}"/>
-                                </h:selectOneMenu>
-                                <h:message for="servicio"/>
-                            </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Agendar Cita</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true" class="text-warning">x</span>
+                                        </button>
+                                    </div>
+                                    <h:form>
+                                        <div class="modal-body">
+                                            <div class="form-row ocultar"> 
+                                                <div class="form-group col">
+                                                    <h:outputLabel for="hora" value="#{citasEti.hora}"/>
+                                                    <h:selectOneMenu id="hora" value="#{citasController.horas.idHoras}" styleClass="form form-control">
+                                                        <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
+                                                        <f:selectItems value="#{citasController.listHoras}" var="horas" 
+                                                                       itemValue="#{horas.idHoras}" 
+                                                                       itemLabel="#{horas.hora}"/>
+                                                    </h:selectOneMenu>
+                                                    <h:message for="hora"/>
+                                                </div> 
 
-                            <div class="form-group col-md-12">
-                                <h:outputLabel for="empleado" value="#{citasEti.empleado}"/>
-                                <h:selectOneMenu id="empleado" value="#{citasController.empleado.idEmpleado}" styleClass="form form-control">
-                                    <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
-                                    <f:selectItems value="#{citasController.listEmpleados}" var="emp" 
-                                                   itemValue="#{emp.idEmpleado}" 
-                                                   itemLabel="#{emp.idUsuario.nombre} #{emp.idUsuario.apellido} - #{emp.idCargo.cargo}"/>
-                                </h:selectOneMenu>
-                                <h:message for="empleado"/>
+                                                <div class="form-group col-md-12">
+                                                    <h:outputLabel for="servicio" value="#{citasEti.servicio}"/>
+                                                    <h:selectOneMenu id="servicio" value="#{citasController.servicios.idServicio}" styleClass="form form-control">
+                                                        <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
+                                                        <f:selectItems value="#{citasController.listServicios}" var="servicio" 
+                                                                       itemValue="#{servicio.idServicio}" 
+                                                                       itemLabel="#{servicio.nombre}"/>
+                                                    </h:selectOneMenu>
+                                                    <h:message for="servicio"/>
+                                                </div>
+
+                                                <div class="form-group col-md-12">
+                                                    <h:outputLabel for="empleado" value="#{citasEti.empleado}"/>
+                                                    <h:selectOneMenu id="empleado" value="#{citasController.empleado.idEmpleado}" styleClass="form form-control">
+                                                        <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
+                                                        <f:selectItems value="#{citasController.listEmpleados}" var="emp" 
+                                                                       itemValue="#{emp.idEmpleado}" 
+                                                                       itemLabel="#{emp.idUsuario.nombre} #{emp.idUsuario.apellido} - #{emp.idCargo.cargo}"/>
+                                                    </h:selectOneMenu>
+                                                    <h:message for="empleado"/>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                        <div class="modal-footer">
+                                            <h:commandButton styleClass="btn boton d-block mx-auto" 
+                                                             action="#{citasController.generarCita()}" 
+                                                             value="#{citasEti.btn_agendar}"/> 
+                                        </div>
+                                    </h:form>
+                                </div>
                             </div>
-                            <h:commandButton styleClass="btn boton d-block mx-auto" 
-                                             action="#{citasController.generarCita()}" 
-                                             value="#{citasEti.btn_agendar}"/> 
                         </div>
+
                     </h:form>
                 </div>
             </div>
