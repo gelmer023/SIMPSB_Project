@@ -18,13 +18,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Entity
 @Table(name = "horas")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Horas.findAll", query = "SELECT h FROM Horas h")
     , @NamedQuery(name = "Horas.findByIdHoras", query = "SELECT h FROM Horas h WHERE h.idHoras = :idHoras")
@@ -68,6 +72,8 @@ public class Horas implements Serializable {
         this.hora = hora;
     }
 
+    @XmlTransient
+    @JsonIgnore
     public List<Citas> getCitasList() {
         return citasList;
     }
@@ -76,6 +82,8 @@ public class Horas implements Serializable {
         this.citasList = citasList;
     }
 
+    @XmlTransient
+    @JsonIgnore
     public List<Disponibilidad> getDisponibilidadList() {
         return disponibilidadList;
     }

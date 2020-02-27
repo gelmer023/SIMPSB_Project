@@ -62,7 +62,7 @@
                                 </h:commandButton>
                             </h:form>
                             <h:form>
-                                <h:dataTable value="#{citasController.listFactura()}" var="cita" class="display tablas table table-striped table-bordered dt-responsive nowrap text-center">
+                                <h:dataTable value="#{citasController.listarCitas()}" var="cita" class="display tablas table table-striped table-bordered dt-responsive nowrap text-center">
                                     <h:column>
                                         <f:facet name="header">ID</f:facet>
                                         <h:outputText id="id" value="#{cita.idCita}"/>

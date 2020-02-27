@@ -21,13 +21,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Entity
 @Table(name = "empleado")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Empleado.findAll", query = "SELECT e FROM Empleado e")
     , @NamedQuery(name = "Empleado.findByIdEmpleado", query = "SELECT e FROM Empleado e WHERE e.idEmpleado = :idEmpleado")
@@ -85,6 +89,8 @@ public class Empleado implements Serializable {
         this.descripcion = descripcion;
     }
 
+    @XmlTransient
+    @JsonIgnore
     public List<Porcentajepagos> getPorcentajepagosList() {
         return porcentajepagosList;
     }
@@ -93,6 +99,8 @@ public class Empleado implements Serializable {
         this.porcentajepagosList = porcentajepagosList;
     }
 
+    @XmlTransient
+    @JsonIgnore
     public List<Citas> getCitasList() {
         return citasList;
     }
@@ -101,6 +109,8 @@ public class Empleado implements Serializable {
         this.citasList = citasList;
     }
 
+    @XmlTransient
+    @JsonIgnore
     public List<Comisiones> getComisionesList() {
         return comisionesList;
     }

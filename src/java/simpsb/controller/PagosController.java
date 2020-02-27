@@ -24,8 +24,8 @@ import simpsb.dao.*;
  */
 @Named
 @RequestScoped
-public class PagosController {
 
+public class PagosController {
     @EJB
     PorcentajepagosFacadeLocal porcentajePagosFacadeLocal;
     @EJB
@@ -33,15 +33,18 @@ public class PagosController {
     @EJB
     FacturaFacadeLocal facturaFacadeLocal;
     @EJB
-    private FacturaFacadeLocal facturaFacadeLocal;
+    EmpleadoFacadeLocal empleadoFacadeLocal;
     @EJB
-    private PorcentajepagosFacadeLocal porcentajepagosFacadeLocal;
+    PorcentajepagosFacadeLocal porcentajepagosFacadeLocal;
+    @EJB
+    CitasFacadeLocal citasFacadeLocal;
 
     private Porcentajepagos porcentajepagos;
     private Comisiones comisiones;
     private Empleado empleado;
     private Usuario usuario;
     private Factura factura;
+    private Citas citas;
 
     private List<Empleado> listEmpleado;
     private List<Factura> listFactura;
@@ -51,6 +54,7 @@ public class PagosController {
         comisiones = new Comisiones();
         empleado = new Empleado();
         usuario = new Usuario();
+        citas = new Citas();
         factura = new Factura();
         porcentajepagos = new Porcentajepagos();
         listEmpleado = empleadoFacadeLocal.findAll();
@@ -114,6 +118,7 @@ public class PagosController {
         this.listEmpleado = listEmpleado;
     }
 
+ 
     //FECHAS 
     Calendar date = Calendar.getInstance();
     int dia = date.get(Calendar.DATE);
@@ -126,56 +131,19 @@ public class PagosController {
             //Asigno el porcentaje
             int valorTotal = Integer.parseInt(bill.getValorTotal());
             int porcentaje = (int) (valorTotal * 0.15);
-            porcentajePagos.setPorcentaje(porcentaje);
-
-            //Asigno la fecha
-            Date fechaHoyD = bill.getFecha();
-            porcentajePagos.setFecha(fechaHoyD);
-
-            //Asigno el empleado
-            Empleado idEmp = bill.getIdCita().getIdEmpleado();
-            empleado.setIdEmpleado(idEmp.getIdEmpleado());
-            porcentajePagos.setIdEmpleadoFK(empleado);
-
-            //Creo el registro
-            porcentajePagosFacadeLocal.create(porcentajePagos);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Funciona correcto"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error"));
-        }
-
-    }
-
-    public void setListFactura(List<Factura> listFactura) {
-        this.listFactura = listFactura;
-    }
-
-    //FECHAS 
-    Calendar date = Calendar.getInstance();
-    int dia = date.get(Calendar.DATE);
-    int mes = date.get(Calendar.MONTH) + 1;
-    int año = date.get(Calendar.YEAR);
-
-    public void generarPorcentaje(){
-        Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
-        try {
-            //Asigno el porcentaje
-            int valorTotal = Integer.parseInt(bill.getValorTotal());
-            int porcentaje = (int) (valorTotal * 0.15);
             porcentajepagos.setPorcentaje(porcentaje);
-            
+
             //Asigno la fecha
             Date fechaHoyD = bill.getFecha();
             porcentajepagos.setFecha(fechaHoyD);
-            
+
             //Asigno el empleado
             Empleado idEmp = bill.getIdCita().getIdEmpleado();
             empleado.setIdEmpleado(idEmp.getIdEmpleado());
             porcentajepagos.setIdEmpleadoFK(empleado);
-            
+
             //Creo el registro
-            porcentajepagosFacadeLocal.create(porcentajepagos);
+            porcentajePagosFacadeLocal.create(porcentajepagos);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Funciona correcto"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -253,7 +221,7 @@ public class PagosController {
         FacesContext.getCurrentInstance().responseComplete();
     }
 
-//Metodo para invocar el reporte y enviarle los parametros si es que necesita
+    //Metodo para invocar el reporte y enviarle los parametros si es que necesita
     public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
         //Instancia hacia la clase reporteClientes        

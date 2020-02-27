@@ -20,13 +20,15 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Sebastián
+ * @author Leonardo Lara
  */
 @Entity
 @Table(name = "porcentajepagos")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Porcentajepagos.findAll", query = "SELECT p FROM Porcentajepagos p")
     , @NamedQuery(name = "Porcentajepagos.findByIdPorcentaje", query = "SELECT p FROM Porcentajepagos p WHERE p.idPorcentaje = :idPorcentaje")

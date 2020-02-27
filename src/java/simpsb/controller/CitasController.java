@@ -607,4 +607,18 @@ public class CitasController {
         } catch (Exception e) {                        
         }
     }
+    
+    //Metodo para invocar el reporte y enviarle los parametros si es que necesita
+    public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        Reportes rCliente = new Reportes();
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("reportes/reporteGrafico.jasper");
+
+        rCliente.getReporte(ruta);
+        FacesContext.getCurrentInstance().responseComplete();
+    }
 }
