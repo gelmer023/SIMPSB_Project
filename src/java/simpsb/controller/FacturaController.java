@@ -3,6 +3,7 @@ package simpsb.controller;
 import static com.sun.corba.se.spi.presentation.rmi.StubAdapter.request;
 import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -21,6 +22,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.convert.Converter;
 import javax.faces.convert.DateTimeConverter;
 import javax.faces.convert.FacesConverter;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -214,7 +216,6 @@ public class FacturaController {
 
     public List<Factura> listarFactura() {
         List<Factura> listFactura = null;
-        List<Factura> listDetalle = null;
         try {
             listFactura = facturaFacadeLocal.findAll();
         } catch (Exception e) {
@@ -275,7 +276,16 @@ public class FacturaController {
         }
         return listCitas;
     }
-
+    
+     public void eliminarHorariotrabajo(Factura fac) {
+        try {
+            facturaFacadeLocal.remove(factura);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso: ", "Eliminacion exitosa"));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error: ", "No conexion"));
+            e.printStackTrace();
+        }
+     }
     public String consultarFacturaDos(Citas ct) {
         try {
             citas = citasFacadeLocal.find(ct.getIdCita());
@@ -289,7 +299,19 @@ public class FacturaController {
         }
         return "crearFactura";
     }
+//Metodo para invocar el reporte y enviarle los parametros si es que necesita
+    public void verFactura() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
+        //Instancia hacia la clase reporteClientes        
+        Reportes rCliente = new Reportes();
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("reportes/reportePagos.jasper");
+
+        rCliente.getFactura(ruta);
+        FacesContext.getCurrentInstance().responseComplete();
+    }
     public void genenarPDF(ActionEvent actionEvent) {
         //Genero un Hash Map para los parametros del reporte
         Map<String, Object> parametros = new HashMap<String, Object>();

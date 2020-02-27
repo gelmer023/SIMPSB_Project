@@ -62,7 +62,7 @@
                                 </h:commandButton>
                             </h:form>
                             <h:form>
-                                <h:dataTable value="#{citasController.listarCitas()}" var="cita" class="display tablas table table-striped table-bordered dt-responsive nowrap text-center">
+                                <h:dataTable value="#{citasController.listFactura()}" var="cita" class="display tablas table table-striped table-bordered dt-responsive nowrap text-center">
                                     <h:column>
                                         <f:facet name="header">ID</f:facet>
                                         <h:outputText id="id" value="#{cita.idCita}"/>
@@ -111,12 +111,7 @@
 
                                     <h:column>
                                         <f:facet name="header">#{universEti.acciones}</f:facet>
-                                        <h:commandButton class="btn btn-warning ocultar" id="btn" action="#{citasController.consultarCita(cita)}" value="#{universEti.modificar}"/>
-                                        <h:commandButton class="btn btn-danger ocultar" 
-                                                         onclick="javascript:if (!confirm('¿Está seguro que desea cancelar esta cita?'))
-                                                                     return false;" 
-                                                         action="#{citasController.cancelarCita(cita)}" 
-                                                         value="Cancelar"/>
+                                        <h:commandButton class="btn btn-primary ocultar" action="#{citasController.hacerFactura(cita)}" value="#{universEti.facturar}"/>
                                     </h:column>
                                 </h:dataTable>
                             </h:form>

@@ -82,12 +82,14 @@ public class Reportes {
     }
 
     public void getCertificado(String ruta) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
+        Usuario us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        int citas=us.getIdUsuario();
         Connection conexion;
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "");
         //Se definen los parametros si es que el reporte necesita
         Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("idUsuario", 6);
+        parametros.put("idUsuario", citas);
         try {
 
             File file = new File(ruta);
@@ -135,11 +137,12 @@ public class Reportes {
     public void getFactura(String ruta) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         Connection conexion;
         Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Factura factu=  
+        Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
+        int billf=bill.getIdFactura();
         conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "");
         //Se definen los parametros si es que el reporte necesita
         Map<String, Object> parametros = new HashMap<String, Object>();
-        parametros.put("idUsuario", 6);
+        parametros.put("idFactura", billf);
         try {
 
             File file = new File(ruta);
@@ -148,7 +151,7 @@ public class Reportes {
 
             httpServletResponse.setContentType("application/pdf");
             httpServletResponse.addHeader("Content-Type", "application/pdf");
-            httpServletResponse.addHeader("Content-disposition", "attachment; filename=jk.pdf");
+            httpServletResponse.addHeader("Content-disposition", "attachment; filename=Factura.pdf");
             ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
 
             JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());

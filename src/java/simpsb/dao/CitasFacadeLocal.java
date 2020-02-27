@@ -34,4 +34,6 @@ public interface CitasFacadeLocal {
     List<Citas> citasCli(int idCli);
     
     Citas getIdCita(int idCit);
+    
+    List<Citas> listarFacturas();
 }

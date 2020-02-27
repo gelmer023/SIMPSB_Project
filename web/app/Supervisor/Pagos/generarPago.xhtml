@@ -15,7 +15,7 @@ and open the template in the editor.
         <link href="../../../resources/css/Bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="../../resources/css/Pagos/estilos-generar-pagos.css" rel="stylesheet" type="text/css"/>
     </h:head>
-    <h:body>
+    <h:body class="fondo">
         <f:view locale="#{languages.idiomaSeleccionado}">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
@@ -45,10 +45,7 @@ and open the template in the editor.
                         <h1 class="text-center text-uppercase">#{pagosEti.generar}</h1>
                     </div>
                     <h:form>
-                        <div class="form-group">
-                            <h:outputLabel value="#{pagosEti.valor}" for="valor"/>
-                            <h:inputText id="valor" value="#{pagosController.comisiones.valor}" styleClass="form form-control"/>
-
+                        <div class="form-group col">
                             <h:outputLabel value="#{pagosEti.empleado}" for="idEmpleado"/>
                             <h:selectOneMenu id="empleado" value="#{pagosController.empleado.idEmpleado}" styleClass="form form-control">
                                 <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
@@ -56,15 +53,33 @@ and open the template in the editor.
                                                itemValue="#{emp.idEmpleado}" 
                                                itemLabel="#{emp.idUsuario.nombre}"/>
                             </h:selectOneMenu>
+                            <h:message for="empleado"/>
+                        </div> 
+                        
+                        <div class="form-group col">
+                            <h:outputLabel for="fechaI" value="#{citasEti.fecha} inicial"/>
+                            <h:inputText id="fechaI" 
+                                         styleClass="form form-control" 
+                                         a:type="date"
+                                         value="#{citasController.citas.fecha}" 
+                                         >
+                                <f:convertDateTime for="fecha" type="date" pattern="yyyy-MM-dd"></f:convertDateTime>
+                            </h:inputText>
+                            <h:message for="fechaI"/>
+                        </div> 
+                        
+                        <div class="form-group col">
+                            <h:outputLabel for="fechaF" value="#{citasEti.fecha} final"/>
+                            <h:inputText id="fechaF" 
+                                         styleClass="form form-control" 
+                                         a:type="date"
+                                         value="#{citasController.citas.fecha}" 
+                                         >
+                                <f:convertDateTime for="fecha" type="date" pattern="yyyy-MM-dd"></f:convertDateTime>
+                            </h:inputText>
+                           <h:message for="fechaF"/>
+                        </div> 
 
-                            <h:outputLabel value="#{pagosEti.factura}" for="idFactura"/>
-                            <h:selectOneMenu id="factura" value="#{pagosController.factura.idFactura}" styleClass="form form-control">
-                                <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
-                                <f:selectItems value="#{pagosController.listFactura}" var="fact" 
-                                               itemValue="#{fact.idFactura}" 
-                                               itemLabel="#{fact.idFactura}"/>
-                            </h:selectOneMenu>
-                        </div>
                         <h:commandButton value="#{usuariosEti.enviar}" action="#{pagosController.generarPago()}" styleClass="btn boton d-block mx-auto"/>
                     </h:form>
                 </div>

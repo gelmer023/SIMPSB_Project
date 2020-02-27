@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Leonardo Lara
+ * @author Sebastián
  */
 @Entity
 @Table(name = "horas")
@@ -30,9 +30,6 @@ import javax.validation.constraints.Size;
     , @NamedQuery(name = "Horas.findByIdHoras", query = "SELECT h FROM Horas h WHERE h.idHoras = :idHoras")
     , @NamedQuery(name = "Horas.findByHora", query = "SELECT h FROM Horas h WHERE h.hora = :hora")})
 public class Horas implements Serializable {
-
-    @OneToMany(mappedBy = "horaFK")
-    private List<Citas> listCitas;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -71,12 +68,12 @@ public class Horas implements Serializable {
         this.hora = hora;
     }
 
-    public List<Citas> getListCitas() {
-        return listCitas;
+    public List<Citas> getCitasList() {
+        return citasList;
     }
 
-    public void setListCitas(List<Citas> listCitas) {
-        this.listCitas = listCitas;
+    public void setCitasList(List<Citas> citasList) {
+        this.citasList = citasList;
     }
 
     public List<Disponibilidad> getDisponibilidadList() {
@@ -111,6 +108,5 @@ public class Horas implements Serializable {
     public String toString() {
         return "simpsb.entidades.Horas[ idHoras=" + idHoras + " ]";
     }
-
     
 }

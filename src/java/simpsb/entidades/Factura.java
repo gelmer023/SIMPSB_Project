@@ -7,16 +7,16 @@ package simpsb.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,7 +32,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Factura.findAll", query = "SELECT f FROM Factura f")
     , @NamedQuery(name = "Factura.findByIdFactura", query = "SELECT f FROM Factura f WHERE f.idFactura = :idFactura")
     , @NamedQuery(name = "Factura.findByFecha", query = "SELECT f FROM Factura f WHERE f.fecha = :fecha")
-    , @NamedQuery(name = "Factura.findByIdCita", query = "SELECT f FROM Factura f WHERE f.idCita = :idCita")
     , @NamedQuery(name = "Factura.findBySubTotal", query = "SELECT f FROM Factura f WHERE f.subTotal = :subTotal")
     , @NamedQuery(name = "Factura.findByIva", query = "SELECT f FROM Factura f WHERE f.iva = :iva")
     , @NamedQuery(name = "Factura.findByValorTotal", query = "SELECT f FROM Factura f WHERE f.valorTotal = :valorTotal")})
@@ -47,8 +46,6 @@ public class Factura implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Column(name = "idCita")
-    private Integer idCita;
     @Size(max = 45)
     @Column(name = "subTotal")
     private String subTotal;
@@ -58,10 +55,9 @@ public class Factura implements Serializable {
     @Size(max = 45)
     @Column(name = "valorTotal")
     private String valorTotal;
-    @OneToMany(mappedBy = "idFactura")
-    private List<Calificacion> calificacionList;
-    @OneToMany(mappedBy = "idFactura")
-    private List<Comisiones> comisionesList;
+    @JoinColumn(name = "idCita", referencedColumnName = "idCita")
+    @ManyToOne
+    private Citas idCita;
 
     public Factura() {
     }
@@ -84,14 +80,6 @@ public class Factura implements Serializable {
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    public Integer getIdCita() {
-        return idCita;
-    }
-
-    public void setIdCita(Integer idCita) {
-        this.idCita = idCita;
     }
 
     public String getSubTotal() {
@@ -118,20 +106,12 @@ public class Factura implements Serializable {
         this.valorTotal = valorTotal;
     }
 
-    public List<Calificacion> getCalificacionList() {
-        return calificacionList;
+    public Citas getIdCita() {
+        return idCita;
     }
 
-    public void setCalificacionList(List<Calificacion> calificacionList) {
-        this.calificacionList = calificacionList;
-    }
-
-    public List<Comisiones> getComisionesList() {
-        return comisionesList;
-    }
-
-    public void setComisionesList(List<Comisiones> comisionesList) {
-        this.comisionesList = comisionesList;
+    public void setIdCita(Citas idCita) {
+        this.idCita = idCita;
     }
 
     @Override

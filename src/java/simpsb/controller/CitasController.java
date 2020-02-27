@@ -1,5 +1,6 @@
 package simpsb.controller;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.annotation.PostConstruct;
@@ -9,6 +10,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
 import simpsb.dao.*;
 import simpsb.entidades.*;
 
@@ -40,6 +42,8 @@ public class CitasController {
     private ServiciosextraFacadeLocal serviciosExtraFacadeLocal;
     @EJB
     private FacturaFacadeLocal facturaFacadeLocal;
+    @EJB
+    private PorcentajepagosFacadeLocal porcentajepagosFacadeLocal;
 
     private Citas citas;
     private Empleado empleado;
@@ -52,13 +56,16 @@ public class CitasController {
     private Disponibilidad disponibilidad;
     private Calificacion calificacion;
     private Serviciosextra serviciosExtra;
+    private Porcentajepagos porcentajepagos;
 
     private List<Servicios> listServicios;
     private List<Empleado> listEmpleados;
     private List<Horas> listHoras;
+    private List<Citas> listFactura;
 
     @PostConstruct
     public void init() {
+        //listFactura = citasFacadeLocal.listarFacturas();
         citas = new Citas();
         servicios = new Servicios();
         empleado = new Empleado();
@@ -67,6 +74,8 @@ public class CitasController {
         usuario = new Usuario();
         horas = new Horas();
         factura = new Factura();
+        porcentajepagos = new Porcentajepagos();
+
         serviciosExtra = new Serviciosextra();
         calificacion = new Calificacion();
         disponibilidad = new Disponibilidad();
@@ -91,6 +100,47 @@ public class CitasController {
 
     public void setHoras(Horas horas) {
         this.horas = horas;
+    }
+
+    public Factura getFactura() {
+        return factura;
+    }
+
+    public void setFactura(Factura factura) {
+        this.factura = factura;
+    }
+
+    public List<Citas> getListFactura() {
+        return listFactura;
+    }
+
+    public void setListFactura(List<Citas> listFactura) {
+        this.listFactura = listFactura;
+    }
+    
+
+    public Calificacion getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(Calificacion calificacion) {
+        this.calificacion = calificacion;
+    }
+
+    public Serviciosextra getServiciosExtra() {
+        return serviciosExtra;
+    }
+
+    public void setServiciosExtra(Serviciosextra serviciosExtra) {
+        this.serviciosExtra = serviciosExtra;
+    }
+
+    public Porcentajepagos getPorcentajepagos() {
+        return porcentajepagos;
+    }
+
+    public void setPorcentajepagos(Porcentajepagos porcentajepagos) {
+        this.porcentajepagos = porcentajepagos;
     }
 
     public List<Horas> getListHoras() {
@@ -309,30 +359,23 @@ public class CitasController {
         Citas cv = null;
         try {
             citas = citasFacadeLocal.find(ct.getIdCita());
-            servicios = citas.getIdServicio();
-            empleado = citas.getIdEmpleado();
-            Servicios serv = serviciosFacadeLocal.getValor();
-            String valor = serv.getValor();
-            citas.setValorTotal(valor);
-            citas.setIdEmpleado(empleado);
-            citas.setIdServicio(servicios);
-            citasFacadeLocal.edit(citas);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("cta", citas);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
+
+                servicios = citas.getIdServicio();
+                empleado = citas.getIdEmpleado();
+                Servicios serv = serviciosFacadeLocal.getValor();
+                String valor = serv.getValor();
+                citas.setValorTotal(valor);
+                citas.setIdEmpleado(empleado);
+                citas.setIdServicio(servicios);
+                citasFacadeLocal.edit(citas);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("cta", citas);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al consultar su cita"));
         }
         return "crearFactura";
 
-    }
-
-    public void calificarCita() {
-        try {
-
-        } catch (Exception e) {
-
-        }
     }
 
     //METODO PARA MODIFICAR LA CITA
@@ -458,6 +501,20 @@ public class CitasController {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al consultar su cita"));
         }
     }
+//Metodo para invocar el reporte y enviarle los parametros si es que necesita
+
+    public void verFactura() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        Reportes rCliente = new Reportes();
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("reportes/factura.jasper");
+
+        rCliente.getFactura(ruta);
+        FacesContext.getCurrentInstance().responseComplete();
+    }
 
     public void generarFactura() {
         try {
@@ -468,7 +525,8 @@ public class CitasController {
 
             //Asigno ID CITA
             Citas ct = (Citas) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cta");
-            factura.setIdCita(ct.getIdCita());
+            ct.getIdCita();
+            factura.setIdCita(ct);
 
             //Asigno total
             factura.setValorTotal(citas.getValorTotal());
@@ -486,17 +544,67 @@ public class CitasController {
 
             //Creo la factura
             facturaFacadeLocal.create(factura);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("factura", factura);
+
+            //Cambio el estado de la cita a completada
             estado.setIdEstado(4);
             ct.setEstadoFK(estado);
             citasFacadeLocal.edit(ct);
+
+            //Ejecuto el metodo para calcular el porcentaje
+            generarPorcentaje();
+            verFactura();
+            calificarCita();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("calificacion.xhtml");
 
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al generar la factura"));
 
         }
+    }
 
+    public void generarPorcentaje() {
+        Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
+        try {
+            //Asigno el porcentaje
+            int valorTotal = Integer.parseInt(bill.getValorTotal());
+            int porcentaje = (int) (valorTotal * 0.15);
+            porcentajepagos.setPorcentaje(porcentaje);
+
+            //Asigno la fecha
+            Date fechaHoyD = bill.getFecha();
+            porcentajepagos.setFecha(fechaHoyD);
+
+            //Asigno el empleado
+            Empleado idEmp = bill.getIdCita().getIdEmpleado();
+            empleado.setIdEmpleado(idEmp.getIdEmpleado());
+            porcentajepagos.setIdEmpleadoFK(empleado);
+
+            //Creo el registro
+            porcentajepagosFacadeLocal.create(porcentajepagos);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Funciona correcto"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error"));
+        }
+
+    }
+    
+    public void calificarCita(){
+        // Traigo el ID de la factura, con la variable de Sesion
+        Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
+        try {
+            //Asigno la fecha de la factura
+            Date fechaHoyD = bill.getFecha();
+            calificacion.setFecha(fechaHoyD);
+            //Asigno el ID de la factura
+            factura.getIdFactura();
+            calificacion.setIdFactura(factura);
+            //Creo la calificacion
+            calificacionFacadeLocal.create(calificacion);
+        } catch (Exception e) {                        
+        }
     }
 }

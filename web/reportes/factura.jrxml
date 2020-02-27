@@ -19,12 +19,29 @@
      factura.`idFactura` AS ID,
      citas.`fecha` AS Fecha,
      citas.`horaFK` AS Hor,
-     citas.`valorTotal` AS citas_valorTotal
+     citas.`valorTotal` AS citas_valorTotal,
+     serviciosextra.`idServicioExtra` AS idServicioExtra,
+     serviciosextra.`idServicio` AS serviciosextra_idServicio
 FROM
      `usuario` usuario INNER JOIN `empleado` empleado ON usuario.`idUsuario` = empleado.`idUsuario`
      INNER JOIN `citas` citas ON empleado.`idEmpleado` = citas.`idEmpleado`
      INNER JOIN `servicios` servicios ON citas.`idServicio` = servicios.`idServicio`
-     INNER JOIN `factura` factura ON citas.`idCita` = factura.`idCita` where factura.id=$P{idFactura}]]>
+     INNER JOIN `factura` factura ON citas.`idCita` = factura.`idCita`
+     INNER JOIN `serviciosextra` serviciosextra ON citas.`idCita` = serviciosextra.`idCita`
+     AND servicios.`idServicio` = serviciosextra.`idServicio`
+WHERE
+     factura.idFactura = $P{idFactura}
+  UNION ALL
+
+SELECT
+     servicios.`nombre` AS Servicio,
+     servicios.`valor` AS Valorse,
+     serviciosextra.`idServicioExtra` AS idServicioExtra,
+     serviciosextra.`idServicio` AS serviciosextra_idServicio
+FROM serviciosextra INNER JOI
+     `
+WHERE
+     factura.idFactura = $P{idFactura}]]>
 	</queryString>
 	<field name="Nombre" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -38,7 +55,9 @@ FROM
 	<field name="Iva" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Valor" class="java.lang.String"/>
+	<field name="Valor" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="Email" class="java.lang.String"/>
 	<field name="ID" class="java.lang.Integer"/>
 	<field name="Fecha" class="java.sql.Date">
@@ -46,6 +65,10 @@ FROM
 	</field>
 	<field name="Hor" class="java.lang.Integer"/>
 	<field name="citas_valorTotal" class="java.lang.String"/>
+	<field name="idServicioExtra" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="serviciosextra_idServicio" class="java.lang.Integer"/>
 	<variable name="Nombre_1" class="java.lang.Integer" resetType="Column" calculation="Count">
 		<variableExpression><![CDATA[$F{Nombre}]]></variableExpression>
 	</variable>
@@ -134,23 +157,12 @@ FROM
 				<reportElement x="100" y="75" width="100" height="20" uuid="b43fe3ef-2f8e-4669-b8a7-cd6d7744cfcf"/>
 				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="281" y="75" width="100" height="20" uuid="e5dfcf18-fd4a-4057-9c95-2443a5ba60d0"/>
-				<textFieldExpression><![CDATA[$F{Hor}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="11" y="75" width="69" height="20" uuid="a44c3925-7b56-4099-882c-d2e7721eb922"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha Cita:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="213" y="75" width="58" height="20" uuid="e951122f-56e8-4a28-ac56-d20abfbbce82"/>
-				<textElement>
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Hora Cita:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="412" y="137" width="31" height="20" uuid="d49ed524-e45c-4c0b-92c9-1ebf6f38888c"/>
@@ -186,7 +198,7 @@ FROM
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="50">
+		<band height="83">
 			<rectangle radius="10">
 				<reportElement x="0" y="0" width="555" height="29" forecolor="#D4AF37" backcolor="#D4AF37" uuid="b71d5554-578e-4257-b9a0-db6f5f602b0c"/>
 			</rectangle>
@@ -197,6 +209,26 @@ FROM
 				</textElement>
 				<text><![CDATA[Servicio  Extra]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="281" y="45" width="68" height="20" uuid="96569061-cbfc-4e5a-bff8-60fb88bcf4c8"/>
+				<textFieldExpression><![CDATA[$F{SubTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="412" y="45" width="37" height="20" uuid="b0ea9b33-6b37-4b72-96a5-bd1ec643b482"/>
+				<textFieldExpression><![CDATA[$F{Iva}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="48" width="58" height="20" uuid="110d327d-8325-4c78-bae9-6f17dad7a08c"/>
+				<textFieldExpression><![CDATA[$F{Valorse}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="48" width="66" height="20" uuid="c92e63ed-dcdd-49b8-9d01-9eb4ae9ad975"/>
+				<textFieldExpression><![CDATA[$F{Servicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="26" y="45" width="24" height="20" uuid="fa92e223-6fb5-41f2-97f0-524f9c467e79"/>
+				<textFieldExpression><![CDATA[$F{ID}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnFooter>
 	<pageFooter>
