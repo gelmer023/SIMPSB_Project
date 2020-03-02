@@ -174,7 +174,7 @@ public class PagosController {
         }
     }
 
-    public void generarPago() {
+    public void registrarPago() {
         List<Porcentajepagos> listPagos = null;
         try {
             comisiones.setIdEmpleado(empleado);

@@ -6,6 +6,7 @@
 package simpsb.dao;
 
 import java.util.List;
+import java.util.Date;
 import javax.ejb.Local;
 import simpsb.entidades.Citas;
 import simpsb.entidades.Disponibilidad;
