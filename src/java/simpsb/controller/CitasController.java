@@ -277,12 +277,15 @@ public class CitasController {
 
     public void consultarFecha() {
         try {
-            citas.getFecha();
-            listHoras = disponibilidadFacadeLocal.disponibles(citas);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("Cita.xhtml");
+            if (citas.getFecha() == null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:", "Debe seleccionar una fecha"));
+            } else {
+                citas.getFecha();
+                listHoras = disponibilidadFacadeLocal.disponibles(citas);
+                FacesContext.getCurrentInstance().getExternalContext().redirect("Cita.xhtml");
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:", "Debe seleccionar una fecha"));
         }
     }
 
