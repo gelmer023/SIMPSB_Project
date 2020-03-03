@@ -148,32 +148,6 @@ public class PagosController {
         this.fechaFinal = fechaFinal;
     }
 
-    public void generarPorcentaje() {
-        Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
-        try {
-            //Asigno el porcentaje
-            int valorTotal = Integer.parseInt(bill.getValorTotal());
-            int porcentaje = (int) (valorTotal * 0.15);
-            porcentajepagos.setPorcentaje(porcentaje);
-
-            //Asigno la fecha
-            Date fechaHoyD = bill.getFecha();
-            porcentajepagos.setFecha(fechaHoyD);
-
-            //Asigno el empleado
-            Empleado idEmp = bill.getIdCita().getIdEmpleado();
-            empleado.setIdEmpleado(idEmp.getIdEmpleado());
-            porcentajepagos.setIdEmpleadoFK(empleado);
-
-            //Creo el registro
-            porcentajepagosFacadeLocal.create(porcentajepagos);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Funciona correcto"));
-        } catch (Exception e) {
-            e.printStackTrace();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error"));
-        }
-    }
-
     public void registrarPago() {
         List<Porcentajepagos> listPagos = null;
         try {

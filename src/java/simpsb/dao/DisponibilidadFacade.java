@@ -46,21 +46,26 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
 
         try {
             List<Disponibilidad> lista = disponibilidadFacadeLocal.findAll();
-            if (!lista.isEmpty()) {
-                Query query = em.createQuery("SELECT h from Horas h INNER JOIN h.disponibilidadList d WHERE d.estado = :estado AND d.fecha = :fecha");
-                query.setParameter("estado", "Disponible");
-                query.setParameter("fecha", ct.getFecha());
-                listDis = query.getResultList();
-                if (!listDis.isEmpty()) {
-                    listDis.get(0);
-                }
-            } else {
-                Query query = em.createQuery("SELECT h from Horas h");
-                listDis = query.getResultList();
-                if (!listDis.isEmpty()) {
-                    listDis.get(0);
+            for (Disponibilidad disp : lista) {
+                Date dfech = disp.getFecha();
+                if (dfech == ct.getFecha()) {
+                    Query query = em.createQuery("SELECT h from Horas h INNER JOIN h.disponibilidadList d WHERE d.estado = :estado AND d.fecha = :fecha");
+                    query.setParameter("estado", "Disponible");
+                    query.setParameter("fecha", ct.getFecha());
+                    listDis = query.getResultList();
+                    if (!listDis.isEmpty()) {
+                        listDis.get(0);
+                    }
+
+                } else {
+                    Query query = em.createQuery("SELECT h from Horas h");
+                    listDis = query.getResultList();
+                    if (!listDis.isEmpty()) {
+                        listDis.get(0);
+                    }
                 }
             }
+
         } catch (Exception e) {
             throw e;
         }

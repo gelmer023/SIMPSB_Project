@@ -36,7 +36,7 @@ public class PorcentajepagosFacade extends AbstractFacade<Porcentajepagos> imple
     public List<Porcentajepagos> calcularPago(int idEmp, Date fechaI, Date fechaF) {
         List<Porcentajepagos> listPorc = null;
         try {
-            Query q = em.createQuery("SELECT e FROM Empleado e INNER JOIN e.porcentajepagosList p WHERE p.fecha AND p.idEmpleadoFK = :idEmp BETWEEN :fechaI AND :fechaF");
+            Query q = em.createQuery("SELECT e FROM Empleado e INNER JOIN e.porcentajepagosList p WHERE p.idEmpleadoFK = :idEmp AND p.fecha >= :fechaI AND p.fecha <= :fechaF");
             q.setParameter("fechaI", fechaI);
             q.setParameter("fechaF", fechaF);
             q.setParameter("idEmp", idEmp);

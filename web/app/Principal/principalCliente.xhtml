@@ -2,8 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
     <h:head>
         <title>Cliente</title>
@@ -28,29 +27,13 @@
                 <li class="breadcrumb-item active text-uppercase" aria-current="page">Home</li>
             </ol>
         </nav>
-        <h:form>
-            <div class="dropdown d-flex justify-content-end">
-                <button type="button" class="lanbtn btn dropdown-toggle"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="../../resources/img/banderas partidas 2.png" alt="" style="width:25px; height:20px;"/>
-                    #{pagesEti[languages.idiomaSeleccionado.language]}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <c:forEach items="#{languages.idiomasSoportados}" var="idioma">
-                        <h:commandLink class="dropdown-item" actionListener="#{languages.cambiarIdioma(idioma)}"
-                                       value="#{pagesEti[idioma.language]}"/>
-                    </c:forEach>    
-                </div>
-            </div>
-        </h:form>
 
-        <div class="bienvenido text-center">BIENVENIDO #{session.getValue("user").getNombre()} #{session.getValue("user").getApellido()}</div>
+        <div class="bienvenido text-center">Bienvenid@ #{session.getValue("user").getNombre()} #{session.getValue("user").getApellido()}</div>
         <div class="row">
-           
-            <div class="citas">
+            <div class="citas col">
                 <p class="text-uppercase"> <img src="../resources/img/icono_citas.png" alt="Icono citas"/>#{citasEti.subtitulo_citas}</p>
                 <h:form>
-                    <h:dataTable value="#{citasController.listarCitasUs()}" var="cita" class="tablas table table-striped table-bordered dt-responsive nowrap text-center">
+                    <h:dataTable value="#{reporteController.listarCitas()}" var="cita" class="tablas table table-striped table-bordered dt-responsive nowrap text-center">
                         <h:column>
                             <f:facet name="header">ID</f:facet>
                             <h:outputText id="id" value="#{cita.idCita}"/>
@@ -79,7 +62,7 @@
 
                         <h:column>
                             <f:facet name="header">#{citasEti.enc_hora}</f:facet>
-                            <h:outputText id="hora" value="#{cita.hora}">
+                            <h:outputText id="hora" value="#{cita.horaFK.hora}">
                                 <f:convertDateTime dateStyle="full" pattern="h:mm a"></f:convertDateTime>
                             </h:outputText>
                             <h:message for="hora"/>
@@ -99,11 +82,11 @@
 
                         <h:column>
                             <f:facet name="header">#{universEti.acciones}</f:facet>
-                            <h:commandButton class="btn btn-warning" action="#{reporteController.consultarCita(cita)}" value="#{universEti.modificar}"/>
+                            <h:commandButton class="btn btn-warning" action="#{usuarioController.consultarCita(cita)}" value="#{universEti.modificar}"/>
                             <h:commandButton class="btn btn-danger" 
                                              onclick="javascript:if (!confirm('¿Está seguro que desea eliminar este horario?'))
                                                          return false;" 
-                                             action="#{reporteController.eliminarCita(cita)}" 
+                                             action="#{usuarioController.eliminarCita(cita)}" 
                                              value="#{universEti.eliminar}"/>
                         </h:column>
                     </h:dataTable>

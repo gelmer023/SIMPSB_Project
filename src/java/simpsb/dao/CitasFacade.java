@@ -66,8 +66,8 @@ public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLoc
     public List<Citas> listarFacturas() {
         List<Citas> lista = null;
         try {
-            Query query = em.createQuery("SELECT c FROM Citas c WHERE c.estadoFK :state");
-            query.setParameter("state", "3");
+            Query query = em.createQuery("SELECT c FROM Citas c WHERE c.estadoFK.estado = :state");
+            query.setParameter("state", "Activa");
             lista = query.getResultList();
             if (!lista.isEmpty()) {
                 lista.get(0);

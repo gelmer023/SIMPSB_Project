@@ -57,11 +57,6 @@
                         <div class="col-12">
                             <p class="text-uppercase"> <img src="../../resources/img/icono_citas.png" alt="Icono citas"/>#{citasEti.subtitulo_citas}</p>
                             <h:form>
-                                <h:commandButton actionListener="#{citasController.verReporte()}" value="PDF" styleClass="btn btn-warning">
-
-                                </h:commandButton>
-                            </h:form>
-                            <h:form>
                                 <h:dataTable value="#{citasController.listarCitas()}" var="cita" class="display tablas table table-striped table-bordered dt-responsive nowrap text-center">
                                     <h:column>
                                         <f:facet name="header">ID</f:facet>
