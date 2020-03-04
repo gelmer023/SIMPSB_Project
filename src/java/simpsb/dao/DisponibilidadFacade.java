@@ -27,6 +27,8 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
 
     @EJB
     DisponibilidadFacadeLocal disponibilidadFacadeLocal;
+    @EJB
+    HorasFacadeLocal horasFacadeLocal;
 
     @PersistenceContext(unitName = "SIMPSB1PU")
     private EntityManager em;
@@ -43,25 +45,23 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
     @Override
     public List<Horas> disponibles(Citas ct) {
         List<Horas> listDis = null;
-
+        List<Horas> listHor = horasFacadeLocal.findAll();
+        List<Disponibilidad> lista = disponibilidadFacadeLocal.findAll();
         try {
-            List<Disponibilidad> lista = disponibilidadFacadeLocal.findAll();
             for (Disponibilidad disp : lista) {
                 Date dfech = disp.getFecha();
-                if (dfech == ct.getFecha()) {
-                    Query query = em.createQuery("SELECT h from Horas h INNER JOIN h.disponibilidadList d WHERE d.estado = :estado AND d.fecha = :fecha");
-                    query.setParameter("estado", "Disponible");
-                    query.setParameter("fecha", ct.getFecha());
-                    listDis = query.getResultList();
-                    if (!listDis.isEmpty()) {
-                        listDis.get(0);
-                    }
-
-                } else {
-                    Query query = em.createQuery("SELECT h from Horas h");
-                    listDis = query.getResultList();
-                    if (!listDis.isEmpty()) {
-                        listDis.get(0);
+                int id = disp.getHoraFK().getIdHoras();
+                for (Horas hor : listHor) {
+                    int idH = hor.getIdHoras();
+                        if (id == idH) {
+                            if (dfech.equals(ct.getFecha())) {
+                                Query query = em.createQuery("SELECT h from Horas h WHERE h.idHoras != :hora");
+                                query.setParameter("hora", idH);
+                                listDis = query.getResultList();
+                                if (!listDis.isEmpty()) {
+                                    listDis.get(0);
+                                }
+                            }
                     }
                 }
             }

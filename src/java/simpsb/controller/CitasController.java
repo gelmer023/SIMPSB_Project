@@ -317,7 +317,11 @@ public class CitasController {
             disponibilidadFacadeLocal.create(disponibilidad);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("fecha");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente la cita"));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
+            if (us.getIdRol().getRol() == "Cliente") {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../../Cliente/Citas/consultarCitasCli.xhtml");
+            } else {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
+            }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al generar la cita"));
         }
@@ -481,8 +485,9 @@ public class CitasController {
         List<Citas> listCitas = null;
         us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         cl = clienteFacadeLocal.getIdCl(us.getIdUsuario());
+        int idCliente = cl.getIdCliente();
         try {
-            listCitas = citasFacadeLocal.citasCli(cl.getIdCliente());
+            listCitas = citasFacadeLocal.citasCli(idCliente);
         } catch (Exception e) {
             e.printStackTrace();
         }
