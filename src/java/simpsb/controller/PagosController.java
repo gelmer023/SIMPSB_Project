@@ -234,5 +234,13 @@ public class PagosController {
         rCliente.getReporte(ruta);
         FacesContext.getCurrentInstance().responseComplete();
     }
+    
+    public void realizarPago(Porcentajepagos pg){
+        try {
+            porcentajepagos.getFecha();
+            
+        } catch (Exception e) {
+        }
+    }
 
 }

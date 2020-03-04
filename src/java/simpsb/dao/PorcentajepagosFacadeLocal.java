@@ -30,4 +30,5 @@ public interface PorcentajepagosFacadeLocal {
 
     int count();
     
+    List<Porcentajepagos> pagoE(Porcentajepagos pg);
 }

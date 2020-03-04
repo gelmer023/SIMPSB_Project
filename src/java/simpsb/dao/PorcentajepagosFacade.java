@@ -5,9 +5,11 @@
  */
 package simpsb.dao;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import simpsb.entidades.Porcentajepagos;
 
 /**
@@ -28,5 +30,22 @@ public class PorcentajepagosFacade extends AbstractFacade<Porcentajepagos> imple
     public PorcentajepagosFacade() {
         super(Porcentajepagos.class);
     }
+    
+    @Override
+     public List<Porcentajepagos> pagoE(Porcentajepagos pg) {
+        List<Porcentajepagos> pagosEmp = null;
+        try {
+            Query query = em.createQuery("SELECT p FROM Porcentajepagos p WHERE p.fecha >= :fechaI");
+            query.setParameter("fechaI", (pg.getFecha()));
+            pagosEmp = query.getResultList();
+            if (!pagosEmp.isEmpty()) {
+                pagosEmp.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return pagosEmp;
+    }
+    
     
 }

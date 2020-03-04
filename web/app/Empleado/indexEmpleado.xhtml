@@ -15,11 +15,13 @@
         <f:view locale="#{languages.idiomaSeleccionado}">
             <!-- SIDEBAR -->
             <div class="col-2 sidebar float-left">
-                <div class="perfil">
-                    <p class="text-center text-uppercase">Empleado</p>
-                    <img src="../resources/img/perfil.png" alt=""/>
-                    <p class="text-center text-uppercase">#{session.getValue("user").getNombre()} #{session.getValue("user").getApellido()}</p>
-                </div>
+                 <div class="perfil">
+                        <p class="text-center text-uppercase">Empleado</p>
+                        <h:graphicImage value="#{user.getFoto()}" class="estilosFtPerfil"/>
+                        <p class="text-center text-uppercase">#{user.getNombre()} #{user.getApellido()}</p>
+                        <h:commandButton action="#{sesionController.logout()}" value="Cerrar Sesion"
+                                         styleClass="btn text-warning d-block mx-auto" style="color: #fff; margin-top: 10px; margin-left: 80px; background: black;"/>
+                    </div>
                 <div class="modulos">
                     <h:form>
                         <!-- HOME -->
@@ -82,14 +84,18 @@
                                 <li>
                                     <a href="#"><img src="../resources/img/config.png" alt=""/></a>
                                     <ul>
-                                        <li>
-                                            <img src="../resources/img/editar-perfil.png" alt=""/><a class="text-left" href="../Supervisor/Usuarios/loginFoto.xhtml" target="area-trabajo">Editar Perfil</a>
+                                       <li>
+                                            <h:form>
+                                                <img src="../resources/img/editar-perfil.png" alt=""/>
+                                                <h:commandLink action="#{usuarioController.editarU(us)}" 
+                                                                 value="Editar Perfil"  a:target="area-trabajo" styleClass="btn boton" style="color: #fff; margin-top: 10px;"/>
+                                            </h:form>
                                         </li>
                                         <li>
-                                            <img src="../resources/img/ajustes.png" alt=""/><a class="text-left" href="../Supervisor/Config/cambiarContra.xhtml?faces-redirect=true" target="area-trabajo">Cambiar contraseña</a>
-                                        </li>
-                                        <li>	
-                                            <img src="../resources/img/logout.png" alt=""/><a class="text-left">#{perfilEti.cerrarSesion}</a>
+                                            <h:form>
+                                            <img src="../resources/img/ajustes.png" alt="" style="margin-left: 10px; "/><h:commandLink    action="Config/cambiarContra.xhtml?faces-redirect=true" value="Cambiar Contraseña" a:target="area-trabajo" 
+                                                                                                             style="color: #fff; margin-top: 0px; margin-left: 0px; text-align: center"/>
+                                            </h:form>
                                         </li>
                                     </ul>
                                 </li>

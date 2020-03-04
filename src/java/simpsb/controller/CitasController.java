@@ -65,7 +65,7 @@ public class CitasController {
 
     @PostConstruct
     public void init() {
-        //listFactura = citasFacadeLocal.listarFacturas();
+//        listFactura = citasFacadeLocal.listarFacturas();
         citas = new Citas();
         servicios = new Servicios();
         empleado = new Empleado();
@@ -281,6 +281,10 @@ public class CitasController {
 
     public void generarCita() {
         Cliente cl = null;
+        
+        
+        
+        
         Usuario us = null;
         Citas ct = null;
         try {
@@ -464,7 +468,7 @@ public class CitasController {
         return listCitas;
     }
 
-    public void agregarServicios() {
+    public  void agregarServicios() {
         try {
             Citas ct = (Citas) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cta");
             citas.setIdCita(ct.getIdCita());

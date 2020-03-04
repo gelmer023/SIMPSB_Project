@@ -7,68 +7,14 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT
-     concat(usuario.`nombre`,usuario.`apellido`) AS Nombre,
-     usuario.`numDocumento` AS N°Documento,
-     servicios.`nombre` AS Servicio,
-     servicios.`valor` AS Valorse,
-     factura.`subTotal` AS SubTotal,
-     factura.`iva` AS Iva,
-     factura.`valorTotal` AS Valor,
-     usuario.`correo` AS Email,
-     factura.`idFactura` AS ID,
-     citas.`fecha` AS Fecha,
-     citas.`horaFK` AS Hor,
-     citas.`valorTotal` AS citas_valorTotal,
-     serviciosextra.`idServicioExtra` AS idServicioExtra,
-     serviciosextra.`idServicio` AS serviciosextra_idServicio
-FROM
-     `usuario` usuario INNER JOIN `empleado` empleado ON usuario.`idUsuario` = empleado.`idUsuario`
-     INNER JOIN `citas` citas ON empleado.`idEmpleado` = citas.`idEmpleado`
-     INNER JOIN `servicios` servicios ON citas.`idServicio` = servicios.`idServicio`
-     INNER JOIN `factura` factura ON citas.`idCita` = factura.`idCita`
-     INNER JOIN `serviciosextra` serviciosextra ON citas.`idCita` = serviciosextra.`idCita`
-     AND servicios.`idServicio` = serviciosextra.`idServicio`
-WHERE
-     factura.idFactura = $P{idFactura}
-  UNION ALL
-
-SELECT
-     servicios.`nombre` AS Servicio,
-     servicios.`valor` AS Valorse,
-     serviciosextra.`idServicioExtra` AS idServicioExtra,
-     serviciosextra.`idServicio` AS serviciosextra_idServicio
-FROM serviciosextra INNER JOI
-     `
-WHERE
-     factura.idFactura = $P{idFactura}]]>
+		<![CDATA[]]>
 	</queryString>
-	<field name="Nombre" class="java.lang.String">
+	<field name="nombre" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="N°Documento" class="java.lang.Integer"/>
-	<field name="Servicio" class="java.lang.String"/>
-	<field name="Valorse" class="java.lang.String"/>
-	<field name="SubTotal" class="java.lang.String">
+	<field name="idServicio" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Iva" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Valor" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Email" class="java.lang.String"/>
-	<field name="ID" class="java.lang.Integer"/>
-	<field name="Fecha" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Hor" class="java.lang.Integer"/>
-	<field name="citas_valorTotal" class="java.lang.String"/>
-	<field name="idServicioExtra" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="serviciosextra_idServicio" class="java.lang.Integer"/>
 	<variable name="Nombre_1" class="java.lang.Integer" resetType="Column" calculation="Count">
 		<variableExpression><![CDATA[$F{Nombre}]]></variableExpression>
 	</variable>
@@ -86,7 +32,7 @@ WHERE
 		</band>
 	</title>
 	<columnHeader>
-		<band height="165">
+		<band height="159">
 			<staticText>
 				<reportElement x="146" y="0" width="252" height="31" uuid="8746dcab-7c35-45c8-a832-82359cd436e7"/>
 				<textElement textAlignment="Center">
@@ -108,7 +54,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="376" y="42" width="100" height="20" uuid="4f6c6dbc-68ac-4395-8627-10c43a8e3c46"/>
+				<reportElement x="365" y="42" width="100" height="20" uuid="4f6c6dbc-68ac-4395-8627-10c43a8e3c46"/>
 				<textFieldExpression><![CDATA[$F{N°Documento}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -154,7 +100,7 @@ WHERE
 				<text><![CDATA[Valor]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="100" y="75" width="100" height="20" uuid="b43fe3ef-2f8e-4669-b8a7-cd6d7744cfcf"/>
+				<reportElement x="90" y="75" width="100" height="20" uuid="b43fe3ef-2f8e-4669-b8a7-cd6d7744cfcf"/>
 				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
 			</textField>
 			<staticText>

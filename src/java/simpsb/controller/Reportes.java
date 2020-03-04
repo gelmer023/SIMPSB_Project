@@ -89,6 +89,7 @@ public class Reportes {
         conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "");
         //Se definen los parametros si es que el reporte necesita
         Map<String, Object> parametros = new HashMap<String, Object>();
+        
         parametros.put("idUsuario", citas);
         try {
 
@@ -139,10 +140,13 @@ public class Reportes {
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
         int billf=bill.getIdFactura();
+       
+        
         conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/proyecto", "root", "");
         //Se definen los parametros si es que el reporte necesita
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put("idFactura", billf);
+        
         try {
 
             File file = new File(ruta);

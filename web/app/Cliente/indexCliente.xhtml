@@ -21,6 +21,8 @@
                         <p class="text-center text-uppercase">cliente</p>
                         <h:graphicImage value="#{user.getFoto()}" class="estilosFtPerfil"/>
                         <p class="text-center text-uppercase">#{user.getNombre()} #{user.getApellido()}</p>
+                        <h:commandButton action="#{sesionController.logout()}" value="#{perfilEti.cerrarSesion}"
+                                         styleClass="btn text-warning d-block mx-auto" style="color: #fff; margin-top: 10px; margin-left: 80px; background: black;"/>
                     </div>
                     <div class="modulos">
                         <!-- HOME -->
@@ -31,7 +33,7 @@
                             </h4>
                         </div>
 
-                        
+
                         <!-- CITAS -->
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_citas.png" alt=""/>
@@ -45,10 +47,10 @@
                                 <a href="Citas/consultarCitasCli.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.consultarCita}</a>
                             </p>
                         </div>
-                        
+
+                    </div>
                 </div>
-            </div>
-        </h:form>
+            </h:form>
             <!-- AREA DE TRABAJO -->
             <div class="col-10 derecho float-right">
                 <nav class="navbarra float-right col-12">
@@ -56,17 +58,41 @@
                         <div class="col-6 logo">
                             <p><img src="../resources/img/logo.png" alt=""/></p>
                         </div>
-                        <div class="col-3"></div>
-                        <div class="col-3 config">
+                        <div class="col-5">
+                            <h:form>
+                                <div class="btnlan dropdown d-flex justify-content-end">
+                                    <button type="button" class="btnlan text-light btn dropdown-toggle"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../resources/img/banderas partidas 2.png" alt="" style="width:25px; height:20px;"/>
+                                        #{pagesEti[languages.idiomaSeleccionado.language]}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <c:forEach items="#{languages.idiomasSoportados}" var="idioma">
+                                            <h:commandLink class="dropdown-item" actionListener="#{languages.cambiarIdioma(idioma)}"
+                                                           value="#{pagesEti[idioma.language]}"/>
+                                        </c:forEach>    
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                        <div class="col-1 config">
                             <ul>
                                 <li>
                                     <a href="#"><img src="../resources/img/config.png" alt=""/></a>
                                     <ul>
                                         <li>
-                                            <img src="../resources/img/editar-perfil.png" alt=""/><a class="text-left" href="../Supervisor/Usuarios/editarPerfil.xhtml" target="area-trabajo">Editar Perfil</a>
+                                            <h:form>
+                                                <img src="../resources/img/editar-perfil.png" alt=""/>
+                                                <h:commandLink action="#{usuarioController.editarU(us)}" 
+                                                               value="Editar Perfil"  a:target="area-trabajo" styleClass="btn boton" style="color: #fff; margin-top: 10px;"/>
+                                            </h:form>
                                         </li>
                                         <li>
-                                            <img src="../resources/img/ajustes.png" alt=""/><a class="text-left" href="../Supervisor/Config/cambiarContra.xhtml?faces-redirect=true" target="area-trabajo">Cambiar contraseña</a>
+                                            <img src="../resources/img/ajustes.png" alt=""/>
+                                            <h:form>
+                                            <h:commandLink    action="Config/cambiarContra.xhtml?faces-redirect=true" value="Cambiar Contraseña" a:target="area-trabajo" 
+                                                              style="color: #fff; margin-top: 0px; margin-left: 0px; text-align: center"/>
+                                            </h:form>
                                         </li>
                                     </ul>
                                 </li>

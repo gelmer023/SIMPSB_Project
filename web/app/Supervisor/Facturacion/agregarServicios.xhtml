@@ -17,8 +17,8 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Facturar Cita</li>
-                    <li class="breadcrumb-item active" aria-current="page">Agregar Servicios</li>
+                    <li class="breadcrumb-item active" aria-current="page">#{facturaEti.facCit}</li>
+                    <li class="breadcrumb-item active" aria-current="page">#{facturaEti.serviciosEx}</li>
                 </ol>
             </nav> 
             <h:messages globalOnly="true" showDetail="true" class="mensajes"/>
@@ -41,7 +41,7 @@
             <div class="container">
                 <div class="formulario d-block mx-auto">
                     <div class="titulo">
-                        <h1 class="text-center">AGREGAR SERVICIOS</h1>
+                        <h1 class="text-center">#{facturaEti.serviciosEx}</h1>
                     </div>
 
                     <h:form>
@@ -57,7 +57,7 @@
                         </div>
                         <h:commandButton styleClass="btn boton d-block mx-auto" 
                                          action="#{citasController.agregarServicios()}" 
-                                         value="Agregar"/> 
+                                         value="#{facturaEti.agregar}"/> 
                     </h:form>
                 </div>
             </div>

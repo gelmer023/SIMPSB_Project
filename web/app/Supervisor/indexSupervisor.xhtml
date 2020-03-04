@@ -20,7 +20,7 @@
                         <p class="text-center text-uppercase">Supervisor</p>
                         <h:graphicImage value="#{user.getFoto()}" class="estilosFtPerfil"/>
                         <p class="text-center text-uppercase">#{user.getNombre()} #{user.getApellido()}</p>
-                        <h:commandButton action="#{sesionController.logout()}" value="Cerrar Sesion"
+                        <h:commandButton action="#{sesionController.logout()}" value="#{perfilEti.cerrarSesion}"
                                          styleClass="btn text-warning d-block mx-auto" style="color: #fff; margin-top: 10px; margin-left: 80px; background: black;"/>
                     </div>
                     <div class="modulos">
@@ -109,8 +109,24 @@
                         <div class="col-6 logo">
                             <p><img src="../resources/img/logo.png" alt=""/></p>
                         </div>
-                        <div class="col-3"></div>
-                        <div class="col-3 config">
+                        <div class="col-5">
+                            <h:form>
+                                <div class="btnlan dropdown d-flex justify-content-end">
+                                    <button type="button" class="btnlan text-light btn dropdown-toggle"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../resources/img/banderas partidas 2.png" alt="" style="width:25px; height:20px;"/>
+                                        #{pagesEti[languages.idiomaSeleccionado.language]}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <c:forEach items="#{languages.idiomasSoportados}" var="idioma">
+                                            <h:commandLink class="dropdown-item" actionListener="#{languages.cambiarIdioma(idioma)}"
+                                                           value="#{pagesEti[idioma.language]}"/>
+                                        </c:forEach>    
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                        <div class="col-1 config">
                             <ul>
                                 <li>
                                     <a href="#"><img src="../resources/img/config.png" alt=""/></a>

@@ -51,11 +51,11 @@
             <div class="container">
                 <div class="tabla d-block mx-auto">
                     <div class="titulo">
-                        <h1 class="text-center">CONSULTAR FACTURA</h1>
+                        <h1 class="text-center">#{facturaEti.consultarFactura}</h1>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <p class="text-uppercase"> <img src="../../resources/img/icono_citas.png" alt="Icono citas"/>#{citasEti.subtitulo_citas}</p>
+                            <p class="text-uppercase"> <img src="../../resources/img/icono_facturacion.png" alt="Icono citas"/>#{citasEti.subtitulo_citas}</p>
                             <h:form>
                                 <h:commandButton actionListener="#{pagosController.verReporte2()}" value="PDF" styleClass="btn btn-warning">
 
@@ -70,7 +70,7 @@
                                     </h:column>
 
                                     <h:column>
-                                        <f:facet name="header">Fecha</f:facet>
+                                        <f:facet name="header">#{facturaEti.fecha}</f:facet>
                                         <h:outputText id="fecha" value="#{fac.fecha} #{cita.idCliente.idUsuario.apellido}">
                                             <f:convertDateTime for="fecha" type="date" dateStyle="full"></f:convertDateTime>
                                         </h:outputText>
@@ -78,7 +78,7 @@
                                     </h:column>
 
                                     <h:column>
-                                        <f:facet name="header">Empleado</f:facet>
+                                        <f:facet name="header">#{facturaEti.empleado}</f:facet>
                                         <h:outputText id="servicio" value="#{fac.idCita.idEmpleado.idUsuario.nombre}"/>
                                         <h:message for="servicio"/>
                                     </h:column>

@@ -28,23 +28,24 @@
                 <li class="breadcrumb-item active text-uppercase" aria-current="page">Home</li>
             </ol>
         </nav>
-        <h:form>
-            <div class="dropdown d-flex justify-content-end">
-                <button type="button" class="lanbtn btn dropdown-toggle"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="../../resources/img/banderas partidas 2.png" alt="" style="width:25px; height:20px;"/>
-                    #{pagesEti[languages.idiomaSeleccionado.language]}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <c:forEach items="#{languages.idiomasSoportados}" var="idioma">
-                        <h:commandLink class="dropdown-item" actionListener="#{languages.cambiarIdioma(idioma)}"
-                                       value="#{pagesEti[idioma.language]}"/>
-                    </c:forEach>    
+        <div class="bienvenido text-center">#{perfilEti.bievenido} #{session.getValue("user").getNombre()} #{session.getValue("user").getApellido()}</div>
+        <div cass="row">
+            <h:form>
+                <div class="dropdown d-flex justify-content-end">
+                    <button type="button" class="lanbtn text-dark btn dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="../resources/img/banderas partidas 2.png" alt="" style="width:25px; height:20px;"/>
+                        #{pagesEti[languages.idiomaSeleccionado.language]}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <c:forEach items="#{languages.idiomasSoportados}" var="idioma">
+                            <h:commandLink class="dropdown-item" actionListener="#{languages.cambiarIdioma(idioma)}"
+                                           value="#{pagesEti[idioma.language]}"/>
+                        </c:forEach>    
+                    </div>
                 </div>
-            </div>
-        </h:form>
-
-        <div class="bienvenido text-center">BIENVENIDO #{session.getValue("user").getNombre()} #{session.getValue("user").getApellido()}</div>
+            </h:form>
+        </div>
         <div class="row">
            
             <div class="citas">

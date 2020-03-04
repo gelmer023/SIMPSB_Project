@@ -51,6 +51,11 @@
         </resource-bundle>
         
         <resource-bundle>
+            <base-name>simpsb.languages.Factura.factura</base-name>
+            <var>facturaEti</var>
+        </resource-bundle>
+        
+        <resource-bundle>
             <base-name>simpsb.languages.Pages.pages</base-name>
             <var>pagesEti</var>
         </resource-bundle>
