@@ -44,6 +44,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Usuario.findByFoto", query = "SELECT u FROM Usuario u WHERE u.foto = :foto")})
 public class Usuario implements Serializable {
 
+    @OneToMany(mappedBy = "usuarioFK")
+    private List<Comisiones> comisionesList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -201,6 +204,14 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "simpsb.entidades.Usuario[ idUsuario=" + idUsuario + " ]";
+    }
+
+    public List<Comisiones> getComisionesList() {
+        return comisionesList;
+    }
+
+    public void setComisionesList(List<Comisiones> comisionesList) {
+        this.comisionesList = comisionesList;
     }
     
 }

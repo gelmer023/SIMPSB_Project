@@ -61,15 +61,26 @@ and open the template in the editor.
                             <h:inputText id="fechaI" 
                                          styleClass="form form-control" 
                                          a:type="date"
-                                         value="#{citasController.citas.fecha}" 
+                                         value="#{pagosController.fechaInicial}" 
                                          >
                                 <f:convertDateTime for="fecha" type="date" pattern="yyyy-MM-dd"></f:convertDateTime>
                             </h:inputText>
                             <h:message for="fechaI"/>
                         </div> 
-                       
+                        
+                        <div class="form-group col">
+                            <h:outputLabel for="fechaF" value="#{citasEti.fecha} final"/>
+                            <h:inputText id="fechaF" 
+                                         styleClass="form form-control" 
+                                         a:type="date"
+                                         value="#{pagosController.fechaFinal}" 
+                                         >
+                                <f:convertDateTime for="fecha" type="date" pattern="yyyy-MM-dd"></f:convertDateTime>
+                            </h:inputText>
+                           <h:message for="fechaF"/>
+                        </div> 
 
-                        <h:commandButton value="#{usuariosEti.enviar}" action="#{pagosController.generarPago()}" styleClass="btn boton d-block mx-auto"/>
+                        <h:commandButton value="#{usuariosEti.enviar}" action="#{pagosController.registrarPago()}" styleClass="btn boton d-block mx-auto"/>
                     </h:form>
                 </div>
             </div>

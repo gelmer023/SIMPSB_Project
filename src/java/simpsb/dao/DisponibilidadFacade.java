@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -22,12 +24,15 @@ import simpsb.entidades.Horas;
  */
 @Stateless
 public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> implements DisponibilidadFacadeLocal {
-    
+
     @EJB
     DisponibilidadFacadeLocal disponibilidadFacadeLocal;
-    
+    @EJB
+    HorasFacadeLocal horasFacadeLocal;
+
     @PersistenceContext(unitName = "SIMPSB1PU")
     private EntityManager em;
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -36,28 +41,31 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
     public DisponibilidadFacade() {
         super(Disponibilidad.class);
     }
-    
+
     @Override
     public List<Horas> disponibles(Citas ct) {
-            List<Horas> listDis = null;
-
+        List<Horas> listDis = null;
+        List<Horas> listHor = horasFacadeLocal.findAll();
+        List<Disponibilidad> lista = disponibilidadFacadeLocal.findAll();
         try {
-            List<Disponibilidad> lista = disponibilidadFacadeLocal.findAll();
-            if (!lista.isEmpty()) {
-                Query query = em.createQuery("SELECT h from Horas h INNER JOIN h.disponibilidadList d WHERE d.estado = :estado AND d.fecha = :fecha");
-                query.setParameter("estado", "Disponible");
-                query.setParameter("fecha", ct.getFecha());
-                listDis = query.getResultList();
-                if (!listDis.isEmpty()) {
-                    listDis.get(0);
-                }
-            } else {
-                Query query = em.createQuery("SELECT h from Horas h");
-                listDis = query.getResultList();
-                if (!listDis.isEmpty()) {
-                    listDis.get(0);
+            for (Disponibilidad disp : lista) {
+                Date dfech = disp.getFecha();
+                int id = disp.getHoraFK().getIdHoras();
+                for (Horas hor : listHor) {
+                    int idH = hor.getIdHoras();
+                        if (id == idH) {
+                            if (dfech.equals(ct.getFecha())) {
+                                Query query = em.createQuery("SELECT h from Horas h WHERE h.idHoras != :hora");
+                                query.setParameter("hora", idH);
+                                listDis = query.getResultList();
+                                if (!listDis.isEmpty()) {
+                                    listDis.get(0);
+                                }
+                            }
+                    }
                 }
             }
+
         } catch (Exception e) {
             throw e;
         }

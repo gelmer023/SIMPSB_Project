@@ -35,7 +35,7 @@ public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLoc
     public List<Citas> citasCli(int idCli) {
         List<Citas> listaCitas = null;
         try {
-            Query query = em.createQuery("SELECT c FROM Citas c WHERE c.idCliente = :cli");
+            Query query = em.createQuery("SELECT c FROM Citas c WHERE c.idCliente.idCliente = :cli");
             query.setParameter("cli", idCli);
             listaCitas = query.getResultList();
             if (!listaCitas.isEmpty()) {
@@ -66,7 +66,7 @@ public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLoc
     public List<Citas> listarFacturas() {
         List<Citas> lista = null;
         try {
-            Query query = em.createQuery("SELECT c FROM Citas c WHERE c.estadoFK.estado :state");
+            Query query = em.createQuery("SELECT c FROM Citas c WHERE c.estadoFK.estado = :state");
             query.setParameter("state", "Activa");
             lista = query.getResultList();
             if (!lista.isEmpty()) {

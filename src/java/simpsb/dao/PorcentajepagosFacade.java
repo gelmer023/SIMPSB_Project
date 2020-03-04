@@ -5,6 +5,7 @@
  */
 package simpsb.dao;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,22 +31,23 @@ public class PorcentajepagosFacade extends AbstractFacade<Porcentajepagos> imple
     public PorcentajepagosFacade() {
         super(Porcentajepagos.class);
     }
-    
+
     @Override
-     public List<Porcentajepagos> pagoE(Porcentajepagos pg) {
-        List<Porcentajepagos> pagosEmp = null;
+    public List<Porcentajepagos> calcularPago(int idEmp, Date fechaI, Date fechaF) {
+        List<Porcentajepagos> listPorc = null;
         try {
-            Query query = em.createQuery("SELECT p FROM Porcentajepagos p WHERE p.fecha >= :fechaI");
-            query.setParameter("fechaI", (pg.getFecha()));
-            pagosEmp = query.getResultList();
-            if (!pagosEmp.isEmpty()) {
-                pagosEmp.get(0);
+            Query q = em.createQuery("SELECT e FROM Empleado e INNER JOIN e.porcentajepagosList p WHERE p.idEmpleadoFK = :idEmp AND p.fecha >= :fechaI AND p.fecha <= :fechaF");
+            q.setParameter("fechaI", fechaI);
+            q.setParameter("fechaF", fechaF);
+            q.setParameter("idEmp", idEmp);
+            listPorc = q.getResultList();
+            if (!listPorc.isEmpty()) {
+                listPorc.get(0);
             }
         } catch (Exception e) {
             throw e;
         }
-        return pagosEmp;
+        return listPorc;
     }
-    
-    
+
 }

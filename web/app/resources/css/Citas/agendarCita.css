@@ -23,6 +23,21 @@
 .fondo{
     background-color: rgb(203,203,210);
 }
+.modal-content{
+    background-color: #000;
+    border-radius: 10px;
+    border: 1px solid #D4AF37;
+}
+.modal-header{
+    border-bottom: 1px solid #D4AF37;
+}
+.modal-footer{
+    border-top: 1px solid #D4AF37;
+}
+
+.modal-dialog {
+    max-width: 800px;
+}   
 /*MIGAS*/
 .lanbtn{
  color: #000;
@@ -68,6 +83,7 @@
     border-bottom: 1px solid #D4AF37;
 }
 .boton{
+    color: #000;
     background-color: #D4AF37;
 }
 /* TABLA */

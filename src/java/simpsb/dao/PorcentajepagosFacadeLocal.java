@@ -5,6 +5,7 @@
  */
 package simpsb.dao;
 
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Local;
 import simpsb.entidades.Porcentajepagos;
@@ -30,5 +31,5 @@ public interface PorcentajepagosFacadeLocal {
 
     int count();
     
-    List<Porcentajepagos> pagoE(Porcentajepagos pg);
+    List<Porcentajepagos> calcularPago(int idEmp, Date fechaI, Date fechaF);
 }

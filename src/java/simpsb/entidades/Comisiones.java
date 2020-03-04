@@ -6,6 +6,7 @@
 package simpsb.entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -25,7 +27,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "comisiones")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Comisiones.findAll", query = "SELECT c FROM Comisiones c")
     , @NamedQuery(name = "Comisiones.findByIdComisiones", query = "SELECT c FROM Comisiones c WHERE c.idComisiones = :idComisiones")
@@ -33,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Comisiones implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -43,9 +45,12 @@ public class Comisiones implements Serializable {
     @JoinColumn(name = "idEmpleado", referencedColumnName = "idEmpleado")
     @ManyToOne
     private Empleado idEmpleado;
-    @JoinColumn(name = "idFactura", referencedColumnName = "idFactura")
+    @Column(name = "fecha")
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+    @JoinColumn(name = "usuarioFK", referencedColumnName = "idUsuario")
     @ManyToOne
-    private Factura idFactura;
+    private Usuario usuarioFK;
 
     public Comisiones() {
     }
@@ -77,13 +82,20 @@ public class Comisiones implements Serializable {
     public void setIdEmpleado(Empleado idEmpleado) {
         this.idEmpleado = idEmpleado;
     }
-
-    public Factura getIdFactura() {
-        return idFactura;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setIdFactura(Factura idFactura) {
-        this.idFactura = idFactura;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Usuario getUsuarioFK() {
+        return usuarioFK;
+    }
+
+    public void setUsuarioFK(Usuario usuarioFK) {
+        this.usuarioFK = usuarioFK;
     }
 
     @Override
@@ -110,5 +122,6 @@ public class Comisiones implements Serializable {
     public String toString() {
         return "simpsb.entidades.Comisiones[ idComisiones=" + idComisiones + " ]";
     }
-    
+
 }
+

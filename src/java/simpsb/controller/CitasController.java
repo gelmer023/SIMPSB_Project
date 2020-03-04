@@ -9,6 +9,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import javax.servlet.ServletContext;
 import simpsb.dao.*;
@@ -81,6 +82,7 @@ public class CitasController {
         disponibilidad = new Disponibilidad();
         listServicios = serviciosFacadeLocal.servActivos();
         listEmpleados = empleadoFacadeLocal.findAll();
+
         validarEstado();
         validarDia();
     }
@@ -117,7 +119,6 @@ public class CitasController {
     public void setListFactura(List<Citas> listFactura) {
         this.listFactura = listFactura;
     }
-    
 
     public Calificacion getCalificacion() {
         return calificacion;
@@ -275,8 +276,17 @@ public class CitasController {
     }
 
     public void consultarFecha() {
-        citas.getFecha();
-        listHoras = disponibilidadFacadeLocal.disponibles(citas);
+        try {
+            if (citas.getFecha() == null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:", "Debe seleccionar una fecha"));
+            } else {
+                citas.getFecha();
+                listHoras = disponibilidadFacadeLocal.disponibles(citas);
+                FacesContext.getCurrentInstance().getExternalContext().redirect("Cita.xhtml");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void generarCita() {
@@ -294,15 +304,11 @@ public class CitasController {
             citas.setIdCliente(cl);
 
             //ASIGNO LAS LLAVES FORANEAS DE LA CITA
+            citas.setIdServicio(servicios);
             citas.setIdEmpleado(empleado);
             estado.setIdEstado(3);
             citas.setEstadoFK(estado);
             citas.setHoraFK(horas);
-
-            //ASIGNO EL VALOR DE LA CITA
-            String valor = servicios.getValor();
-            citas.setValorTotal(valor);
-
             //CREO LA CITA
             citasFacadeLocal.create(citas);
 
@@ -315,7 +321,11 @@ public class CitasController {
             disponibilidadFacadeLocal.create(disponibilidad);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("fecha");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente la cita"));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
+            if (us.getIdRol().getRol() == "Cliente") {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../../Cliente/Citas/consultarCitasCli.xhtml");
+            } else {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
+            }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al generar la cita"));
         }
@@ -323,10 +333,14 @@ public class CitasController {
 
     public void cancelarCita(Citas citas) {
         try {
-            estado.setIdEstado(1);
-            citas.setEstadoFK(estado);
-            citasFacadeLocal.edit(citas);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha cancelado exitosamente la cita"));
+            if (citas.getEstadoFK().getIdEstado() != 3) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:", "Esta cita no se puede cancelar"));
+            } else {
+                estado.setIdEstado(1);
+                citas.setEstadoFK(estado);
+                citasFacadeLocal.edit(citas);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha cancelado exitosamente la cita"));
+            }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al cancelar la cita"));
         }
@@ -343,14 +357,28 @@ public class CitasController {
         return listCitas;
     }
 
+    //MÉTODO PARA LISTAR FACTURAS
+    public List<Citas> listarFacturas() {
+        List<Citas> listFactura = null;
+        try {
+            listFactura = citasFacadeLocal.listarFacturas();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listFactura;
+    }
+
     //METODO PARA CONSULTAR LA CITA
     public String consultarCita(Citas ct) {
         try {
-            citas = citasFacadeLocal.find(ct.getIdCita());
-            servicios = citas.getIdServicio();
-            empleado = citas.getIdEmpleado();
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
+            if (ct.getEstadoFK().getIdEstado() != 3) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:", "Esta cita no se puede modificar"));
+            } else {
+                citas = citasFacadeLocal.find(ct.getIdCita());
+                servicios = citas.getIdServicio();
+                empleado = citas.getIdEmpleado();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al consultar su cita"));
@@ -364,16 +392,16 @@ public class CitasController {
         try {
             citas = citasFacadeLocal.find(ct.getIdCita());
 
-                servicios = citas.getIdServicio();
-                empleado = citas.getIdEmpleado();
-                Servicios serv = serviciosFacadeLocal.getValor();
-                String valor = serv.getValor();
-                citas.setValorTotal(valor);
-                citas.setIdEmpleado(empleado);
-                citas.setIdServicio(servicios);
-                citasFacadeLocal.edit(citas);
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("cta", citas);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
+            servicios = citas.getIdServicio();
+            empleado = citas.getIdEmpleado();
+            Servicios serv = serviciosFacadeLocal.getValor();
+            String valor = serv.getValor();
+            citas.setValorTotal(valor);
+            citas.setIdEmpleado(empleado);
+            citas.setIdServicio(servicios);
+            citasFacadeLocal.edit(citas);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("cta", citas);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al consultar su cita"));
@@ -391,6 +419,7 @@ public class CitasController {
             citasFacadeLocal.edit(citas);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente su cita"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
+
         } catch (Exception e) {
             citasFacadeLocal.edit(citas);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al modificar su cita"));
@@ -460,8 +489,9 @@ public class CitasController {
         List<Citas> listCitas = null;
         us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         cl = clienteFacadeLocal.getIdCl(us.getIdUsuario());
+        int idCliente = cl.getIdCliente();
         try {
-            listCitas = citasFacadeLocal.citasCli(cl.getIdCliente());
+            listCitas = citasFacadeLocal.citasCli(idCliente);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -569,7 +599,36 @@ public class CitasController {
         }
     }
 
-    public void generarPorcentaje() {
+    public void calificarCita() {
+        // Traigo el ID de la factura, con la variable de Sesion
+        Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
+        try {
+            //Asigno la fecha de la factura
+            Date fechaHoyD = bill.getFecha();
+            calificacion.setFecha(fechaHoyD);
+            //Asigno el ID de la factura
+            factura.getIdFactura();
+            calificacion.setIdFactura(factura);
+            //Creo la calificacion
+            calificacionFacadeLocal.create(calificacion);
+        } catch (Exception e) {
+        }
+    }
+
+    //Metodo para invocar el reporte y enviarle los parametros si es que necesita
+    public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+
+        //Instancia hacia la clase reporteClientes        
+        Reportes rCliente = new Reportes();
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("reportes/reporteGrafico.jasper");
+
+        rCliente.getReporte(ruta);
+        FacesContext.getCurrentInstance().responseComplete();
+    }
+        public void generarPorcentaje() {
         Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
         try {
             //Asigno el porcentaje
@@ -593,36 +652,5 @@ public class CitasController {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error"));
         }
-
-    }
-    
-    public void calificarCita(){
-        // Traigo el ID de la factura, con la variable de Sesion
-        Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
-        try {
-            //Asigno la fecha de la factura
-            Date fechaHoyD = bill.getFecha();
-            calificacion.setFecha(fechaHoyD);
-            //Asigno el ID de la factura
-            factura.getIdFactura();
-            calificacion.setIdFactura(factura);
-            //Creo la calificacion
-            calificacionFacadeLocal.create(calificacion);
-        } catch (Exception e) {                        
-        }
-    }
-    
-    //Metodo para invocar el reporte y enviarle los parametros si es que necesita
-    public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-
-        //Instancia hacia la clase reporteClientes        
-        Reportes rCliente = new Reportes();
-
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-        String ruta = servletContext.getRealPath("reportes/reporteGrafico.jasper");
-
-        rCliente.getReporte(ruta);
-        FacesContext.getCurrentInstance().responseComplete();
     }
 }
