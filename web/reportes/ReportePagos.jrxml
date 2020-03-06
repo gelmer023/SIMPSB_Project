@@ -21,18 +21,7 @@ FROM
 		<band/>
 	</background>
 	<title>
-		<band height="90">
-			<staticText>
-				<reportElement x="213" y="59" width="131" height="31" uuid="59c12cad-ce7c-48fa-b43b-a1d4e4dd13b7"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Calle 62 #75-76
-4567303]]></text>
-			</staticText>
-			<image>
-				<reportElement x="175" y="0" width="239" height="54" uuid="b911e3cd-3d6c-4389-b336-48db673c7f4b"/>
-				<imageExpression><![CDATA["logo.png"]]></imageExpression>
-			</image>
-		</band>
+		<band height="25"/>
 	</title>
 	<columnHeader>
 		<band height="80">
