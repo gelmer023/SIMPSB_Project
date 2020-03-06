@@ -57,8 +57,6 @@ public class Factura implements Serializable {
     @Size(max = 45)
     @Column(name = "valorTotal")
     private String valorTotal;
-    @OneToMany(mappedBy = "idFactura")
-    private List<Calificacion> calificacionList;
     @JoinColumn(name = "idCita", referencedColumnName = "idCita")
     @ManyToOne
     private Citas idCita;

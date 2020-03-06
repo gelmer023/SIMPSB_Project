@@ -33,7 +33,6 @@
                             </h4>
                         </div>
 
-
                         <!-- CITAS -->
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_citas.png" alt=""/>
@@ -47,6 +46,18 @@
                                 <a href="Citas/consultarCitasCli.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.consultarCita}</a>
                             </p>
                         </div>
+                        
+                        <!-- CALIFICACIÓN -->
+                        <div class="modulo d-block mx-auto">
+                            <img class="float-left" src="../resources/img/icono_calificaciones.png" alt=""/>
+                            <h5>
+                                <a href="#">#{perfilEti.calificacion}</a>
+                            </h5>
+                            <p>
+                                <a href="Calificación/consultarCitasCal.xhtml" target="area-trabajo">#{perfilEti.calificar}</a>
+                            </p>
+                        </div>
+
 
                     </div>
                 </div>
@@ -89,10 +100,11 @@
                                         </li>
                                         <li>
                                             <h:form>
-                                                <img src="../resources/img/ajustes.png" alt="" style="margin-left: 10px; "/>
-                                                <a href="../Config/cambiarContra.xhtml?faces-redirect=true" 
+                                                <img src="../resources/img/password.png" alt="" style="margin-left: 10px; "/>
+                                                <h:commandLink action="Config/cambiarContra.xhtml?faces-redirect=true" 
+                                                               value="Cambiar Contraseña" 
                                                                a:target="area-trabajo" 
-                                                               style="color: #fff; margin-top: 0px; margin-left: 0px; text-align: center">Cambiar Contraseña</a>
+                                                               style="color: #fff; margin-top: 0px; margin-left: 0px; text-align: center"/>
                                             </h:form>
                                         </li>
                                     </ul>

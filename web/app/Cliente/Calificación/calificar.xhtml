@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Editar Perfil</title>
+        <link href="../../../resources/css/Bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../resources/css/Usuarios/crearUsuario.css" rel="stylesheet" type="text/css"/>
+
+    </h:head>
+    <h:body styleClass="fondo">
+        <f:view locale="#{languages.idiomaSeleccionado}">           
+            <!--Migas de Pan-->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">#{universEti.calificar}</li>
+                </ol>
+            </nav> 
+            <h:messages globalOnly="true" showDetail="true" class="mensajes"/>
+            <h:form enctype="multipart/form-data">
+                <div class="dropdown d-flex justify-content-end">
+                    <button type="button" class="lanbtn btn dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="../../resources/img/banderas partidas 2.png" alt="" style="width:25px; height:20px;"/>
+                        #{pagesEti[languages.idiomaSeleccionado.language]}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <c:forEach items="#{languages.idiomasSoportados}" var="idioma">
+                            <h:commandLink class="dropdown-item" actionListener="#{languages.cambiarIdioma(idioma)}"
+                                           value="#{pagesEti[idioma.language]}"/>
+                        </c:forEach>    
+                    </div>
+                </div>
+            </h:form>
+            <!-- Area de Trabajo -->
+            <div class="container">
+                <div class="formulario d-block mx-auto" style="margin-top: 20px">
+                    <div class="titulo">
+                        <h1 class="text-center text-uppercase">#{universEti.calificar}</h1>
+                    </div>
+                    <div>
+                        <h:form>
+                            <div class="form-group col-md-12">
+                                <h:inputHidden value="#{citasController.citas.idCita}"/>
+                                <h:outputLabel for="valoracion" value="Valoracion"/>
+                                <h:selectOneMenu id="valoracion" value="#{citasController.calificacion.valoracion}" styleClass="form form-control">
+                                    <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
+                                    <f:selectItem itemLabel="Pésimo servicio" itemValue="1"/>
+                                    <f:selectItem itemLabel="Buen servicio" itemValue="2"/>
+                                    <f:selectItem itemLabel="Excelente servicio" itemValue="3"/>
+                                </h:selectOneMenu>
+                                <h:message for="valoracion"/>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <h:outputLabel for="comentario" value="Comentario"/>
+                                <h:inputTextarea value="#{citasController.calificacion.comentario}" styleClass="form-control form" a:placeholder="Agregue un comentario de su visita"/>
+                                <h:message for="comentario"/>
+                            </div>
+                            <h:commandButton action="#{citasController.calificar()}" styleClass="btn boton d-block mx-auto" value="#{usuariosEti.btn_registrar}"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </f:view>
+        <!-- BOOTSTRAP -->
+        <script src="../../../resources/js/Bootstrap/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
+        <script src="../../../resources/js/Bootstrap/popper.min.js" type="text/javascript"></script>
+        <script src="../../../resources/js/Bootstrap/bootstrap.min.js" type="text/javascript"></script>
+    </h:body>
+</html>

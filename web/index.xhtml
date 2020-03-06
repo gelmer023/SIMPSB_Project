@@ -228,10 +228,10 @@
                     <div class="col-12">
                         <h1 class="text-center text-uppercase">#{indexEti.tit_equipo}</h1>
                     </div>
-                    <div class="row text-center">
+                    <div class="text-center">
                         <h:form enctype="multipart/form-data">
                             <c:forEach items="#{empleadoController.listarEmpleado()}" var="empleado">
-                                <div class="col-xs-12 col-sm-12 col-lg-4  d-flex justify-content-center">
+                                <div class="col-xs-12 col-sm-12 col-lg-6 d-block mx-auto">
                                     <div class="empleado">
                                         <div class="imagen-empleado">
                                             <h:graphicImage value="#{empleado.idUsuario.foto}"/>

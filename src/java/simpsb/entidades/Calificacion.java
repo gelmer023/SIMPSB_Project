@@ -38,6 +38,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Calificacion.findByComentario", query = "SELECT c FROM Calificacion c WHERE c.comentario = :comentario")})
 public class Calificacion implements Serializable {
 
+    @JoinColumn(name = "citaFK", referencedColumnName = "idCita")
+    @ManyToOne
+    private Citas citaFK;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,9 +56,6 @@ public class Calificacion implements Serializable {
     @Size(max = 220)
     @Column(name = "comentario")
     private String comentario;
-    @JoinColumn(name = "idFactura", referencedColumnName = "idFactura")
-    @ManyToOne
-    private Factura idFactura;
 
     public Calificacion() {
     }
@@ -95,13 +96,6 @@ public class Calificacion implements Serializable {
         this.comentario = comentario;
     }
 
-    public Factura getIdFactura() {
-        return idFactura;
-    }
-
-    public void setIdFactura(Factura idFactura) {
-        this.idFactura = idFactura;
-    }
 
     @Override
     public int hashCode() {
@@ -126,6 +120,14 @@ public class Calificacion implements Serializable {
     @Override
     public String toString() {
         return "simpsb.entidades.Calificacion[ idCalificacion=" + idCalificacion + " ]";
+    }
+
+    public Citas getCitaFK() {
+        return citaFK;
+    }
+
+    public void setCitaFK(Citas citaFK) {
+        this.citaFK = citaFK;
     }
     
 }

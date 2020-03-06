@@ -33,6 +33,8 @@ public interface CitasFacadeLocal {
     
     List<Citas> citasCli(int idCli);
     
+    List<Citas> citasCliCal(int idCli);
+    
     List<Citas> citasEmp(int idEmp);
     
     Citas getIdCita(int idCit);

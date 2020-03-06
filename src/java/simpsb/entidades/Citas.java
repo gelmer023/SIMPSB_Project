@@ -41,6 +41,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "Citas.findByValorTotal", query = "SELECT c FROM Citas c WHERE c.valorTotal = :valorTotal")})
 public class Citas implements Serializable {
 
+    @OneToMany(mappedBy = "citaFK")
+    private List<Calificacion> calificacionList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -199,6 +202,14 @@ public class Citas implements Serializable {
     @Override
     public String toString() {
         return "simpsb.entidades.Citas[ idCita=" + idCita + " ]";
+    }
+
+    public List<Calificacion> getCalificacionList() {
+        return calificacionList;
+    }
+
+    public void setCalificacionList(List<Calificacion> calificacionList) {
+        this.calificacionList = calificacionList;
     }
     
 }

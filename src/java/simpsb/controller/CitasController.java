@@ -222,6 +222,7 @@ public class CitasController {
     int dia = date.get(Calendar.DATE);
     int mes = date.get(Calendar.MONTH) + 1;
     int año = date.get(Calendar.YEAR);
+    SimpleDateFormat sdfm = new SimpleDateFormat("yyyy-MM-dd");
 
     String diaS;
     String diaMax;
@@ -282,7 +283,7 @@ public class CitasController {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:", "Debe seleccionar una fecha"));
             } else {
                 citas.getFecha();
-                disponibilidadFacadeLocal.disponibles(citas);
+                listHoras = disponibilidadFacadeLocal.disponibles(citas);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("Cita.xhtml");
             }
         } catch (Exception ex) {
@@ -307,14 +308,13 @@ public class CitasController {
             estado.setIdEstado(3);
             citas.setEstadoFK(estado);
             int hor = horas.getIdHoras();
-            int hr = 0;
+            int hora = 0;
             Date dfech = null;
             for (Disponibilidad di : lista) {
-                String hora = di.getHoraFK().getHora();
+                hora = di.getHoraFK().getIdHoras();
                 dfech = di.getFecha();
-                hr = Integer.parseInt(hora);
             }
-            if (hr == hor) {
+            if (hora == hor) {
                 if (dfech.equals(citas.getFecha())) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Ya existe una cita agendada en este mismo horario"));
                 }
@@ -322,7 +322,9 @@ public class CitasController {
                 citas.setHoraFK(horas);
                 //CREO LA CITA
                 citasFacadeLocal.create(citas);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("citas", citas);
 
+                
                 //CREO DATOS DE LA TABLA DISPONIBILIDAD
                 disponibilidad.setEstado("Agendada");
                 disponibilidad.setCitaFK(citas);
@@ -405,7 +407,37 @@ public class CitasController {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al consultar su cita"));
         }
+    }
 
+    //METODO PARA CONSULTAR LA CALIFICACION
+    public void consultarCC(Citas ct) {
+        try {
+            citas = citasFacadeLocal.find(ct.getIdCita());
+            empleado = citas.getIdEmpleado();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
+            FacesContext.getCurrentInstance().getExternalContext().redirect("calificar.xhtml");
+        } catch (Exception e) {
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al consultar su cita"));
+        }
+
+    }
+
+    public void calificar() {
+        try {
+            citas.getIdCita();
+            calificacion.setCitaFK(citas);
+            String fe = año + "-" + mes + "-" + dia;
+            Date fechaHoyD = sdfm.parse(fe);
+            calificacion.setFecha(fechaHoyD);
+            //Creo la calificacion
+            calificacionFacadeLocal.create(calificacion);
+            estado.setIdEstado(5);
+            citas.setEstadoFK(estado);
+            citasFacadeLocal.edit(citas);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String hacerFactura(Citas ct) {
@@ -525,6 +557,25 @@ public class CitasController {
         return listCitas;
     }
 
+    //LISTAR CITAS DEL CLIENTE PARA CALIFICAR
+    public List<Citas> listarCitasCal() {
+        Usuario us = null;
+        Cliente cl = null;
+        List<Citas> listCitas = null;
+        us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        cl = clienteFacadeLocal.getIdCl(us.getIdUsuario());
+        int idCliente = cl.getIdCliente();
+        try {
+            listCitas = citasFacadeLocal.citasCliCal(idCliente);
+            if (listCitas.isEmpty()) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:", "No tiene citas para calificar"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listCitas;
+    }
+
     //MÉTODOS ESPECIALES PARA EL PERFIL EMPLEADO
     public List<Citas> listarCitasEmp() {
         Usuario us = null;
@@ -631,7 +682,6 @@ public class CitasController {
             //Ejecuto el metodo para calcular el porcentaje
             generarPorcentaje();
             verFactura();
-            calificarCita();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
             FacesContext.getCurrentInstance().getExternalContext().redirect("calificacion.xhtml");
 
@@ -639,22 +689,6 @@ public class CitasController {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al generar la factura"));
 
-        }
-    }
-
-    public void calificarCita() {
-        // Traigo el ID de la factura, con la variable de Sesion
-        Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
-        try {
-            //Asigno la fecha de la factura
-            Date fechaHoyD = bill.getFecha();
-            calificacion.setFecha(fechaHoyD);
-            //Asigno el ID de la factura
-            factura.getIdFactura();
-            calificacion.setIdFactura(factura);
-            //Creo la calificacion
-            calificacionFacadeLocal.create(calificacion);
-        } catch (Exception e) {
         }
     }
 

@@ -52,7 +52,7 @@
                             <h:inputFile a:accept=".jpg" a:type="file" class="form-control" value="#{usuarioController.imagen.file}" style="margin-bottom: 10px; margin-top: 15px"/>
                             <br></br>
                         </div>
-                        <h:commandButton actionListener="#{usuarioController.cambiarFoto()}" value="#{universEti.subirA}" class="btn boton" style="margin-left: 465px; margin-bottom: 20px;"/>
+                        <h:commandButton onclick="document.location.reload();" action="#{usuarioController.cambiarFoto()}" value="#{universEti.subirA}" class="btn boton" style="margin-left: 465px; margin-bottom: 20px;"/>
                     </h:form>
                     </div>
                     <h:form>

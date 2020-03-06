@@ -5,6 +5,7 @@
  */
 package simpsb.controller;
 
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -13,6 +14,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import simpsb.dao.CalificacionFacadeLocal;
 import simpsb.entidades.Calificacion;
+import simpsb.entidades.Citas;
 
 /**
  *
@@ -31,15 +33,6 @@ public class CalificacionController {
     public void init() {
         calificacion = new Calificacion();
     }
-
-    public CalificacionFacadeLocal getCalificacionFacadeLocal() {
-        return calificacionFacadeLocal;
-    }
-
-    public void setCalificacionFacadeLocal(CalificacionFacadeLocal calificacionFacadeLocal) {
-        this.calificacionFacadeLocal = calificacionFacadeLocal;
-    }
-
     public Calificacion getCalificacion() {
         return calificacion;
     }
@@ -48,13 +41,15 @@ public class CalificacionController {
         this.calificacion = calificacion;
     }
     
-    public void registrarCalifiacion(){
+    //MÉTODO PARA LISTAR
+    public List<Calificacion> listarCalificaciones() {
+        List<Calificacion> listCal = null;
         try {
-            calificacionFacadeLocal.create(calificacion);
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso:", "Registro Exitoso"));
+            listCal = calificacionFacadeLocal.findAll();
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error:", "Error"));
             e.printStackTrace();
         }
+        return listCal;
     }
+    
 }

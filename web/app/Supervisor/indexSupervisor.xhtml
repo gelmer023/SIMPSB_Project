@@ -71,6 +71,16 @@
                                 <a href="Citas/consultarCita.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.consultarCita}</a>
                             </p>
                         </div>
+                        <!-- CALIFICACION -->
+                        <div class="modulo d-block mx-auto">
+                            <img class="float-left" src="../resources/img/icono_calificaciones.png" alt=""/>
+                            <h5>
+                                <a href="#">#{perfilEti.calificacion}</a>
+                            </h5>
+                            <p>
+                                <a href="Calificacion/consultarCalificacion.xhtml" target="area-trabajo" >#{perfilEti.consuCali}</a>
+                            </p>
+                        </div>
                         <!-- HORARIOS -->
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_horarios.png" alt=""/>
@@ -101,11 +111,10 @@
                         <!-- REPORTES -->
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_reportes.png" alt=""/>
-                            <h4>
-                                <p> <h:commandButton actionListener="#{empleadoController.vergrafico()}" value="PIE POPULARIDAD" styleClass="btn btn-warning"></h:commandButton></p>
-                                <p> <h:commandButton actionListener="#{serviciosController.vergrafico2()}" value="BARRA SERVICIOS" styleClass="btn btn-warning"></h:commandButton></p>
-                                <p> <h:commandButton actionListener="#{pagosController.verReporte()}" value="PAGOS REALIZADOS" styleClass="btn btn-warning"></h:commandButton></p>
-                            </h4>
+                            <h5><a href="#">#{perfilEti.Reportes}</a></h5>
+                                <p><h:commandLink actionListener="#{empleadoController.vergrafico()}" value="Pie Popularidad"/></p>
+                                <p><h:commandLink actionListener="#{serviciosController.vergrafico2()}" value="Barra servicios"/></p>
+                                <p><h:commandLink actionListener="#{pagosController.verReporte()}" value="Pagos realizados"/></p>
                             
                         </div>
 
@@ -143,17 +152,18 @@
                                     <ul>
                                         <li>
                                             <h:form>
-                                                <img src="../resources/img/editar-perfil.png" alt=""/>
+                                                <img src="../../resources/img/editar-perfil.png" alt=""/>
                                                 <h:commandLink action="#{usuarioController.editarU(us)}" 
                                                                value="Editar Perfil"  a:target="area-trabajo" styleClass="btn boton" style="color: #fff; margin-top: 10px;"/>
                                             </h:form>
                                         </li>
                                         <li>
                                             <h:form>
-                                                <img src="../resources/img/ajustes.png" alt="" style="margin-left: 10px; "/>
-                                                <a href="../Config/cambiarContra.xhtml?faces-redirect=true" 
+                                                <img src="../resources/img/password.png" alt="" style="margin-left: 10px; "/>
+                                                <h:commandLink action="Config/cambiarContra.xhtml?faces-redirect=true" 
+                                                               value="Cambiar Contraseña" 
                                                                a:target="area-trabajo" 
-                                                               style="color: #fff; margin-top: 0px; margin-left: 0px; text-align: center">Cambiar Contraseña</a>
+                                                               style="color: #fff; margin-top: 0px; margin-left: 0px; text-align: center"/>
                                             </h:form>
                                         </li>
 

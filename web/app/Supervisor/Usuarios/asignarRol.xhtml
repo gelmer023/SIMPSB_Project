@@ -63,6 +63,11 @@
                             </h:selectOneMenu>
                         </div>
 
+                        <div class="form-group">
+                            <h:outputLabel for="des" value="Descripción"/>
+                            <h:inputTextarea value="#{empleadoController.empleado.descripcion}" styleClass="form-control form" a:placeholder="Agregue una descripción"/>
+                            <h:message for="des"/>
+                        </div>
                         <div class="text-center">
                             <h:commandButton action="#{empleadoController.asignarRol(usuarioController.cliente)}" class="btn boton" value="#{usuariosEti.enviar}"/>
                         </div>

@@ -126,10 +126,13 @@ public class UsuarioController {
     //MÉTODOS CRUD DE USUARIOS
     public void registrarUsuario() {
         Usuario user = null;
+        MailController mailC = new MailController();
         try {
             roles.setIdRol(3);
             usuario.setIdRol(roles);
+            usuario.setFoto("/FotosPerfil/predeterminado.jpg");
             usuarioFacadeLocal.create(usuario);
+            mailC.nuevoUsuario(usuario);
             cliente.setIdUsuario(usuario);
             clienteFacadeLocal.create(cliente);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha registrado exitosamente"));
@@ -238,6 +241,7 @@ public class UsuarioController {
             usuarioFacadeLocal.edit(usuario);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", usuario);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

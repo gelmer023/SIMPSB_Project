@@ -64,10 +64,10 @@
                         <!-- REPORTES -->
                         <div class="modulo d-block mx-auto">
                             <img class="float-left" src="../resources/img/icono_reportes.png" alt=""/>
-                            <h4>
-                                <p> <h:commandButton actionListener="#{empleadoController.verCertificado()}" value="Certiifcado" styleClass="btn btn-warning"></h:commandButton></p>
-                            </h4>
-                        </div> 
+                            <h5><a href="#">#{perfilEti.Reportes}</a></h5>
+                                <p><h:commandLink actionListener="#{empleadoController.verCertificado()}" value="Certificado"/></p>
+                            
+                        </div>
                     </h:form>
                 </div>
             </div>
@@ -93,8 +93,8 @@
                                         </li>
                                         <li>
                                             <h:form>
-                                                <img src="../resources/img/ajustes.png" alt="" style="margin-left: 10px; "/>
-                                                <h:commandLink action="../Config/cambiarContra.xhtml?faces-redirect=true" 
+                                                <img src="../resources/img/password.png" alt="" style="margin-left: 10px; "/>
+                                                <h:commandLink action="Config/cambiarContra.xhtml?faces-redirect=true" 
                                                                value="Cambiar Contraseña" 
                                                                a:target="area-trabajo" 
                                                                style="color: #fff; margin-top: 0px; margin-left: 0px; text-align: center"/>

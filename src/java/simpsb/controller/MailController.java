@@ -112,9 +112,8 @@ public class MailController {
     }
 
     public void citas(Citas ct) throws UnsupportedEncodingException {
-        citas = citasFacadeLocal.find(ct.getIdCita());
         //Defino destinatario
-        this.setDestinatario(citas.getIdCliente().getIdUsuario().getCorreo());
+        this.setDestinatario(ct.getIdCliente().getIdUsuario().getCorreo());
         //Defino asunto
         this.setAsunto("Se ha agendado correctamente su cita");
         //Defino mensaje
@@ -126,12 +125,12 @@ public class MailController {
                 + "\">"
                 + "<div style = \"width: 90%; float: left; padding: 20px; margin: 20px; border: 10px solid rgb(230,230,230);\">\n"
                 + "<h1 style = \"margin-bottom: 40px;\">Se ha agendado correctamente su cita</h1>"
-                + "<p style = \"color: rgb(110,110,110); margin-bottom: -10px;\">" + citas.getIdCliente().getIdUsuario().getNombre() + " su cita se ha agendado exitosamente</p>"
+                + "<p style = \"color: rgb(110,110,110); margin-bottom: -10px;\">" + ct.getIdCliente().getIdUsuario().getNombre() + " su cita se ha agendado exitosamente</p>"
                 + "<p style = \"color: rgb(110,110,110);\">Datos de la cita:</p>"
-                + "<p style = \"color: rgb(110,110,110);\"> Hora: " + citas.getHoraFK().getHora() + "</p>"
-                + "<p style = \"color: rgb(110,110,110);\"> Fecha: " + citas.getFecha() + "</p>"
-                + "<p style = \"color: rgb(110,110,110);\"> " + citas.getIdEmpleado().getIdCargo().getCargo() + ": " + citas.getIdEmpleado().getIdUsuario().getNombre() + "</p>"
-                + "<p style = \"color: rgb(110,110,110);\"> Servicios: " + citas.getIdServicio().getNombre() + "</p>"
+                + "<p style = \"color: rgb(110,110,110);\"> Hora: " + ct.getHoraFK().getHora() + "</p>"
+                + "<p style = \"color: rgb(110,110,110);\"> Fecha: " + ct.getFecha() + "</p>"
+                + "<p style = \"color: rgb(110,110,110);\"> " + ct.getIdEmpleado().getIdCargo() + ": " + ct.getIdEmpleado().getIdUsuario().getNombre() + "</p>"
+                + "<p style = \"color: rgb(110,110,110);\"> Servicios: " + ct.getIdServicio().getNombre() + "</p>"
                 + "<br>"
                 + "<br>"
                 + "<br>"
@@ -143,6 +142,35 @@ public class MailController {
         //Envio mensaje
         mailer.send(destinatario, asunto, mensaje);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", "Se han enviado los datos de su cita al correo."));
+
+    }
+    
+    public void nuevoUsuario(Usuario us) throws UnsupportedEncodingException {
+        //Defino destinatario
+        this.setDestinatario(us.getCorreo());
+        //Defino asunto
+        this.setAsunto("Bienvenido a SIMPSB");
+        //Defino mensaje
+        String text;
+        text = "<body style=\"@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');\n"
+                + "margin: 0;\n"
+                + "padding: 0;\n"
+                + "font-family: 'Josefin Sans', sans-serif;\n"
+                + "\">"
+                + "<div style = \"width: 90%; float: left; padding: 20px; margin: 20px; border: 10px solid rgb(230,230,230);\">\n"
+                + "<h1 style = \"color: rgb(110,110,110);\"> " + us.getNombre() + " " + us.getApellido()  + ", te damos la bienvenida a la familia SIMPSB</h1>"
+                + "<p style = \"color: rgb(110,110,110);\"> Ahora tienes acceso a nuestros servicios autenticandote con tu correo " + us.getCorreo() + " y la contraseña que suministraste durante el registro</p>"
+                + "<br>"
+                + "<br>"
+                + "<br>"
+                + "<br>"
+                + "<p style = \"color: rgb(110,110,110); font-size: 13px;\">Gracias por completar tu registro, en caso de tener problemas con el inicio de sesión contactar con SIMPSB Corp</p>"
+                + "</div>"
+                + "</body>\n";
+        this.setMensaje(text);
+        //Envio mensaje
+        mailer.send(destinatario, asunto, mensaje);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", "Correcto"));
 
     }
 
