@@ -62,9 +62,9 @@ WHERE
 		<band/>
 	</background>
 	<title>
-		<band height="106">
+		<band height="36">
 			<staticText>
-				<reportElement x="213" y="73" width="131" height="31" uuid="59c12cad-ce7c-48fa-b43b-a1d4e4dd13b7"/>
+				<reportElement x="213" y="0" width="131" height="31" uuid="59c12cad-ce7c-48fa-b43b-a1d4e4dd13b7"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Calle 62 #75-76
 4567303]]></text>

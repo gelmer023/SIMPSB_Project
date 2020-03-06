@@ -19,12 +19,18 @@ GROUP BY
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="115" y="48" width="383" height="31" uuid="20a38c81-a7d1-44d4-a3a9-1c21c7bfbff1"/>
+				<reportElement x="101" y="19" width="383" height="31" uuid="20a38c81-a7d1-44d4-a3a9-1c21c7bfbff1"/>
 				<textElement textAlignment="Center">
 					<font size="24" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
-				<text><![CDATA[EMPLEADOS CON MAS CITA]]></text>
+				<text><![CDATA[POPULARIDAD EMPLEADOS]]></text>
 			</staticText>
+			<line>
+				<reportElement x="132" y="50" width="328" height="1" forecolor="#D4AF37" backcolor="#D4AF37" uuid="a5827b27-5ac1-4016-b5ed-a2fb5493e427"/>
+				<graphicElement>
+					<pen lineWidth="3.5"/>
+				</graphicElement>
+			</line>
 		</band>
 	</title>
 	<summary>
@@ -45,12 +51,6 @@ GROUP BY
 					<itemLabel/>
 				</pie3DPlot>
 			</pie3DChart>
-			<line>
-				<reportElement x="146" y="0" width="328" height="1" forecolor="#D4AF37" backcolor="#D4AF37" uuid="a5827b27-5ac1-4016-b5ed-a2fb5493e427"/>
-				<graphicElement>
-					<pen lineWidth="3.5"/>
-				</graphicElement>
-			</line>
 		</band>
 	</summary>
 </jasperReport>

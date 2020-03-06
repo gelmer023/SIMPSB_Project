@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6d7ad972-998c-4cdf-9407-bd765dd5966b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9c46a06-00ab-4e8e-9740-195675defcf7">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -8,28 +8,24 @@
      servicios.`nombre` AS NombreSer,
      count(citas.idCita)as NumCitas,citas.`idServicio`AS Servicio
 FROM
-     `servicios` servicios INNER JOIN `citas` citas ON servicios.`idServicio` = citas.`idServicio` group by citas.idServicio]]>
+     `servicios` servicios INNER JOIN `citas` citas ON servicios.`idServicio` = citas.`idServicio` group by citas.idServicio
+
+]]>
 	</queryString>
 	<field name="NombreSer" class="java.lang.String"/>
 	<field name="NumCitas" class="java.lang.Long"/>
 	<field name="Servicio" class="java.lang.Integer"/>
 	<title>
-		<band height="190">
+		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="213" y="73" width="131" height="31" uuid="59c12cad-ce7c-48fa-b43b-a1d4e4dd13b7"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[Calle 62 #75-76
-4567303]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="122" y="135" width="383" height="31" uuid="81b727b5-6418-4371-a6ac-895c4138eab4"/>
-				<textElement>
+				<reportElement x="113" y="25" width="383" height="31" uuid="20a38c81-a7d1-44d4-a3a9-1c21c7bfbff1"/>
+				<textElement textAlignment="Center">
 					<font size="24" isBold="true" isItalic="false" isUnderline="false"/>
 				</textElement>
 				<text><![CDATA[SERVICIOS MAS AGENDADOS]]></text>
 			</staticText>
 			<line>
-				<reportElement x="136" y="166" width="328" height="1" forecolor="#D4AF37" backcolor="#D4AF37" uuid="c14c60e2-2a76-46eb-974d-a6a0a8d08d26"/>
+				<reportElement x="144" y="56" width="328" height="1" forecolor="#D4AF37" backcolor="#D4AF37" uuid="a5827b27-5ac1-4016-b5ed-a2fb5493e427"/>
 				<graphicElement>
 					<pen lineWidth="3.5"/>
 				</graphicElement>
@@ -37,39 +33,22 @@ FROM
 		</band>
 	</title>
 	<summary>
-		<band height="552">
-			<textField>
-				<reportElement x="213" y="532" width="80" height="20" uuid="c4ab0917-6035-4279-9ed8-d169dd712343"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="293" y="532" width="40" height="20" uuid="a095285e-c2fa-40f2-a252-0d33b0164cb0"/>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="11" y="532" width="100" height="20" uuid="96a0b220-ec96-4f7b-9159-1262df725dfa"/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<image>
-				<reportElement x="469" y="523" width="103" height="29" uuid="fb1762a4-1a12-4fe1-93a9-6135da9305ec"/>
-				<imageExpression><![CDATA["C:\\Users\\usuario\\Documents\\NetBeansProjects\\copiasimpsb1234\\SIMPSB1\\web\\app\\resources\\img\\logo.png"]]></imageExpression>
-			</image>
-			<barChart>
+		<band height="387" splitType="Stretch">
+			<bar3DChart>
 				<chart>
-					<reportElement x="13" y="16" width="559" height="469" uuid="753432f9-848e-44e6-b045-72adebd8efbc"/>
+					<reportElement x="0" y="1" width="543" height="360" uuid="d3299dc8-bcbc-401d-a4b0-ec7ccb2447a2"/>
 					<chartTitle/>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA["Servicios"]]></seriesExpression>
+						<seriesExpression><![CDATA[$F{NombreSer}]]></seriesExpression>
 						<categoryExpression><![CDATA[$F{NombreSer}]]></categoryExpression>
 						<valueExpression><![CDATA[$F{NumCitas}]]></valueExpression>
 					</categorySeries>
 				</categoryDataset>
-				<barPlot>
+				<bar3DPlot>
 					<plot/>
 					<itemLabel/>
 					<categoryAxisFormat>
@@ -78,8 +57,8 @@ FROM
 					<valueAxisFormat>
 						<axisFormat/>
 					</valueAxisFormat>
-				</barPlot>
-			</barChart>
+				</bar3DPlot>
+			</bar3DChart>
 		</band>
 	</summary>
 </jasperReport>
