@@ -69,10 +69,6 @@ WHERE
 				<text><![CDATA[Calle 62 #75-76
 4567303]]></text>
 			</staticText>
-			<image>
-				<reportElement x="157" y="0" width="552" height="64" uuid="348f3b4b-4180-43df-acb4-f563596cff82"/>
-				<imageExpression><![CDATA["logo.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<columnHeader>

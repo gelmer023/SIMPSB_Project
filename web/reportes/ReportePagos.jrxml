@@ -28,10 +28,6 @@ FROM
 				<text><![CDATA[Calle 62 #75-76
 4567303]]></text>
 			</staticText>
-			<image>
-				<reportElement x="175" y="0" width="239" height="54" uuid="b911e3cd-3d6c-4389-b336-48db673c7f4b"/>
-				<imageExpression><![CDATA["logo.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<columnHeader>
