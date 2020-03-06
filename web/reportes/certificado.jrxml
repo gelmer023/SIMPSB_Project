@@ -41,10 +41,14 @@ WHERE
 				<text><![CDATA[Calle 62 #75-76
 4567303]]></text>
 			</staticText>
+			<image>
+				<reportElement x="178" y="12" width="218" height="63" uuid="90171000-de05-45bd-850f-9bed61451de9"/>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="37">
+		<band height="287">
 			<staticText>
 				<reportElement x="200" y="1" width="252" height="31" uuid="8746dcab-7c35-45c8-a832-82359cd436e7"/>
 				<textElement>
@@ -58,11 +62,49 @@ WHERE
 					<pen lineWidth="3.5"/>
 				</graphicElement>
 			</line>
+			<textField>
+				<reportElement x="0" y="103" width="178" height="20" uuid="e99a8708-6f19-429e-a2eb-9b6eb8a48994"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="249" width="168" height="35" uuid="1beb332b-5c5a-4935-ad2c-a5a4cd27d783"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[VIP PELUQUERIA´S]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="71" width="555" height="166" uuid="50c77b8b-5622-4cc7-880e-9d838487190e"/>
+				<textElement textAlignment="Justified">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[
+Mediante el presente documento hacemos constar que ......................................................con numero de identificacion ......................
+ha prestado servicios en nuestra empresa.  La cual la trabajadora halabora con nosotros,realizando su labor de Responsable del ...........................de una manera correcta, demostrando en todo momento ser una persona responsable y desarrollando su trabajo eficazmente.
+
+Atentamente:
+
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="400" y="103" width="141" height="20" uuid="7d485ec0-d87f-47fd-bcd3-1109ed9e0884"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numDocumento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="342" y="138" width="100" height="20" uuid="10bab1fd-d7a2-4cb0-b02c-3654a9f5c8a2"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cargos_cargo}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
-	<detail>
-		<band height="84"/>
-	</detail>
 	<pageFooter>
 		<band height="33">
 			<textField>

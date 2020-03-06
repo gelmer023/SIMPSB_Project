@@ -187,5 +187,18 @@ public class EmpleadoController {
         rCliente.getCertificado(ruta);
         FacesContext.getCurrentInstance().responseComplete();               
     }
+    //Metodo para invocar el reporte y enviarle los parametros si es que necesita
+    public void vergrafico() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        
+        //Instancia hacia la clase reporteClientes        
+           Reportes rCliente = new Reportes();
+        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("reportes/reporteGrafico.jasper");
+       
+        rCliente.getReporte(ruta);
+        FacesContext.getCurrentInstance().responseComplete();               
+    }
 
 }

@@ -45,7 +45,7 @@ public class Reportes {
 
             httpServletResponse.setContentType("application/pdf");
             httpServletResponse.addHeader("Content-Type", "application/pdf");
-            httpServletResponse.addHeader("Content-disposition", "attachment; filename=ReporteUsuarios.pdf");
+            httpServletResponse.addHeader("Content-disposition", "attachment; filename=ReporteSIMPSB.pdf");
             ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
 
             JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());
@@ -99,7 +99,7 @@ public class Reportes {
 
             httpServletResponse.setContentType("application/pdf");
             httpServletResponse.addHeader("Content-Type", "application/pdf");
-            httpServletResponse.addHeader("Content-disposition", "attachment; filename=jk.pdf");
+            httpServletResponse.addHeader("Content-disposition", "attachment; filename=Certificado.pdf");
             ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
 
             JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());
@@ -155,7 +155,7 @@ public class Reportes {
 
             httpServletResponse.setContentType("application/pdf");
             httpServletResponse.addHeader("Content-Type", "application/pdf");
-            httpServletResponse.addHeader("Content-disposition", "attachment; filename=Factura.pdf");
+            httpServletResponse.addHeader("Content-disposition", "attachment; filename=FacturaSIMPSB.pdf");
             ServletOutputStream servletOutputStream = httpServletResponse.getOutputStream();
 
             JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(file.getPath());
