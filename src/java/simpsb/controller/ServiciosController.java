@@ -1,5 +1,7 @@
 package simpsb.controller;
 
+
+import java.sql.SQLException;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -7,8 +9,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import simpsb.dao.ServiciosFacadeLocal;
-import simpsb.entidades.Servicios;
+import javax.servlet.ServletContext;
+import simpsb.dao.*;
+import simpsb.entidades.*;
 
 @Named
 @RequestScoped
@@ -93,4 +96,18 @@ public class ServiciosController {
         return "modificarServicio";
 
     }
+    //Metodo para invocar el reporte y enviarle los parametros si es que necesita
+    public void vergrafico2() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        
+        //Instancia hacia la clase reporteClientes        
+           Reportes rCliente = new Reportes();
+        
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+        String ruta = servletContext.getRealPath("reportes/reporteGrafico2.jasper");
+       
+        rCliente.getReporte(ruta);
+        FacesContext.getCurrentInstance().responseComplete();               
+    }
+    
 }

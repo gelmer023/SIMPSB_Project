@@ -98,6 +98,16 @@
                             <p><a href="Usuarios/crearUsuario.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.registrarUsuario}</a></p>
                             <p><a href="Usuarios/consultarUsuario.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.consultarUsuarios}</a></p>
                         </div>
+                        <!-- REPORTES -->
+                        <div class="modulo d-block mx-auto">
+                            <img class="float-left" src="../resources/img/icono_reportes.png" alt=""/>
+                            <h4>
+                                <p> <h:commandButton actionListener="#{empleadoController.vergrafico()}" value="PIE POPULARIDAD" styleClass="btn btn-warning"></h:commandButton></p>
+                                <p> <h:commandButton actionListener="#{serviciosController.vergrafico2()}" value="BARRA SERVICIOS" styleClass="btn btn-warning"></h:commandButton></p>
+                                <p> <h:commandButton actionListener="#{pagosController.verReporte()}" value="PAGOS REALIZADOS" styleClass="btn btn-warning"></h:commandButton></p>
+                            </h4>
+                            
+                        </div>
 
                     </div>
                 </div>

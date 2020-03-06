@@ -21,10 +21,6 @@ FROM
 				<text><![CDATA[Calle 62 #75-76
 4567303]]></text>
 			</staticText>
-			<image>
-				<reportElement x="159" y="0" width="253" height="63" uuid="8a0389c1-9853-4540-b0ee-e77c34bb0a8c"/>
-				<imageExpression><![CDATA["C:\\Users\\usuario\\Documents\\NetBeansProjects\\copiasimpsb1234\\SIMPSB1\\web\\resources\\img\\logo.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="122" y="135" width="383" height="31" uuid="81b727b5-6418-4371-a6ac-895c4138eab4"/>
 				<textElement>
@@ -38,6 +34,10 @@ FROM
 					<pen lineWidth="3.5"/>
 				</graphicElement>
 			</line>
+			<image>
+				<reportElement x="159" y="0" width="245" height="62" uuid="f4efd6f4-65db-4ac1-83b7-09bbbebfdbb0"/>
+				<imageExpression><![CDATA["logo.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<summary>
