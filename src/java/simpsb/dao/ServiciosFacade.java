@@ -36,7 +36,7 @@ public class ServiciosFacade extends AbstractFacade<Servicios> implements Servic
         List<Servicios> serviciosActivos = null;
         try {
             Query query = em.createQuery("SELECT s FROM Servicios s WHERE s.estado = :estado");
-            query.setParameter("estado", ("Activo"));
+            query.setParameter("estado", "Activo");
             serviciosActivos = query.getResultList();
             if (!serviciosActivos.isEmpty()) {
                 serviciosActivos.get(0);
@@ -47,21 +47,6 @@ public class ServiciosFacade extends AbstractFacade<Servicios> implements Servic
         return serviciosActivos;
     }
     
-     @Override
-      public Servicios getValor(){
-           Servicios sv = new Servicios();
-           List<Servicios> listSer= null;
-           try {
-               Query query = em.createQuery("SELECT s FROM Servicios s INNER JOIN s.citasList c WHERE  c.idServicio.idServicio = s.idServicio");
-               listSer = query.getResultList();
-               if (!listSer.isEmpty()) {
-                    sv = listSer.get(0);
-               }
-           } catch (Exception e){
-               throw e;
-           }
-        return sv;
-       }
 
     @Override
     public Servicios obtenerValor(int id) {

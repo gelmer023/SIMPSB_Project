@@ -1,4 +1,3 @@
-
 package simpsb.controller;
 
 import java.sql.SQLException;
@@ -31,7 +30,7 @@ public class EmpleadoController {
     private DiadescansoFacadeLocal diadescansoFacadeLocal;
     @EJB
     private ClienteFacadeLocal clienteFacadeLocal;
-    
+
     private Usuario usuario;
     private Cargos cargos;
     private Empleado empleado;
@@ -114,7 +113,7 @@ public class EmpleadoController {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
+
     public Empleado getEmpleado() {
         return empleado;
     }
@@ -137,6 +136,30 @@ public class EmpleadoController {
 
     public void setListCargos(List<Cargos> listCargos) {
         this.listCargos = listCargos;
+    }
+//MÉTODO PARA LISTAR
+
+    public List<Empleado> listarHorarios() {
+        List<Empleado> listEmp = null;
+        Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        Empleado emp = empleadoFacadeLocal.getIdEmp(user.getIdUsuario());
+        int idEmp = emp.getIdEmpleado();
+        try {
+            listEmp = empleadoFacadeLocal.dataEmp(idEmp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listEmp;
+    }
+    
+    public List<Empleado> listarEmpleado() {
+        List<Empleado> listEmp = null;
+        try {
+            listEmp = empleadoFacadeLocal.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listEmp;
     }
 
     public String consultarRol(Usuario user) {
@@ -173,19 +196,19 @@ public class EmpleadoController {
 
         }
     }
-    
+
     //Metodo para invocar el reporte y enviarle los parametros si es que necesita
     public void verCertificado() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        
+
         //Instancia hacia la clase reporteClientes        
-           Reportes rCliente = new Reportes();
-        
+        Reportes rCliente = new Reportes();
+
         FacesContext facesContext = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
         String ruta = servletContext.getRealPath("reportes/certificado.jasper");
-       
+
         rCliente.getCertificado(ruta);
-        FacesContext.getCurrentInstance().responseComplete();               
+        FacesContext.getCurrentInstance().responseComplete();
     }
 
 }

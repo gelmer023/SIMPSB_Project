@@ -27,6 +27,7 @@ import simpsb.entidades.*;
 @RequestScoped
 
 public class PagosController {
+
     @EJB
     PorcentajepagosFacadeLocal porcentajepagosFacadeLocal;
     @EJB
@@ -48,6 +49,7 @@ public class PagosController {
 
     private List<Empleado> listEmpleado;
     private List<Factura> listFactura;
+
     @PostConstruct
     public void init() {
         comisiones = new Comisiones();
@@ -70,7 +72,6 @@ public class PagosController {
     public void setListEmpleado(List<Empleado> listEmpleado) {
         this.listEmpleado = listEmpleado;
     }
-    
 
     public Usuario getUsuario() {
         return usuario;
@@ -126,11 +127,9 @@ public class PagosController {
     int mes = date.get(Calendar.MONTH) + 1;
     int año = date.get(Calendar.YEAR);
 
-
-    
     //Variables para guardar las fechas
-    private Date fechaInicial; 
-    private Date fechaFinal; 
+    private Date fechaInicial;
+    private Date fechaFinal;
 
     public Date getFechaInicial() {
         return fechaInicial;
@@ -148,30 +147,62 @@ public class PagosController {
         this.fechaFinal = fechaFinal;
     }
 
+    public List<Comisiones> listaPagos() {
+        List<Comisiones> lista = null;
+        try {
+            lista = comisionesFacadeLocal.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
     public void registrarPago() {
         List<Porcentajepagos> listPagos = null;
         try {
             comisiones.setIdEmpleado(empleado);
-            
+
             //Asigno el valor
             //Primero se suman todos ls valores que me retorna la lista dependiendo de las fechas seleccionadas
             listPagos = porcentajepagosFacadeLocal.calcularPago(empleado.getIdEmpleado(), fechaInicial, fechaFinal);
             int pagos = 0;
             for (Porcentajepagos pago : listPagos) {
                 pagos = pago.getPorcentaje();
-                pagos = pagos + pagos;
             }
+                pagos = pagos + pagos;
             //Ahora si asigno el valor 
             comisiones.setValor(pagos);
-            
+
             //Asigno el usuario que generó el pago
             Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
             usuario.setIdUsuario(user.getIdUsuario());
             comisiones.setUsuarioFK(usuario);
+
+            //Asigno la fecha
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String fechaP = año + "-" + mes + "-" + dia;
+            Date fecha = sdf.parse(fechaP);
+            comisiones.setFecha(fecha);
             
+            //Creo el pago
+            comisionesFacadeLocal.create(comisiones);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("consultarPago.xhtml");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public List<Comisiones> listarPagosEmp() {
+        List<Comisiones> listPay = null;
+        Usuario user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        Empleado emp = empleadoFacadeLocal.getIdEmp(user.getIdUsuario());
+        int idEmp = emp.getIdEmpleado();
+        try {
+            listPay = comisionesFacadeLocal.listarPagos(idEmp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listPay;
     }
 
     public String consultarPago(Comisiones comi) {
@@ -223,13 +254,4 @@ public class PagosController {
         rCliente.getReporte(ruta);
         FacesContext.getCurrentInstance().responseComplete();
     }
-    
-    public void realizarPago(Porcentajepagos pg){
-        try {
-            porcentajepagos.getFecha();
-            
-        } catch (Exception e) {
-        }
-    }
-
 }

@@ -5,7 +5,10 @@
  */
 package simpsb.dao;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -33,6 +36,8 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
     @PersistenceContext(unitName = "SIMPSB1PU")
     private EntityManager em;
 
+    static List listFinal;
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -45,27 +50,12 @@ public class DisponibilidadFacade extends AbstractFacade<Disponibilidad> impleme
     @Override
     public List<Horas> disponibles(Citas ct) {
         List<Horas> listDis = null;
-        List<Horas> listHor = horasFacadeLocal.findAll();
-        List<Disponibilidad> lista = disponibilidadFacadeLocal.findAll();
         try {
-            for (Disponibilidad disp : lista) {
-                Date dfech = disp.getFecha();
-                int id = disp.getHoraFK().getIdHoras();
-                for (Horas hor : listHor) {
-                    int idH = hor.getIdHoras();
-                        if (id == idH) {
-                            if (dfech.equals(ct.getFecha())) {
-                                Query query = em.createQuery("SELECT h from Horas h WHERE h.idHoras != :hora");
-                                query.setParameter("hora", idH);
-                                listDis = query.getResultList();
-                                if (!listDis.isEmpty()) {
-                                    listDis.get(0);
-                                }
-                            }
-                    }
-                }
+            Query query = em.createQuery("SELECT h from Horas h");
+            listDis = query.getResultList();
+            if (!listDis.isEmpty()) {
+                listDis.get(0);
             }
-
         } catch (Exception e) {
             throw e;
         }

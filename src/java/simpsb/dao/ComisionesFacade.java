@@ -5,10 +5,13 @@
  */
 package simpsb.dao;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import simpsb.entidades.Comisiones;
+import simpsb.entidades.Empleado;
 
 /**
  *
@@ -27,6 +30,22 @@ public class ComisionesFacade extends AbstractFacade<Comisiones> implements Comi
 
     public ComisionesFacade() {
         super(Comisiones.class);
+    }
+
+    @Override
+    public List<Comisiones> listarPagos(int idEmp) {
+        List<Comisiones> lista = null;
+        try {
+            Query query = em.createQuery("SELECT p FROM Comisiones p WHERE p.idEmpleado.idEmpleado = :idEmp");
+            query.setParameter("idEmp", idEmp);
+            lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                lista.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return lista;
     }
     
 }

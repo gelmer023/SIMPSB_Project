@@ -51,11 +51,11 @@
             <div class="container">
                 <div class="tabla d-block mx-auto">
                     <div class="titulo">
-                        <h1 class="text-center">#{facturaEti.consultarFactura}</h1>
+                        <h1 class="text-center text-uppercase">#{facturaEti.consultarFactura}</h1>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <p class="text-uppercase"> <img src="../../resources/img/icono_facturacion.png" alt="Icono citas"/>#{citasEti.subtitulo_citas}</p>
+                            <p class="text-uppercase"> <img src="../../resources/img/icono_facturacion.png" alt="Icono factura"/>Factura</p>
                             <h:form>
                                 <h:commandButton actionListener="#{pagosController.verReporte2()}" value="PDF" styleClass="btn btn-warning">
 
@@ -71,8 +71,8 @@
 
                                     <h:column>
                                         <f:facet name="header">#{facturaEti.fecha}</f:facet>
-                                        <h:outputText id="fecha" value="#{fac.fecha} #{cita.idCliente.idUsuario.apellido}">
-                                            <f:convertDateTime for="fecha" type="date" dateStyle="full"></f:convertDateTime>
+                                        <h:outputText id="fecha" value="#{fac.fecha}">
+                                            <f:convertDateTime type="date" dateStyle="full"/>    
                                         </h:outputText>
                                         <h:message for="fecha"/>
                                     </h:column>
@@ -103,15 +103,6 @@
                                         <h:message for="empleado"/>
                                     </h:column>
 
-                                    <h:column>
-                                        <f:facet name="header">#{universEti.acciones}</f:facet>
-                                        <h:commandButton class="btn btn-warning ocultar" id="btn" action="#{facturaController.consultarFactura(fac)}" value="#{universEti.modificar}"/>
-                                        <h:commandButton class="btn btn-danger ocultar" 
-                                                         onclick="javascript:if (!confirm('¿Está seguro que desea cancelar esta cita?'))
-                                                                     return false;" 
-                                                         action="#{facturaController.eliminarHorariotrabajo(fac)}" 
-                                                         value="Cancelar"/>
-                                    </h:column>
                                 </h:dataTable>
                             </h:form>
                         </div>

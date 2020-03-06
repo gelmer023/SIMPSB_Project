@@ -22,10 +22,10 @@
             <h:head class="banner-alto">
 
                 <!-- BARRA DE NAVEGACIÓN -->
-                <nav id="nav" class="navbar fixed-top navbar-expand-lg scrolling-navbar color-nav">
+                <nav id="nav" class="navbar fixed-top navbar-expand-lg scrolling-navbar color-nav row">
 
                     <div class="container">
-                        <div class="col-8 mr-auto">
+                        <div class="col-sm-12 mr-auto">
                             <a class="navbar-brand" href="#">
                                 <img class="w-50" src="resources/img/logo.png" alt=""/>
                             </a> 
@@ -58,22 +58,22 @@
                                 </ul>
                             </div> 
                         </div> 
-                    </div> 
-                    <h:form>
-                        <div class="dropdown">
-                            <button type="button" class="btn dropdown-toggle"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <h:form>
+                            <div class="dropdown col-sm-4">
+                                <button type="button" class="btn dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <img src="app/resources/img/banderas partidas 2.png" alt="" style="width:35px; height:30px;"/>
-                                #{pagesEti[languages.idiomaSeleccionado.language]}
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <c:forEach items="#{languages.idiomasSoportados}" var="idioma">
-                                    <h:commandLink class="dropdown-item letracolor" actionListener="#{languages.cambiarIdioma(idioma)}"
-                                                   value="#{pagesEti[idioma.language]}"/>
-                                </c:forEach>    
+                                    #{pagesEti[languages.idiomaSeleccionado.language]}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <c:forEach items="#{languages.idiomasSoportados}" var="idioma">
+                                        <h:commandLink class="dropdown-item letracolor" actionListener="#{languages.cambiarIdioma(idioma)}"
+                                                       value="#{pagesEti[idioma.language]}"/>
+                                    </c:forEach>    
+                                </div>
                             </div>
-                        </div>
-                    </h:form>   
+                        </h:form>   
+                    </div> 
                 </nav>
                 <!--  ENCABEZADO -->
                 <div class="fondo-header" id="header">
@@ -229,119 +229,25 @@
                         <h1 class="text-center text-uppercase">#{indexEti.tit_equipo}</h1>
                     </div>
                     <div class="row text-center">
-
-                        <div class="col-xs-12 col-sm-12 col-lg-4  d-flex justify-content-center">
-                            <div class="empleado">
-                                <div class="imagen-empleado">
-                                    <img src="resources/img/daniela.jpg" alt=""/>
+                        <h:form enctype="multipart/form-data">
+                            <c:forEach items="#{empleadoController.listarEmpleado()}" var="empleado">
+                                <div class="col-xs-12 col-sm-12 col-lg-4  d-flex justify-content-center">
+                                    <div class="empleado">
+                                        <div class="imagen-empleado">
+                                            <h:graphicImage value="#{empleado.idUsuario.foto}"/>
+                                        </div>
+                                        <div class="contenido-empleado">
+                                            <h3 class="text-uppercase">#{empleado.idUsuario.nombre} #{empleado.idUsuario.apellido}</h3>
+                                            <p>
+                                                #{empleado.descripcion}
+                                            </p>
+                                            <p>#{indexEti.calificacion}</p>
+                                            <p></p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="contenido-empleado">
-                                    <h3>DANIELA</h3>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, sint?
-                                    </p>
-                                    <p>#{indexEti.calificacion}</p>
-                                    <p><img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-lg-4  d-flex justify-content-center">
-                            <div class="empleado">
-                                <div class="imagen-empleado">
-                                    <img src="resources/img/camilo.png" alt=""/>
-                                </div>
-                                <div class="contenido-empleado">
-                                    <h3>CAMILO</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, sint?</p>
-                                    <p>#{indexEti.calificacion}</p>
-                                    <p> <img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-lg-4  d-flex justify-content-center">
-                            <div class="empleado">
-                                <div class="imagen-empleado">
-                                    <img src="resources/img/lucia.jpg" alt=""/>
-                                </div>
-                                <div class="contenido-empleado">
-                                    <h3>LUCIA</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, sint?</p>
-                                    <p>#{indexEti.calificacion}</p>
-                                    <p><img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella.png" alt=""/></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row text-center">
-                        <div class="col-xs-12 col-sm-12 col-lg-4  d-flex justify-content-center">
-                            <div class="empleado">
-                                <div class="imagen-empleado">
-                                    <img src="resources/img/andres.png" alt=""/>
-                                </div>
-                                <div class="contenido-empleado">
-                                    <h3>ANDRÉS</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, sint?</p>
-                                    <p>#{indexEti.calificacion}</p>
-                                    <p><img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-lg-4  d-flex justify-content-center">
-                            <div class="empleado">
-                                <div class="imagen-empleado">
-                                    <img src="resources/img/paola.jpg" alt=""/>
-                                </div>
-                                <div class="contenido-empleado">
-                                    <h3>PAOLA</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, sint?</p>
-                                    <p>#{indexEti.calificacion}</p>
-                                    <p><img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/>  
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-lg-4  d-flex justify-content-center">
-                            <div class="empleado">
-                                <div class="imagen-empleado">
-                                    <img src="resources/img/ronald.png" alt=""/>
-                                </div>
-                                <div class="contenido-empleado">
-                                    <h3>RONALD</h3>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, sint?</p>
-                                    <p>#{indexEti.calificacion}</p>
-                                    <p><img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/>  
-                                        <img src="resources/img/estrella_vacio.png" alt=""/></p>
-                                </div>
-                            </div>
-                        </div>
+                            </c:forEach>
+                        </h:form> 
                     </div>
                 </div>
             </div>
@@ -354,38 +260,6 @@
                     </div>
                     <div class="col">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15905.834956409239!2d-74.0987736!3d4.6900638!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x77c63d08388e1311!2zVklQIFBlbHVxdWVyw61hIOKAmHM!5e0!3m2!1ses-419!2sco!4v1558582370550!5m2!1ses-419!2sco"></iframe>
-                    </div>
-                </div>
-            </div>
-            <!-- CONTÁCTENOS -->
-            <div class="modal fade" id="contactenos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">#{indexEti.tit_contactenos}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true"></span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <h:form>
-                                <h:outputLabel for="nombre" value="#{indexEti.form_nombre}"/>
-                                <h:inputText id="nombre" value="#" a:placeholder="#{indexEti.form_nombre}" styleClass="form-control"/>
-
-                                <h:outputLabel for="email" value="#{indexEti.form_email}"/>
-                                <h:inputText id="email" value="#" a:placeholder="#{indexEti.form_email}" styleClass="form-control"/>
-
-                                <h:outputLabel for="telefono" value="#{indexEti.form_tel}"/>
-                                <h:inputText id="telefono" value="#" a:placeholder="#{indexEti.form_tel}" styleClass="form-control"/>
-
-                                <h:outputLabel for="comentario" value="#{indexEti.form_comme}"/>
-                                <h:inputTextarea id="comentario" value="#" styleClass="form-control" a:placeholder="#{indexEti.place_comme}" rows="8"/>
-                            </h:form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-grey" data-dismiss="modal">#{indexEti.btn_cerrar}</button>
-                            <button type="button" class="btn btn-yellow">#{indexEti.btn_enviar}</button>
-                        </div>
                     </div>
                 </div>
             </div>

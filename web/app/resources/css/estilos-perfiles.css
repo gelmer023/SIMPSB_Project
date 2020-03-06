@@ -35,6 +35,7 @@
     width: 60px;
     height: 40px;
 }
+
 /* CLASES ESPECIALES */
 .row{
     margin: 0;
@@ -225,23 +226,18 @@ iframe{
     cursor: pointer;
     z-index: 100;
 }
-@media screen and (max-width: 768px){
-    .menu{
-        display: block;
-        margin-right: 20px;
-    }
-    .barra-lateral{
-        display: none;
-    }
-    .panel-derecho{
-        width: 100%;
-        position: static;
-        z-index: -100;
-    }
-}
+
 @media screen and (max-width: 576px){
     .titulo p{
         display: none;
+    }
+}
+@media screen and (min-width: 1700px){
+    .modulos{
+        height: 60%;
+    }
+    .perfil{
+        height: 40%;
     }
 }
 /*FOOTER*/
@@ -266,7 +262,7 @@ iframe{
 .tamañoImg {
     width: 70px ;
     height: 70px ;
-    
+
 }
 
 .btnlan{

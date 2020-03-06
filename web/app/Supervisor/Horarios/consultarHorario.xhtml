@@ -58,8 +58,7 @@ and open the template in the editor.
                         <h1 class="text-center">#{horarioEti.consultarhorario}</h1>
                     </div>  
                     <p class="text-uppercase">
-                        <img src="../../resources/img/icono_horarios.png" alt=""/>
-                        #{horarioEti.horarios}
+                        <p class="text-uppercase"> <img src="../../resources/img/icono_horarios.png" alt="Icono horarios"/>#{horarioEti.horarios}</p>
                     </p>
                     <h:form>
                         <h:dataTable value="#{horariosController.listarHorariotrabajo()}" var="horariotrabajo" styleClass="table tablas table-striped table-bordered dt-responsive nowrap text-center">

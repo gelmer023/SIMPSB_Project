@@ -7,6 +7,7 @@ package simpsb.dao;
 
 import java.util.List;
 import javax.ejb.Local;
+import simpsb.entidades.Cliente;
 import simpsb.entidades.Empleado;
 
 /**
@@ -30,4 +31,7 @@ public interface EmpleadoFacadeLocal {
 
     int count();
     
+    Empleado getIdEmp(int idUs);
+    
+    List<Empleado> dataEmp(int idEmp);
 }

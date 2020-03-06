@@ -47,7 +47,7 @@ and open the template in the editor.
                     <h:form>
                         <div class="form-group col">
                             <h:outputLabel value="#{pagosEti.empleado}" for="idEmpleado"/>
-                            <h:selectOneMenu id="empleado" value="#{pagosController.empleado.idEmpleado}" styleClass="form form-control">
+                            <h:selectOneMenu required="true" requiredMessage="Seleccione un empleado" id="empleado" value="#{pagosController.empleado.idEmpleado}" styleClass="form form-control">
                                 <f:selectItem itemLabel="#{universEti.seleccionar}" itemValue="0" noSelectionOption="true"/>
                                 <f:selectItems value="#{pagosController.listEmpleado}" var="emp" 
                                                itemValue="#{emp.idEmpleado}" 
@@ -58,7 +58,8 @@ and open the template in the editor.
                         
                         <div class="form-group col">
                             <h:outputLabel for="fechaI" value="#{citasEti.fecha} inicial"/>
-                            <h:inputText id="fechaI" 
+                            <h:inputText required="true" requiredMessage="Seleccione una fecha inicial"
+                                         id="fechaI" 
                                          styleClass="form form-control" 
                                          a:type="date"
                                          value="#{pagosController.fechaInicial}" 
@@ -70,7 +71,8 @@ and open the template in the editor.
                         
                         <div class="form-group col">
                             <h:outputLabel for="fechaF" value="#{citasEti.fecha} final"/>
-                            <h:inputText id="fechaF" 
+                            <h:inputText required="true" requiredMessage="Seleccione una fecha final"
+                                         id="fechaF" 
                                          styleClass="form form-control" 
                                          a:type="date"
                                          value="#{pagosController.fechaFinal}" 

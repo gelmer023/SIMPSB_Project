@@ -11,6 +11,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
+import javax.persistence.Query;
 import javax.servlet.ServletContext;
 import simpsb.dao.*;
 import simpsb.entidades.*;
@@ -281,7 +282,7 @@ public class CitasController {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:", "Debe seleccionar una fecha"));
             } else {
                 citas.getFecha();
-                listHoras = disponibilidadFacadeLocal.disponibles(citas);
+                disponibilidadFacadeLocal.disponibles(citas);
                 FacesContext.getCurrentInstance().getExternalContext().redirect("Cita.xhtml");
             }
         } catch (Exception ex) {
@@ -291,12 +292,9 @@ public class CitasController {
 
     public void generarCita() {
         Cliente cl = null;
-        
-        
-        
-        
         Usuario us = null;
         Citas ct = null;
+        List<Disponibilidad> lista = disponibilidadFacadeLocal.findAll();
         try {
             //TRAIGO DATOS DEL USUARIO QUE AGENDA LA CITA
             us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
@@ -308,24 +306,40 @@ public class CitasController {
             citas.setIdEmpleado(empleado);
             estado.setIdEstado(3);
             citas.setEstadoFK(estado);
-            citas.setHoraFK(horas);
-            //CREO LA CITA
-            citasFacadeLocal.create(citas);
-
-            //CREO DATOS DE LA TABLA DISPONIBILIDAD
-            disponibilidad.setEstado("Agendada");
-            disponibilidad.setCitaFK(citas);
-            Date f = citas.getFecha();
-            disponibilidad.setFecha(f);
-            disponibilidad.setHoraFK(horas);
-            disponibilidadFacadeLocal.create(disponibilidad);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("fecha");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente la cita"));
-            if (us.getIdRol().getRol() == "Cliente") {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("../../Cliente/Citas/consultarCitasCli.xhtml");
-            } else {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
+            int hor = horas.getIdHoras();
+            int hr = 0;
+            Date dfech = null;
+            for (Disponibilidad di : lista) {
+                String hora = di.getHoraFK().getHora();
+                dfech = di.getFecha();
+                hr = Integer.parseInt(hora);
             }
+            if (hr == hor) {
+                if (dfech.equals(citas.getFecha())) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "Ya existe una cita agendada en este mismo horario"));
+                }
+            } else {
+                citas.setHoraFK(horas);
+                //CREO LA CITA
+                citasFacadeLocal.create(citas);
+
+                //CREO DATOS DE LA TABLA DISPONIBILIDAD
+                disponibilidad.setEstado("Agendada");
+                disponibilidad.setCitaFK(citas);
+                Date f = citas.getFecha();
+                disponibilidad.setFecha(f);
+                disponibilidad.setHoraFK(horas);
+                disponibilidadFacadeLocal.create(disponibilidad);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("fecha");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente la cita"));
+                if (us.getIdRol().getRol().equals("Cliente")) {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("../../Cliente/Citas/consultarCitasCli.xhtml");
+                } else {
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
+                }
+                mailC.citas(citas);
+            }
+
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al generar la cita"));
         }
@@ -369,21 +383,28 @@ public class CitasController {
     }
 
     //METODO PARA CONSULTAR LA CITA
-    public String consultarCita(Citas ct) {
+    public void consultarCita(Citas ct) {
+        Usuario us = null;
+        us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        if (ct.getEstadoFK().getIdEstado() != 3) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:", "Esta cita no se puede modificar"));
+        }
         try {
-            if (ct.getEstadoFK().getIdEstado() != 3) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error:", "Esta cita no se puede modificar"));
+            citas = citasFacadeLocal.find(ct.getIdCita());
+            servicios = citas.getIdServicio();
+            empleado = citas.getIdEmpleado();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
+
+            if (us.getIdRol().getRol().equals("Cliente")) {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../../Supervisor/Citas/modificarCita.xhtml");
             } else {
-                citas = citasFacadeLocal.find(ct.getIdCita());
-                servicios = citas.getIdServicio();
-                empleado = citas.getIdEmpleado();
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
+                FacesContext.getCurrentInstance().getExternalContext().redirect("modificarCita.xhtml");
+
             }
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al consultar su cita"));
         }
-        return "modificarCita";
 
     }
 
@@ -394,7 +415,7 @@ public class CitasController {
 
             servicios = citas.getIdServicio();
             empleado = citas.getIdEmpleado();
-            Servicios serv = serviciosFacadeLocal.getValor();
+            Servicios serv = serviciosFacadeLocal.obtenerValor(citas.getIdServicio().getIdServicio());
             String valor = serv.getValor();
             citas.setValorTotal(valor);
             citas.setIdEmpleado(empleado);
@@ -412,14 +433,20 @@ public class CitasController {
 
     //METODO PARA MODIFICAR LA CITA
     public void modificarCita() {
-        try {
+        Usuario us = null;
+        us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
 
+        try {
             citas.setIdEmpleado(empleado);
             citas.setIdServicio(servicios);
             citasFacadeLocal.edit(citas);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha generado exitosamente su cita"));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
+            if (us.getIdRol().getRol().equals("Cliente")) {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("../../Cliente/Citas/consultarCitasCli.xhtml");
+            } else {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("consultarCita.xhtml");
 
+            }
         } catch (Exception e) {
             citasFacadeLocal.edit(citas);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al modificar su cita"));
@@ -498,7 +525,23 @@ public class CitasController {
         return listCitas;
     }
 
-    public  void agregarServicios() {
+    //MÉTODOS ESPECIALES PARA EL PERFIL EMPLEADO
+    public List<Citas> listarCitasEmp() {
+        Usuario us = null;
+        Empleado emp = null;
+        List<Citas> listCitas = null;
+        us = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        emp = empleadoFacadeLocal.getIdEmp(us.getIdUsuario());
+        int idEmp = emp.getIdEmpleado();
+        try {
+            listCitas = citasFacadeLocal.citasEmp(idEmp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listCitas;
+    }
+
+    public void agregarServicios() {
         try {
             Citas ct = (Citas) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cta");
             citas.setIdCita(ct.getIdCita());
@@ -628,7 +671,8 @@ public class CitasController {
         rCliente.getReporte(ruta);
         FacesContext.getCurrentInstance().responseComplete();
     }
-        public void generarPorcentaje() {
+
+    public void generarPorcentaje() {
         Factura bill = (Factura) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("factura");
         try {
             //Asigno el porcentaje

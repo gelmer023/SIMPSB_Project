@@ -28,6 +28,10 @@ public interface ComisionesFacadeLocal {
 
     List<Comisiones> findRange(int[] range);
 
+    List<Comisiones> listarPagos(int idEmp);
+
     int count();
+    
+    
     
 }

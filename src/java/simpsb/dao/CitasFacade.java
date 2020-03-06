@@ -46,6 +46,21 @@ public class CitasFacade extends AbstractFacade<Citas> implements CitasFacadeLoc
         }
         return listaCitas;
     }
+    @Override
+    public List<Citas> citasEmp(int idEmp) {
+        List<Citas> listaCitas = null;
+        try {
+            Query query = em.createQuery("SELECT c FROM Citas c WHERE c.idEmpleado.idEmpleado = :emp");
+            query.setParameter("emp", idEmp);
+            listaCitas = query.getResultList();
+            if (!listaCitas.isEmpty()) {
+                listaCitas.get(0);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return listaCitas;
+    }
         @Override
        public Citas getIdCita(int idCit) {
         Citas cit = new Citas();
