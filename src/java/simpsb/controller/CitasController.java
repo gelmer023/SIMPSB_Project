@@ -322,9 +322,8 @@ public class CitasController {
                 citas.setHoraFK(horas);
                 //CREO LA CITA
                 citasFacadeLocal.create(citas);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("citas", citas);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("citas", citas);
 
-                
                 //CREO DATOS DE LA TABLA DISPONIBILIDAD
                 disponibilidad.setEstado("Agendada");
                 disponibilidad.setCitaFK(citas);
@@ -435,6 +434,8 @@ public class CitasController {
             estado.setIdEstado(5);
             citas.setEstadoFK(estado);
             citasFacadeLocal.edit(citas);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha calificado exitosamente"));
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -251,6 +251,7 @@ public class UsuarioController {
         try {
             user = (Usuario) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
             usuario = usuarioFacadeLocal.find(user.getIdUsuario());
+            usuarioFacadeLocal.edit(usuario);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Correcto"));
         } catch (Exception e) {
             e.printStackTrace();

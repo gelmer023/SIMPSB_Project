@@ -57,8 +57,6 @@
                             <h:outputLabel for="valor" value="#{servisEti.valorServicio}"/>
                             <h:inputText id="valor" value="#{serviciosController.servicios.valor}" a:placeholder="#{servisEti.placeValor}" styleClass="form form-control" />
 
-                            <h:outputLabel for="tiempoEstimado" value="#{servisEti.tiempoServicio}"/>
-                            <h:inputText id="tiempoEstimado" value="#{serviciosController.servicios.tiempoEstimado}" a:placeholder="#{servisEti.placeTiempo}" styleClass="form form-control"/>
                         </div>
                         <div class="text-center">
                             <h:commandButton value="Modificar" action="#{serviciosController.actualizarServicios()}" styleClass="btn boton"/>
