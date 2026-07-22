@@ -1,0 +1,89 @@
+@import url('data:application/octet-stream;base64,QGZvbnQtZmFjZSB7CiAgZm9udC1mYW1pbHk6ICdSYWxld2F5JzsKICBmb250LXN0eWxlOiBub3JtYWw7CiAgZm9udC13ZWlnaHQ6IDQwMDsKICBmb250LWRpc3BsYXk6IHN3YXA7CiAgc3JjOiBsb2NhbCgnUmFsZXdheScpLCBsb2NhbCgnUmFsZXdheS1SZWd1bGFyJyksIHVybChodHRwczovL2ZvbnRzLmdzdGF0aWMuY29tL3MvcmFsZXdheS92MTMvMVB0dWc4ellTX1NLZ2dQTnlDMElTZy50dGYpIGZvcm1hdCgndHJ1ZXR5cGUnKTsKfQo=');
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;	
+}
+/* SCROLL */
+::-webkit-scrollbar{
+    width: 7px;
+    background-color: #000;
+}
+::-webkit-scrollbar-track{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb{
+    background-color: #D4AF37; 
+    background-image: -webkit-linear-gradient(90deg,rgba(255, 255, 255, .2) 25%,transparent 25%,transparent 50%,rgba(255, 255, 255, .2) 50%,rgba(255, 255, 255, .2) 75%,transparent 75%,transparent)
+}
+.fondo{
+    background-color: rgb(203,203,210);
+}
+.row{
+    margin: 0;
+}
+.contenedor{
+    padding: 15px;
+    padding-top: 0;
+}
+/*MIGAS*/
+.breadcrumb{
+    border-radius: 0;
+    background: rgba(42, 43, 42, 1);  
+    margin-bottom: 0;
+}
+.breadcrumb a{
+    color: #D4AF37;
+}
+.breadcrumb a:hover{
+    border-bottom: 2px solid #D4AF37;
+    color: #D4AF37;
+}
+
+.bienvenido{
+    font-size: 45px;
+    background-color: #D4AF37;
+    color: #000;
+}
+p img{
+    height: 30px;
+    width: 30px;
+    margin-right: 50px;
+}
+.table{
+    background: rgb(210, 210, 210);
+    width: 100%;
+}
+.atajos{
+    border-radius: 5px;
+    margin: 30px;
+    background-color: #fff;
+    height: 30vh;
+    padding: 20px;
+}
+.atajos a{
+  color: rgb(120, 120, 120); 
+  text-decoration: none;
+}
+.atajos a:hover{
+  color: #000;
+  border-left: 2px solid #D4AF37;
+  padding-left: 20px;
+  transition: .3s;
+}
+.atajos h2 img{
+  margin-left: 40px;
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+}
+.citas{
+    border-radius: 5px;
+    margin: 30px;
+    background-color: #fff;
+    height: 80vh;
+    padding: 20px;
+}
+

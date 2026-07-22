@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9c46a06-00ab-4e8e-9740-195675defcf7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     servicios.`nombre` AS NombreSer,
+     count(citas.idCita)as NumCitas,citas.`idServicio`AS Servicio
+FROM
+     `servicios` servicios INNER JOIN `citas` citas ON servicios.`idServicio` = citas.`idServicio` group by citas.idServicio
+
+]]>
+	</queryString>
+	<field name="NombreSer" class="java.lang.String"/>
+	<field name="NumCitas" class="java.lang.Long"/>
+	<field name="Servicio" class="java.lang.Integer"/>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="113" y="25" width="383" height="31" uuid="20a38c81-a7d1-44d4-a3a9-1c21c7bfbff1"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[SERVICIOS MAS AGENDADOS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="144" y="56" width="328" height="1" forecolor="#D4AF37" backcolor="#D4AF37" uuid="a5827b27-5ac1-4016-b5ed-a2fb5493e427"/>
+				<graphicElement>
+					<pen lineWidth="3.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<summary>
+		<band height="387" splitType="Stretch">
+			<bar3DChart>
+				<chart>
+					<reportElement x="0" y="1" width="543" height="360" uuid="d3299dc8-bcbc-401d-a4b0-ec7ccb2447a2"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{NombreSer}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{NombreSer}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{NumCitas}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<bar3DPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</bar3DPlot>
+			</bar3DChart>
+		</band>
+	</summary>
+</jasperReport>

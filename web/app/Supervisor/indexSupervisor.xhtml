@@ -1,0 +1,187 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <title>Supervisor</title>
+        <link href="../../resources/css/Bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../resources/css/estilos-perfiles.css" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" href="../resources/img/shortcut-logo.png"/>
+    </h:head>
+    <f:event type="preRenderView" listener="#{sesionController.verificarSesion()}"/>
+    <h:body class="fondo">
+        <f:view locale="#{languages.idiomaSeleccionado}">
+            <!-- SIDEBAR -->
+            <h:form enctype="multipart/form-data">
+                <div class="col-2 sidebar float-left">
+                    <div class="perfil">
+                        <p class="text-center text-uppercase">Supervisor</p>
+                        <h:graphicImage value="#{user.getFoto()}" class="estilosFtPerfil"/>
+                        <p class="text-center text-uppercase">#{user.getNombre()} #{user.getApellido()}</p>
+                        <h:commandButton action="#{sesionController.logout()}" value="#{perfilEti.cerrarSesion}"
+                                         styleClass="btn text-warning d-block mx-auto" style="color: #fff; margin-top: 10px; margin-left: 80px; background: black;"/>
+                    </div>
+                    <div class="modulos">
+                        <!-- HOME -->
+                        <div class="modulo d-block mx-auto">
+                            <img class="float-left" src="../resources/img/icono_home.png" alt=""/>
+                            <h4>
+                                <a href="../Principal/principalSupervisor.xhtml" target="area-trabajo">HOME</a>
+                            </h4>
+                        </div>
+
+                        <!-- FACTURACIÓN -->
+                        <div class="modulo d-block mx-auto">
+                            <img class="float-left" src="../resources/img/icono_facturacion.png" alt=""/>
+                            <h5>
+                                <a href="#">#{perfilEti.Facturacion}</a>
+                            </h5>
+                            <p>
+                                <a href="Facturacion/consultarCita.xhtml" target="area-trabajo">#{perfilEti.crearFactura}</a>
+                            </p>
+                            <p>
+                                <a href="Facturacion/consultarFacturas.xhtml" target="area-trabajo">#{perfilEti.consultarFactura}</a>
+                            </p>
+                        </div> 
+                        <!-- SERVICIOS -->
+                        <div class="modulo d-block mx-auto">
+                            <img class="float-left" src="../resources/img/icono_servicios.png" alt=""/>
+                            <h5>
+                                <a href="#">#{perfilEti.Servicios}</a>
+                            </h5>
+                            <p>
+                                <a href="Servicios/crearServicio.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.crearServicios}</a>
+                            </p>
+                            <p>
+                                <a href="Servicios/consultarServicio.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.consultarServicios}</a>
+                            </p>
+                        </div>
+                        <!-- CITAS -->
+                        <div class="modulo d-block mx-auto">
+                            <img class="float-left" src="../resources/img/icono_citas.png" alt=""/>
+                            <h5>
+                                <a href="#">#{perfilEti.Citas}</a>
+                            </h5>
+                            <p>
+                                <a href="Citas/agendarCita.xhtml" target="area-trabajo" onclick="validar()">#{perfilEti.agendarCita}</a>
+                            </p>
+                            <p>
+                                <a href="Citas/consultarCita.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.consultarCita}</a>
+                            </p>
+                        </div>
+                        <!-- CALIFICACION -->
+                        <div class="modulo d-block mx-auto">
+                            <img class="float-left" src="../resources/img/icono_calificaciones.png" alt=""/>
+                            <h5>
+                                <a href="#">#{perfilEti.calificacion}</a>
+                            </h5>
+                            <p>
+                                <a href="Calificacion/consultarCalificacion.xhtml" target="area-trabajo" >#{perfilEti.consuCali}</a>
+                            </p>
+                        </div>
+                        <!-- HORARIOS -->
+                        <div class="modulo d-block mx-auto">
+                            <img class="float-left" src="../resources/img/icono_horarios.png" alt=""/>
+                            <h5>
+                                <a href="#">#{perfilEti.Horarios}</a>
+                            </h5>
+                            <p>
+                                <a href="Horarios/crearHorario.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.crearHorarios}</a>
+                            </p>
+                            <p>
+                                <a href="Horarios/consultarHorario.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.consultarHorarios}</a>
+                            </p>
+                        </div>
+                        <!-- PAGOS -->
+                        <div class="modulo d-block mx-auto">
+                            <img class="float-left" src="../resources/img/icono_pagos.png" alt=""/>
+                            <h5><a href="#">#{perfilEti.Pagos}</a></h5>
+                            <p><a href="Pagos/generarPago.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.generarPagos}</a></p>
+                            <p><a href="Pagos/consultarPago.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.consultarPagos}</a></p>
+                        </div>
+                        <!-- USUARIOS -->
+                        <div class="modulo d-block mx-auto">
+                            <img class="float-left" src="../resources/img/icono-usuarios.png" alt=""/>
+                            <h5><a href="#">#{perfilEti.usuarios}</a></h5>
+                            <p><a href="Usuarios/crearUsuario.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.registrarUsuario}</a></p>
+                            <p><a href="Usuarios/consultarUsuario.xhtml?faces-redirect=true" target="area-trabajo">#{perfilEti.consultarUsuarios}</a></p>
+                        </div>
+                        <!-- REPORTES -->
+                        <div class="modulo d-block mx-auto">
+                            <img class="float-left" src="../resources/img/icono_reportes.png" alt=""/>
+                            <h5><a href="#">#{perfilEti.Reportes}</a></h5>
+                                <p><h:commandLink actionListener="#{empleadoController.vergrafico()}" value="Pie Popularidad"/></p>
+                                <p><h:commandLink actionListener="#{serviciosController.vergrafico2()}" value="Barra servicios"/></p>
+                                <p><h:commandLink actionListener="#{pagosController.verReporte()}" value="Pagos realizados"/></p>
+                            
+                        </div>
+
+                    </div>
+                </div>
+            </h:form>
+            <!-- AREA DE TRABAJO -->
+            <div class="col-10 derecho float-right">
+                <nav class="navbarra float-right col-12">
+                    <div class="row">
+                        <div class="col-6 logo">
+                            <p><img src="../resources/img/logo.png" alt=""/></p>
+                        </div>
+                        <div class="col-5">
+                            <h:form>
+                                <div class="btnlan dropdown d-flex justify-content-end">
+                                    <button type="button" class="btnlan text-light btn dropdown-toggle"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <img src="../resources/img/banderas partidas 2.png" alt="" style="width:25px; height:20px;"/>
+                                        #{pagesEti[languages.idiomaSeleccionado.language]}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <c:forEach items="#{languages.idiomasSoportados}" var="idioma">
+                                            <h:commandLink class="dropdown-item" actionListener="#{languages.cambiarIdioma(idioma)}"
+                                                           value="#{pagesEti[idioma.language]}"/>
+                                        </c:forEach>    
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                        <div class="col-1 config">
+                            <ul>
+                                <li>
+                                    <a href="#"><img src="../resources/img/config.png" alt=""/></a>
+                                    <ul>
+                                        <li>
+                                            <h:form>
+                                                <img src="../../resources/img/editar-perfil.png" alt=""/>
+                                                <h:commandLink action="#{usuarioController.editarU(us)}" 
+                                                               value="Editar Perfil"  a:target="area-trabajo" styleClass="btn boton" style="color: #fff; margin-top: 10px;"/>
+                                            </h:form>
+                                        </li>
+                                        <li>
+                                            <h:form>
+                                                <img src="../resources/img/password.png" alt="" style="margin-left: 10px; "/>
+                                                <h:commandLink action="Config/cambiarContra.xhtml?faces-redirect=true" 
+                                                               value="Cambiar Contraseña" 
+                                                               a:target="area-trabajo" 
+                                                               style="color: #fff; margin-top: 0px; margin-left: 0px; text-align: center"/>
+                                            </h:form>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="cargado">
+                    <iframe name="area-trabajo" src="../Principal/principalSupervisor.xhtml?faces-redirect=true" ></iframe>
+                </div>
+            </div>
+        </f:view>
+    </h:body>
+    <script src="../resources/js/ocultar-mostrar.js" type="text/javascript"></script>
+    <!-- SCRIPTS -->
+    <script src="../../resources/js/Bootstrap/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
+    <script src="../../resources/js/Bootstrap/popper.min.js" type="text/javascript"></script>
+    <script src="../../resources/js/Bootstrap/bootstrap.min.js" type="text/javascript"></script>
+</html>

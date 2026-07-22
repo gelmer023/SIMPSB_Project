@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6d7ad972-998c-4cdf-9407-bd765dd5966b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idUsuario" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     concat(usuario.`nombre`,usuario.`apellido`) AS Nombre,
+     usuario.`numDocumento` AS numDocumento,
+     cargos.`cargo` AS cargos_cargo,
+     horariotrabajo.`horaInicio` AS horariotrabajo_horaInicio,
+     horariotrabajo.`horaFin` AS horariotrabajo_horaFin
+FROM
+     `usuario` usuario INNER JOIN `empleado` empleado ON usuario.`idUsuario` = empleado.`idUsuario`
+     INNER JOIN `citas` citas ON empleado.`idEmpleado` = citas.`idEmpleado`
+     INNER JOIN `cargos` cargos ON empleado.`idCargo` = cargos.`idCargo`
+     INNER JOIN `horariotrabajo` horariotrabajo ON empleado.`idHorarioTrabajo` = horariotrabajo.`idHorarioTrabajo`
+WHERE
+     usuario.idUsuario = $P{idUsuario}]]>
+	</queryString>
+	<field name="Nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numDocumento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cargos_cargo" class="java.lang.String"/>
+	<field name="horariotrabajo_horaInicio" class="java.sql.Time"/>
+	<field name="horariotrabajo_horaFin" class="java.sql.Time"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="50">
+			<line>
+				<reportElement x="207" y="31" width="156" height="1" forecolor="#D4AF37" backcolor="#D4AF37" uuid="8d4e2879-e9d8-4fdf-a2df-e462b1a87d74"/>
+				<graphicElement>
+					<pen lineWidth="3.5"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="206" y="0" width="252" height="31" uuid="8746dcab-7c35-45c8-a832-82359cd436e7"/>
+				<textElement>
+					<font size="24" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[CERTIFICADO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<summary>
+		<band height="464">
+			<staticText>
+				<reportElement x="14" y="40" width="527" height="261" uuid="50c77b8b-5622-4cc7-880e-9d838487190e"/>
+				<textElement textAlignment="Justified">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Mediante el presente documento hacemos constar que_________________________________ con numero de identificación_______________________ ha prestado servicios en nuestra empresa.  La cual ha labora con nosotros, realizando su labor responsablemente en el cargo de_____________________ de una manera correcta, demostrando en todo momento ser una persona responsable y desarrollando su trabajo eficazmente.
+
+
+Atentamente:
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="340" width="158" height="54" uuid="59c12cad-ce7c-48fa-b43b-a1d4e4dd13b7"/>
+				<textElement textAlignment="Left"/>
+				<text><![CDATA[Calle 62 #75-76
+4567303]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="317" width="168" height="58" uuid="1beb332b-5c5a-4935-ad2c-a5a4cd27d783"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[VIP PELUQUERIA´S]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="93" y="59" width="135" height="22" uuid="c93acec8-0968-4176-ade6-7a6288f2efcf"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="132" y="81" width="189" height="21" uuid="3a9b8b5b-7ba2-4ff3-9f42-7088f531edfa"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numDocumento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="322" y="119" width="136" height="23" uuid="b3ca3e22-b0da-47fa-b364-e3fb20409ba6"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cargos_cargo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

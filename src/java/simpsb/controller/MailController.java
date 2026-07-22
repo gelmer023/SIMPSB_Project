@@ -1,0 +1,177 @@
+package simpsb.controller;
+
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
+import simpsb.dao.*;
+import simpsb.entidades.*;
+
+@Named
+@RequestScoped
+public class MailController {
+
+    @EJB
+    private UsuarioFacadeLocal usuarioFacadeLocal;
+    private Usuario usuario;
+
+    @EJB
+    private CitasFacadeLocal citasFacadeLocal;
+    private Citas citas;
+
+    public MailController() {
+        usuario = new Usuario();
+        citas = new Citas();
+    }
+    //INICIALIZO EL MAILER
+    Mailer mailer = new Mailer();
+    String asunto = "";
+    String destinatario = "";
+    String mensaje = "";
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getAsunto() {
+        return asunto;
+    }
+
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
+    }
+
+    public String getDestinatario() {
+        return destinatario;
+    }
+
+    public void setDestinatario(String destinatario) {
+        this.destinatario = destinatario;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public void recuperacionContra() throws UnsupportedEncodingException {
+        //Creo las variables 
+        int pass;
+        String newPass = "";
+        Usuario user;
+        user = usuarioFacadeLocal.getId(usuario.getNumDocumento());
+//        //Verifico que el usuario exista
+        if (user != null) {
+            //Creo la nueva contraseña    
+            pass = (int) (Math.random() * 34520 + 23);
+            newPass = "Vx" + pass + "jw*";
+            //Asigno los valores que traje a través de la consulta
+            usuario = user;
+            //Edito la nueva contraseña
+            usuario.setPass(newPass);
+            //Guardo la nueva contraseña
+            usuarioFacadeLocal.edit(usuario);
+            //Creo el cuerpo del mensaje
+            String text;
+            text = "<body style=\"@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');\n"
+                    + "margin: 0;\n"
+                    + "padding: 0;\n"
+                    + "font-family: 'Josefin Sans', sans-serif;\n"
+                    + "\">"
+                    + "<div style = \"width: 90%; float: left; padding: 20px; margin: 20px; border: 10px solid rgb(230,230,230);\">\n"
+                    + "<h1 style = \"margin-bottom: 40px;\"> Restablecer contraseña</h1>"
+                    + "<p style = \"color: rgb(110,110,110); margin-bottom: -10px;\"> Has solicitado restablecer tu contraseña.</p>"
+                    + "<p style = \"color: rgb(110,110,110);\"> Esta es su nueva contraseña, puede cambiarla después de ingresar al sistema:</p>"
+                    + "<p style = \"color: rgb(110,110,110); font-size: 20px;\">" + newPass + "</p>"
+                    + "<br>"
+                    + "<br>"
+                    + "<br>"
+                    + "<br>"
+                    + "<p style = \"color: rgb(110,110,110); font-size: 13px;\">Al ingresar al sistema puede cambiar su contraseña en la opción 'Cambiar contraseña'.</p>"
+                    + "</div>"
+                    + "</body>\n";
+            this.setMensaje(text);
+            this.setDestinatario(destinatario);
+            this.setAsunto("Recuperación de contraseña");
+            //Envio el correo
+            mailer.send(destinatario, asunto, mensaje);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", "Se envio la contraseña a su correo"));
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", "El usuario no está registrado en el sistema"));
+        }
+    }
+
+    public void citas(Citas ct) throws UnsupportedEncodingException {
+        //Defino destinatario
+        this.setDestinatario(ct.getIdCliente().getIdUsuario().getCorreo());
+        //Defino asunto
+        this.setAsunto("Se ha agendado correctamente su cita");
+        //Defino mensaje
+        String text;
+        text = "<body style=\"@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');\n"
+                + "margin: 0;\n"
+                + "padding: 0;\n"
+                + "font-family: 'Josefin Sans', sans-serif;\n"
+                + "\">"
+                + "<div style = \"width: 90%; float: left; padding: 20px; margin: 20px; border: 10px solid rgb(230,230,230);\">\n"
+                + "<h1 style = \"margin-bottom: 40px;\">Se ha agendado correctamente su cita</h1>"
+                + "<p style = \"color: rgb(110,110,110); margin-bottom: -10px;\">" + ct.getIdCliente().getIdUsuario().getNombre() + " su cita se ha agendado exitosamente</p>"
+                + "<p style = \"color: rgb(110,110,110);\">Datos de la cita:</p>"
+                + "<p style = \"color: rgb(110,110,110);\"> Hora: " + ct.getHoraFK().getHora() + "</p>"
+                + "<p style = \"color: rgb(110,110,110);\"> Fecha: " + ct.getFecha() + "</p>"
+                + "<p style = \"color: rgb(110,110,110);\"> " + ct.getIdEmpleado().getIdCargo() + ": " + ct.getIdEmpleado().getIdUsuario().getNombre() + "</p>"
+                + "<p style = \"color: rgb(110,110,110);\"> Servicios: " + ct.getIdServicio().getNombre() + "</p>"
+                + "<br>"
+                + "<br>"
+                + "<br>"
+                + "<br>"
+                + "<p style = \"color: rgb(110,110,110); font-size: 13px;\">Por favor presentarse 10 minutos antes de la hora asignada para la cita.</p>"
+                + "</div>"
+                + "</body>\n";
+        this.setMensaje(text);
+        //Envio mensaje
+        mailer.send(destinatario, asunto, mensaje);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", "Se han enviado los datos de su cita al correo."));
+
+    }
+    
+    public void nuevoUsuario(Usuario us) throws UnsupportedEncodingException {
+        //Defino destinatario
+        this.setDestinatario(us.getCorreo());
+        //Defino asunto
+        this.setAsunto("Bienvenido a SIMPSB");
+        //Defino mensaje
+        String text;
+        text = "<body style=\"@import url('https://fonts.googleapis.com/css?family=Josefin+Sans');\n"
+                + "margin: 0;\n"
+                + "padding: 0;\n"
+                + "font-family: 'Josefin Sans', sans-serif;\n"
+                + "\">"
+                + "<div style = \"width: 90%; float: left; padding: 20px; margin: 20px; border: 10px solid rgb(230,230,230);\">\n"
+                + "<h1 style = \"color: rgb(110,110,110);\"> " + us.getNombre() + " " + us.getApellido()  + ", te damos la bienvenida a la familia SIMPSB</h1>"
+                + "<p style = \"color: rgb(110,110,110);\"> Ahora tienes acceso a nuestros servicios autenticandote con tu correo " + us.getCorreo() + " y la contraseña que suministraste durante el registro</p>"
+                + "<br>"
+                + "<br>"
+                + "<br>"
+                + "<br>"
+                + "<p style = \"color: rgb(110,110,110); font-size: 13px;\">Gracias por completar tu registro, en caso de tener problemas con el inicio de sesión contactar con SIMPSB Corp</p>"
+                + "</div>"
+                + "</body>\n";
+        this.setMensaje(text);
+        //Envio mensaje
+        mailer.send(destinatario, asunto, mensaje);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Aviso", "Correcto"));
+
+    }
+
+}

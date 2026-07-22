@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+        <title>VIP Peluqueria's</title>
+        <link href="resources/css/Bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/Index/estilosIndex.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/Otros/mdb.min.css" rel="stylesheet" type="text/css"/>
+        <link rel="shortcut icon" href="resources/img/shortcut-logo.png"/>
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" type="text/css"/>
+        <script src="resources/js/Otros/font-awesome.js" type="text/javascript"></script>
+    </h:head>
+    <h:body styleClass="fondo">
+        <f:view locale="#{languages.idiomaSeleccionado}">
+            <!-- BARRA DE NAVEGACIÓN -->
+
+            <h:head class="banner-alto">
+
+                <!-- BARRA DE NAVEGACIÓN -->
+                <nav id="nav" class="navbar fixed-top navbar-expand-lg scrolling-navbar color-nav row">
+
+                    <div class="container">
+                        <div class="col-sm-12 mr-auto">
+                            <a class="navbar-brand" href="#">
+                                <img class="w-50" src="resources/img/logo.png" alt=""/>
+                            </a> 
+                        </div>
+                        <div class="nav-item dropdown text-center">
+                            <a class="nav-link p-0" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button type="button" id="sidebarCollapse" class="navbar-btn">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </button>
+                            </a>
+                            <div class="dropdown-menu text-center">
+                                <a href="#header" class="text-center nav-link text-uppercase">#{indexEti.menu_inicio}</a> 
+                                <a href="#servicios" class="text-center nav-link text-uppercase">#{indexEti.menu_servicios}</a> 
+                                <a href="#citas" class="text-center nav-link text-uppercase">#{indexEti.menu_citas}</a> 
+                                <a href="#quienes-somos" class="text-center nav-link text-uppercase">#{indexEti.menu_quienessomos}</a> 
+                                <a href="#equipo" class="text-center nav-link text-uppercase">#{indexEti.menu_equipo}</a> 
+                                <a href="#ubicacion" class="text-center nav-link text-uppercase">#{indexEti.menu_ubicacion}</a> 
+                                <a class="text-center nav-link text-uppercase" id="ingreso">#{indexEti.menu_ingreso} <i class="fas fa-chevron-down"></i></a>
+                                <ul id="login" class="ingreso"> 
+                                    <h:form>
+                                        <li class="nav-item ancho">
+                                            <h:commandLink action="app/login?faces-redirect=true" class="text-center nav-link text-uppercase mx-auto" value="#{indexEti.login}"/>
+                                        </li>
+                                        <li class="nav-item ancho">
+                                            <h:commandLink action="app/Index/registro?faces-redirect=true" class="text-center nav-link text-uppercase mx-auto" value="#{indexEti.registrar}"/>
+                                        </li>
+                                    </h:form>
+                                </ul>
+                            </div> 
+                        </div> 
+                        <h:form>
+                            <div class="dropdown col-sm-4">
+                                <button type="button" class="btn dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <img src="app/resources/img/banderas partidas 2.png" alt="" style="width:35px; height:30px;"/>
+                                    #{pagesEti[languages.idiomaSeleccionado.language]}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <c:forEach items="#{languages.idiomasSoportados}" var="idioma">
+                                        <h:commandLink class="dropdown-item letracolor" actionListener="#{languages.cambiarIdioma(idioma)}"
+                                                       value="#{pagesEti[idioma.language]}"/>
+                                    </c:forEach>    
+                                </div>
+                            </div>
+                        </h:form>   
+                    </div> 
+                </nav>
+                <!--  ENCABEZADO -->
+                <div class="fondo-header" id="header">
+                    <div class="container content">
+                        <div class="row">
+                            <div class="col-12">
+                                <h1 class="titulo-banner" data-aos="fade-right" data-aos-delay="1000">#{indexEti.titulo}</h1>
+                                <h1 class="subtitulo-banner" data-aos="fade-right" data-aos-delay="1500">VIP Peluqueria's</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </h:head>        
+
+
+
+
+            <!-- SERVICIOS -->
+            <div id="servicios" class="row servicios">
+                <div class="container">
+                    <div class="col-xs-12">
+                        <h1 class="text-center text-uppercase">#{indexEti.tit_servicios}</h1>
+                    </div>
+                    <div class="col-xs-12">
+                        <p class="descripcion-servicios text-center text-uppercase">#{indexEti.des_servicios3}
+                        </p>
+                        <p class="descripcion-servicios text-center">
+                            #{indexEti.des_servicios}
+                        </p>
+                        <p class="descripcion-servicios text-center">
+                            #{indexEti.des_servicios2}
+                        </p>   
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-lg-4 servicio text-center" data-aos="fade-down">
+                            <h4 class="text-center text-uppercase">#{indexEti.opt_muj}</h4>
+                            <img class="d-block mx-auto rounded-circle img-responsive" src="resources/img/servicios-mujer.jpg" alt="Servicios Mujer" title="Servicios Mujer"/>
+                            <a href="#"  data-toggle="modal" data-target="#exampleModalLong">#{indexEti.btn_conocemas}</a>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-lg-4 servicio text-center" data-aos="fade-down">
+                            <h4 class="text-center text-uppercase">#{indexEti.opt_hom}</h4>
+                            <img class="d-block mx-auto rounded-circle img-responsive" src="resources/img/servicios-hombre.jpg" alt="Servicios Hombres" title="Servicios Hombres"/>
+                            <a href="#"  data-toggle="modal" data-target="#exampleModalLong">#{indexEti.btn_conocemas}</a>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-lg-4 servicio text-center" data-aos="fade-down">
+                            <h4 class="text-center text-uppercase">#{indexEti.opt_niñ}</h4>
+                            <img class="d-block mx-auto rounded-circle img-responsive" src="resources/img/servicios-kids.png" alt="Servicios Niñas" title="Servicios Niñas"/>
+                            <a href="#" data-toggle="modal" data-target="#exampleModalLong">#{indexEti.btn_conocemas}</a>
+                        </div>
+                    </div>
+
+                    <!-- Modal Servicios -->
+                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title estilo-ti" id="exampleModalLongTitle">#{indexEti.servicios}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                                <div class="modal-body estilo-servicios-lista">
+                                    <h5>#{indexEti.tit_modalS}</h5>
+                                    <ul>
+                                        <li>Corte</li>
+                                        <li>Cepillados</li>
+                                        <li>Tinturas ( Iluminaciones, rayitos, mechones, californianas )</li>
+                                        <li>Keratina</li>
+                                        <li>Repolarizacón</li>
+                                        <li>Extensiones de pelo natural</li>
+                                        <li>Peinados y maquillaje para ocasiones especiales</li>
+                                        <li>Peinados para niñas</li>
+                                        <li>Perfilada de cejas</li>
+                                        <li>Manicure y pedicure ( Normal y semipermanente )</li>
+                                        <li>Decoración de Uñas y extensiones</li>
+                                        <li>Tratamientos capilares</li>
+                                        <li>Depilacion</li>
+                                        <li>Ondulacion de pestañas</li>
+                                        <li>Registrate o Inicia Sesion, para conocer más sobre nuestros servicios y/o agendarlos.</li>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn boton" data-dismiss="modal">#{indexEti.btn_cerrar}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+            <!-- CITAS -->
+            <div id="citas" class=" row citas">
+                <div class="container">
+                    <div class="col-xs-12">
+                        <h1 class="text-center text-uppercase">#{indexEti.tit_cita}</h1>
+                    </div>
+                    <div class="row contenido">
+                        <div class="col-xs-12 col-sm-12 col-lg-6">
+                            <p class="descripcion-cita text-justify">
+                                #{indexEti.des_cita}
+                            </p>
+                            <p class="descripcion-cita">
+                                #{indexEti.des_cita2}
+                            </p>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-lg-6 fondo-citas" data-aos="fade-left" data-aos-delay="1000">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUIÉNES SOMOS -->
+            <div id="quienes-somos" class="row quienes-somos">
+                <div class="container"> 
+                    <div class="col-xs-12">
+                        <h1 class="text-center text-uppercase">#{indexEti.tit_quienessomos}</h1>
+                    </div>
+                    <div class="row"> 
+                        <div class="col-xs-12 col-sm-12 col-lg-6" data-aos="fade-right" data-aos-delay="1000">
+                            <img src="resources/img/quienes-somos.PNG" alt=""/>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-lg-6 descripcion-quienes-somos text-justify">
+                            <p>#{indexEti.des_qs}</p>
+                            <a href="#" class="d-block mx-auto" data-toggle="modal" data-target="#modal-quienes-somos">#{indexEti.btn_conocemas}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Quiénes somos -->
+            <div class="modal fade" id="modal-quienes-somos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title estilo-ti" id="exampleModalLongTitle">#{indexEti.tit_modalQ}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>#{indexEti.des_modal}</p>
+                            <p>#{indexEti.des_modal2}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn boton" data-dismiss="modal">#{indexEti.btn_cerrar}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- NUESTRO EQUIPO -->
+            <div id="equipo" class=" row equipo">
+                <div class="container">
+                    <div class="col-12">
+                        <h1 class="text-center text-uppercase">#{indexEti.tit_equipo}</h1>
+                    </div>
+                    <div class="text-center">
+                        <h:form enctype="multipart/form-data">
+                            <c:forEach items="#{empleadoController.listarEmpleado()}" var="empleado">
+                                <div class="col-xs-12 col-sm-12 col-lg-6 d-block mx-auto">
+                                    <div class="empleado">
+                                        <div class="imagen-empleado">
+                                            <h:graphicImage value="#{empleado.idUsuario.foto}"/>
+                                        </div>
+                                        <div class="contenido-empleado">
+                                            <h3 class="text-uppercase">#{empleado.idUsuario.nombre} #{empleado.idUsuario.apellido}</h3>
+                                            <p>
+                                                #{empleado.descripcion}
+                                            </p>
+                                            <p>#{indexEti.calificacion}</p>
+                                            <p></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </h:form> 
+                    </div>
+                </div>
+            </div>
+
+            <!-- DÓNDE ESTAMOS UBICADOS -->
+            <div id="ubicacion" class=" row ubicacion">
+                <div class="container">
+                    <div class="col-12">
+                        <h1 class="text-center text-uppercase">#{indexEti.tit_ubicacion}</h1>
+                    </div>
+                    <div class="col">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15905.834956409239!2d-74.0987736!3d4.6900638!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x77c63d08388e1311!2zVklQIFBlbHVxdWVyw61hIOKAmHM!5e0!3m2!1ses-419!2sco!4v1558582370550!5m2!1ses-419!2sco"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCTOS -->
+            <div class="row productos">
+                <div class="container text-center">
+                    <img class="" src="resources/img/marcelfrance.png" alt=""/>
+                    <img class="" src="resources/img/tecitaly.jpg" alt=""/>
+                </div>
+            </div>
+            <!-- INFORMACION -->
+            <div class="row informacion">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 col-xs-12">
+                            <h3 class="text-center text-uppercase">#{indexEti.tit_inf}</h3>
+                            <p class="text-center">#{indexEti.des_inf}</p>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <h3 class="text-center text-uppercase">#{indexEti.tit_inf2}</h3> 
+                            <p class="text-center">
+                                <a href="https://www.instagram.com/pelitos_vip/?hl=es-la"><img src="resources/img/icono-instagram.png" target="_blank" alt="Ig" title="Instagram"/></a>          
+                            </p>     
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <h3 class="text-center text-uppercase">#{indexEti.tit_inf3}</h3>   
+                            <p class="text-center">314-241-19-17</p>        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- PIE DE PÁGINA -->
+            <div class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <p class="text-right">
+                                #{indexEti.footer}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- SCRIPTS -->
+            <!-- BOOTSTRAP -->
+            <script src="resources/js/Bootstrap/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
+            <script src="resources/js/Bootstrap/popper.min.js" type="text/javascript"></script>
+            <script src="resources/js/Bootstrap/bootstrap.min.js" type="text/javascript"></script>
+            <!-- OTROS -->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8" type="text/javascript"></script>
+            <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" type="text/javascript"></script>
+            <!-- PROPIOS -->
+            <script src="resources/js/JSPropios/scroll-bar.js" type="text/javascript"></script>
+            <script src="resources/js/JSPropios/menu.js" type="text/javascript"></script>
+            <script src="resources/js/Otros/aos-init.js" type="text/javascript"></script>
+            <script src="resources/js/JSPropios/mostrar-ingreso.js" type="text/javascript"></script>
+
+        </f:view>
+    </h:body>
+</html>

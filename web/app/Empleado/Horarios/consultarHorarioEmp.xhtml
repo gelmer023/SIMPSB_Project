@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Consultar horario</title>
+        <link href="../../../resources/css/Bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../resources/css/Usuarios/crearUsuario.css" rel="stylesheet" type="text/css"/>
+        <!-- DATATABLES -->
+        <link href="../../../resources/css/Tablas/jquery.dataTables.css" rel="stylesheet" type="text/css"/>
+        <link href="../../../resources/css/Tablas/datatables.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../../../resources/css/Tablas/buttons.dataTables.min.css" rel="stylesheet" type="text/css"/>
+
+    </h:head>
+    <h:body styleClass="fondo">
+        <f:view locale="#{languages.idiomaSeleccionado}">           
+            <!--Migas de Pan-->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">#{horarioEti.current_consultar}</li>
+                </ol>
+            </nav> 
+            <h:messages globalOnly="true" showDetail="true" class="mensajes"/>
+            <h:form enctype="multipart/form-data">
+                <div class="dropdown d-flex justify-content-end">
+                    <button type="button" class="lanbtn btn dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="../resources/img/banderas partidas 2.png" alt="" style="width:25px; height:20px;"/>
+                        #{pagesEti[languages.idiomaSeleccionado.language]}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <c:forEach items="#{languages.idiomasSoportados}" var="idioma">
+                            <h:commandLink class="dropdown-item" actionListener="#{languages.cambiarIdioma(idioma)}"
+                                           value="#{pagesEti[idioma.language]}"/>
+                        </c:forEach>    
+                    </div>
+                </div>
+            </h:form>
+            <!-- Area de Trabajo -->
+            <div class="container">
+                <div class="formulario d-block mx-auto" style="margin-top: 20px">
+                    <div class="titulo">
+                        <h1 class="text-center text-uppercase">#{horarioEti.consultarhorario}</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                                                    <p class="text-uppercase"> <img src="../../../resources/img/icono_horarios.png" alt="Icono horarios"/>#{horarioEti.horarios}</p>
+
+                            <h:form>
+                                <h:dataTable id="grid" value="#{empleadoController.listarHorarios()}" var="horario" styleClass="tablas table table-striped table-bordered dt-responsive nowrap text-center">
+                                    <h:column>
+                                        <f:facet name="header">Hora entrada</f:facet>
+                                        <h:outputText id="id" value="#{horario.idHorarioTrabajo.horaInicio}">
+                                            <f:convertDateTime dateStyle="full" pattern="h:mm a"/>
+                                        </h:outputText>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Hora salida</f:facet>
+                                        <h:outputText id="nombre" value="#{horario.idHorarioTrabajo.horaFin}">
+                                            <f:convertDateTime dateStyle="full" pattern="h:mm a"/>
+                                        </h:outputText>
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Día de descanso</f:facet>
+                                        <h:outputText id="apellido" value="#{horario.idDiaDescanso.dia}"/>
+
+                                    </h:column>
+                                </h:dataTable>
+                            </h:form>
+                            <p class="text-warning text-center">Bienvenido #{user.getNombre()} aquí puede consultar su horario, sí desea que se modifique contacte con el supervisor.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </f:view>
+        <!-- BOOTSTRAP -->
+        <script src="../../../resources/js/Bootstrap/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
+        <script src="../../../resources/js/Bootstrap/popper.min.js" type="text/javascript"></script>
+        <script src="../../../resources/js/Bootstrap/bootstrap.min.js" type="text/javascript"></script>
+        <!-- DATATABLES -->
+        <script src="../../../resources/js/Tablas/dataTables.buttons.min.js" type="text/javascript"></script>
+        <script src="../../../resources/js/Tablas/datatables.min.js" type="text/javascript"></script>
+        <script src="../../../resources/js/Tablas/jszip.min.js" type="text/javascript"></script>
+        <script src="../../../resources/js/Tablas/pdfmake.min.js" type="text/javascript"></script>
+        <script src="../../../resources/js/Tablas/vfs_fonts.js" type="text/javascript"></script>
+        <script src="../../../resources/js/Tablas/buttons.html5.min.js" type="text/javascript"></script>
+        <script src="../../../resources/js/Tablas/dataTables.responsive.min.js" type="text/javascript"></script>
+        <script src="../../../resources/js/JSPropios/botones.js" type="text/javascript"></script>
+    </h:body>
+</html>

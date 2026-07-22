@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9c46a06-00ab-4e8e-9740-195675defcf7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     concat(usuario.`nombre`,usuario.`apellido`) AS Empleado,
+     citas.`estadoFK` AS Estado, count(citas.idCita)AS cantidad
+FROM
+     `usuario` usuario INNER JOIN `empleado` empleado ON usuario.`idUsuario` = empleado.`idUsuario`
+     INNER JOIN `citas` citas ON empleado.`idEmpleado` = citas.`idEmpleado` where estadoFK=4
+GROUP BY
+     citas.idEmpleado]]>
+	</queryString>
+	<field name="Empleado" class="java.lang.String"/>
+	<field name="Estado" class="java.lang.Integer"/>
+	<field name="cantidad" class="java.lang.Long"/>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="101" y="19" width="383" height="31" uuid="20a38c81-a7d1-44d4-a3a9-1c21c7bfbff1"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[POPULARIDAD EMPLEADOS]]></text>
+			</staticText>
+			<line>
+				<reportElement x="132" y="50" width="328" height="1" forecolor="#D4AF37" backcolor="#D4AF37" uuid="a5827b27-5ac1-4016-b5ed-a2fb5493e427"/>
+				<graphicElement>
+					<pen lineWidth="3.5"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<summary>
+		<band height="387" splitType="Stretch">
+			<pie3DChart>
+				<chart>
+					<reportElement x="11" y="30" width="544" height="335" uuid="aa82f722-f872-4e00-9c8e-939cce013d9b"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{Empleado}]]></keyExpression>
+					<valueExpression><![CDATA[$F{Estado}]]></valueExpression>
+				</pieDataset>
+				<pie3DPlot>
+					<plot/>
+					<itemLabel/>
+				</pie3DPlot>
+			</pie3DChart>
+		</band>
+	</summary>
+</jasperReport>
