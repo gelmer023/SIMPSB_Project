@@ -1,26 +1,48 @@
 package simpsb.controller;
 
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
-import simpsb.dao.*;
-import simpsb.entidades.*;
+import simpsb.dao.ClienteFacadeLocal;
+import simpsb.dao.EmpleadoFacadeLocal;
+import simpsb.dao.RolesFacadeLocal;
+import simpsb.dao.UsuarioFacadeLocal;
+import simpsb.entidades.Cliente;
+import simpsb.entidades.Empleado;
+import simpsb.entidades.Roles;
+import simpsb.entidades.Usuario;
+import simpsb.utils.AppConstants;
+import simpsb.utils.SessionUtil;
+import simpsb.utils.ValidationUtil;
+import simpsb.utils.ExceptionUtil;
 
+/**
+ * Controlador para gestión de usuarios.
+ * Maneja operaciones CRUD de usuarios, roles y perfiles.
+ * 
+ * @author Sistema SIMPSB
+ * @version 1.0
+ */
 @Named
 @RequestScoped
 public class UsuarioController {
 
+    private static final Logger LOGGER = Logger.getLogger(UsuarioController.class.getName());
+    private static final String DEFAULT_PROFILE_IMAGE = "/FotosPerfil/predeterminado.jpg";
+
     @EJB
     private UsuarioFacadeLocal usuarioFacadeLocal;
+    
     @EJB
     private ClienteFacadeLocal clienteFacadeLocal;
+    
     @EJB
     private EmpleadoFacadeLocal empleadoFacadeLocal;
+    
     @EJB
     private RolesFacadeLocal rolesFacadeLocal;
 
@@ -28,60 +50,19 @@ public class UsuarioController {
     private Roles roles;
     private Cliente cliente;
     private Empleado empleado;
-
-    private UploadController imagen;
-
-    private String contra;
+    private UploadController uploadController;
+    private String confirmarPassword;
 
     @PostConstruct
     public void init() {
-        //ENTIDADES
         usuario = new Usuario();
         roles = new Roles();
         cliente = new Cliente();
         empleado = new Empleado();
-        imagen = new UploadController();
+        uploadController = new UploadController();
     }
 
-    public String getContra() {
-        return contra;
-    }
-
-    public void setContra(String contra) {
-        this.contra = contra;
-    }
-
-    public UsuarioFacadeLocal getUsuarioFacadeLocal() {
-        return usuarioFacadeLocal;
-    }
-
-    public void setUsuarioFacadeLocal(UsuarioFacadeLocal usuarioFacadeLocal) {
-        this.usuarioFacadeLocal = usuarioFacadeLocal;
-    }
-
-    public ClienteFacadeLocal getClienteFacadeLocal() {
-        return clienteFacadeLocal;
-    }
-
-    public void setClienteFacadeLocal(ClienteFacadeLocal clienteFacadeLocal) {
-        this.clienteFacadeLocal = clienteFacadeLocal;
-    }
-
-    public EmpleadoFacadeLocal getEmpleadoFacadeLocal() {
-        return empleadoFacadeLocal;
-    }
-
-    public void setEmpleadoFacadeLocal(EmpleadoFacadeLocal empleadoFacadeLocal) {
-        this.empleadoFacadeLocal = empleadoFacadeLocal;
-    }
-
-    public RolesFacadeLocal getRolesFacadeLocal() {
-        return rolesFacadeLocal;
-    }
-
-    public void setRolesFacadeLocal(RolesFacadeLocal rolesFacadeLocal) {
-        this.rolesFacadeLocal = rolesFacadeLocal;
-    }
+    // ===== GETTERS Y SETTERS =====
 
     public Usuario getUsuario() {
         return usuario;
@@ -115,29 +96,56 @@ public class UsuarioController {
         this.empleado = empleado;
     }
 
-    public UploadController getImagen() {
-        return imagen;
+    public UploadController getUploadController() {
+        return uploadController;
     }
 
-    public void setImagen(UploadController imagen) {
-        this.imagen = imagen;
+    public void setUploadController(UploadController uploadController) {
+        this.uploadController = uploadController;
     }
 
-    //MÉTODOS CRUD DE USUARIOS
+    public String getConfirmarPassword() {
+        return confirmarPassword;
+    }
+
+    public void setConfirmarPassword(String confirmarPassword) {
+        this.confirmarPassword = confirmarPassword;
+    }
+
+    // ===== MÉTODOS DE REGISTRO =====
+
+    /**
+     * Registra un nuevo usuario en el sistema (desde formulario público).
+     */
     public void registrarUsuario() {
-        Usuario user = null;
-        MailController mailC = new MailController();
         try {
-            roles.setIdRol(3);
-            usuario.setIdRol(roles);
-            usuario.setFoto("/FotosPerfil/predeterminado.jpg");
+            validarUsuarioParaRegistro();
+            
+            // Asignar rol de Cliente por defecto
+            Roles rolCliente = rolesFacadeLocal.find(AppConstants.ROLE_CLIENTE);
+            if (rolCliente == null) {
+                LOGGER.log(Level.WARNING, "Rol Cliente no encontrado");
+                SessionUtil.addErrorMessage("Error:", "No se puede asignar rol");
+                return;
+            }
+            
+            usuario.setIdRol(rolCliente);
+            usuario.setFoto(DEFAULT_PROFILE_IMAGE);
+            
+            // Crear usuario
             usuarioFacadeLocal.create(usuario);
-            mailC.nuevoUsuario(usuario);
+            
+            // Crear cliente asociado
             cliente.setIdUsuario(usuario);
             clienteFacadeLocal.create(cliente);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso", "Se ha registrado exitosamente"));
+            
+            SessionUtil.addInfoMessage("Éxito:", AppConstants.MSG_CREADO_EXITOSO);
+            LOGGER.log(Level.INFO, "Nuevo usuario registrado: " + usuario.getNombre());
+            
+        } catch (IllegalArgumentException e) {
+            SessionUtil.addWarningMessage("Validación:", e.getMessage());
         } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Ha ocurrido un error al registrarse"));
+            ExceptionUtil.handleException("Error al registrar usuario", e);
         }
     }
 
